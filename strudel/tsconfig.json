@@ -13,13 +13,13 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "outDir": "./dist",
     "types": [
       "webpack-env"
     ],
     "paths": {
       "@/*": [
         "src/*",
-        "STRUDAL/*"
       ]
     },
     "lib": [
@@ -35,9 +35,9 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "STRUDAL/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
