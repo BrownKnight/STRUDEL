@@ -4,7 +4,7 @@ import { createConnection } from "typeorm";
 import { UserLogin } from "./entity/UserLogin.js";
 
 
-export class UserLoginDBO {
+export class UserLoginDAO {
     private conn() {
         return createConnection({
             type: "postgres",
