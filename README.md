@@ -12,5 +12,5 @@ as a tool for data entry and the bug-the-user prediction reminder service (*Name
 STRU*DAL* is the database
 
 ## ENKEL
-ENKEL is the external-facing api layer designed to support interoperability with external services such as
+ENKEL is the internal/external-facing api layer designed to support interoperability with external services such as
  the [APPLE](https://github.com/benjaminjellis/APPLE) prediction engine
