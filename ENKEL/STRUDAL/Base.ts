@@ -1,5 +1,8 @@
 import pkg from "typeorm";
 import { UserLogin } from "./entity/UserLogin.js";
+import { Team } from "./entity/Team.js";
+import { Fixture } from "./entity/Fixture.js";
+import { Prediction } from "./entity/Prediction.js";
 const { createConnection } = pkg
 
 export function initDb() {
@@ -12,7 +15,10 @@ export function initDb() {
         password: process.env.STRUDAL_DATABASE_PASSWORD,
         database: "STRUDELDB",
         entities: [
-            UserLogin
+            UserLogin,
+            Team,
+            Fixture,
+            Prediction
         ],
         synchronize: true
     }).catch(err => {

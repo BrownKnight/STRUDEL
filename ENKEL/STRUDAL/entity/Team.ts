@@ -1,8 +1,9 @@
-import {Entity, Column} from "typeorm";
+import pkg from "typeorm";
+const { PrimaryColumn, Entity, Column } = pkg;
 
 @Entity()
 export class Team {
-    @Column("integer")
+    @PrimaryColumn("integer")
     teamID!: number;
 
     @Column("character varying")

@@ -1,15 +1,20 @@
-import {Entity, Column} from "typeorm";
-import { FixtureResult } from "./dataTypes/FixtureResult";
-import { Fixture } from "./Fixture";
+import pkg from "typeorm";
+const { PrimaryColumn, Entity, Column, ManyToOne } = pkg;
+import { FixtureResult } from "./dataTypes/FixtureResult.js";
+import { Fixture } from "./Fixture.js";
+import { UserLogin } from "./UserLogin.js";
 
 @Entity()
 export class Prediction {
-    @Column("integer")
+    @PrimaryColumn("integer")
     predictionID!: number;
 
-    @Column("integer")
-    fixtureID!: number;
+    @ManyToOne(type => Fixture)
+    fixture!: Fixture;
 
     @Column({type: "enum", enum: FixtureResult})
     prediction!: FixtureResult;
+
+    @ManyToOne(() => UserLogin)
+    user!: UserLogin
 }
