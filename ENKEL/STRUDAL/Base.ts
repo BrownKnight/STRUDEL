@@ -1,0 +1,22 @@
+import pkg from "typeorm";
+import { UserLogin } from "./entity/UserLogin.js";
+const { createConnection } = pkg
+
+export function initDb() {
+    console.log(`Connecting to db at ${process.env.STRUDAL_DATABASE_HOST}`)
+    createConnection({
+        type: "postgres",
+        host: process.env.STRUDAL_DATABASE_HOST,
+        port: parseInt(process.env.STRUDAL_DATABASE_PORT ?? ""),
+        username: process.env.STRUDAL_DATABASE_USERNAME,
+        password: process.env.STRUDAL_DATABASE_PASSWORD,
+        database: "STRUDELDB",
+        entities: [
+            UserLogin
+        ],
+        synchronize: true
+    }).catch(err => {
+        console.error("Could not connect to db");
+        console.error(err);
+    })
+}
