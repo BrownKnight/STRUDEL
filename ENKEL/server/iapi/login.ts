@@ -1,9 +1,10 @@
-import { UserLoginDAO } from "../../STRUDAL/UserLoginDAO";
+import { UserLoginDAO } from "../../STRUDAL/UserLoginDAO.js";
+import { SimpleConsoleLogger } from "typeorm";
 
 export class LoginApi {
     getTestResponse() {
+        console.log("test response")
         let dao: UserLoginDAO = new UserLoginDAO();
-        let entity = dao.getEntity();
-        return JSON.stringify(entity)
+        return dao.getEntity();
     }
 }

@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import { RouterBase } from "../RouterBase.js";
-import { LoginApi } from "../iapi/login";
+import { LoginApi } from "../iapi/login.js";
 
 export class IApiRouter extends RouterBase {
     protected initLocalRoutes() {
@@ -11,7 +11,9 @@ export class IApiRouter extends RouterBase {
         // No child routes implemented yet
     }
 
-    private login(req: Request, res: Response) {
-        res.json(new LoginApi().getTestResponse());
+    private async login(req: Request, res: Response) {
+        const entity = await new LoginApi().getTestResponse();
+
+        res.json(entity);
     }
 }
