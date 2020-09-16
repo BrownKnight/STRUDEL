@@ -3,9 +3,9 @@ const { PrimaryColumn, Entity, Column } = pkg;
 
 @Entity()
 export class Team {
-    @PrimaryColumn("integer")
-    teamID!: number;
+  @PrimaryColumn("integer")
+  is!: number;
 
-    @Column("character varying")
-    teamName!: string;
+  @Column("character varying")
+  teamName!: string;
 }

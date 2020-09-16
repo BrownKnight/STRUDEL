@@ -6,15 +6,15 @@ import { UserLogin } from "./UserLogin.js";
 
 @Entity()
 export class Prediction {
-    @PrimaryColumn("integer")
-    predictionID!: number;
+  @PrimaryColumn("integer")
+  id!: number;
 
-    @ManyToOne(type => Fixture)
-    fixture!: Fixture;
+  @ManyToOne(() => Fixture)
+  fixture!: Fixture;
 
-    @Column({type: "enum", enum: FixtureResult})
-    prediction!: FixtureResult;
+  @Column({ type: "enum", enum: FixtureResult })
+  prediction!: FixtureResult;
 
-    @ManyToOne(() => UserLogin)
-    user!: UserLogin
+  @ManyToOne(() => UserLogin)
+  user!: UserLogin;
 }

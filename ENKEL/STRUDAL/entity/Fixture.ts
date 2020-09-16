@@ -6,13 +6,13 @@ import { Team } from "./Team.js";
 @Entity()
 export class Fixture {
     @PrimaryGeneratedColumn()
-    fixtureID!: number;
+    id!: number;
 
     @ManyToOne(type => Team)
-    homeTeamID!: Team;
+    homeTeam!: Team;
 
     @ManyToOne(type => Team)
-    awayTeamID!: Team;
+    awayTeam!: Team;
 
     @Column({type: "enum", enum: FixtureResult})
     fixtureResult!: FixtureResult;

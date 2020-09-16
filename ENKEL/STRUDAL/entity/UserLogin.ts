@@ -4,15 +4,15 @@ const { PrimaryColumn, Entity, Column } = pkg;
 
 @Entity()
 export class UserLogin {
-    @PrimaryColumn("character varying")
-    userID!: string;
+  @PrimaryColumn("character varying")
+  id!: string;
 
-    @Column("character varying")
-    emailAddress!: string;
+  @Column("character varying")
+  emailAddress!: string;
 
-    @Column("character varying")
-    password!: string;
+  @Column("character varying")
+  password!: string;
 
-    @Column("character varying")
-    salt!: string;
+  @Column("character varying")
+  salt!: string;
 }
