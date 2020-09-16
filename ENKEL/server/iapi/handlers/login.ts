@@ -1,4 +1,4 @@
-import { UserLoginDAO } from "../../STRUDAL/UserLoginDAO.js";
+import { UserLoginDAO } from "../../../STRUDAL/UserLoginDAO.js";
 import { SimpleConsoleLogger } from "typeorm";
 
 export class LoginApi {
