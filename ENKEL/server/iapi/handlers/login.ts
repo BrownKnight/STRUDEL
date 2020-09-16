@@ -1,7 +1,6 @@
 import { UserLoginDAO } from "../../../STRUDAL/UserLoginDAO.js";
-import { SimpleConsoleLogger } from "typeorm";
 
-export class LoginApi {
+export class LoginApiHandler {
     getTestResponse() {
         console.log("test response")
         let dao: UserLoginDAO = new UserLoginDAO();

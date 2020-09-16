@@ -1,12 +1,12 @@
 import pkg from "typeorm";
-const { PrimaryColumn, Entity, Column, ManyToOne } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column, ManyToOne } = pkg;
 import { FixtureResult } from "./dataTypes/FixtureResult.js";
 import { Fixture } from "./Fixture.js";
 import { UserLogin } from "./UserLogin.js";
 
 @Entity()
 export class Prediction {
-  @PrimaryColumn("integer")
+  @PrimaryGeneratedColumn()
   id!: number;
 
   @ManyToOne(() => Fixture)

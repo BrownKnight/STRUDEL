@@ -2,10 +2,10 @@
   "name": "enkel",
   "version": "1.0.0",
   "description": "API and Data Access Layer for the STRUDEL project",
-  "main": "dist/server/index.js",
+  "main": "dist/server/main.js",
   "type": "module",
   "scripts": {
-    "start": "tsc && node -r dotenv/config dist/server/index.js",
+    "start": "tsc && node -r dotenv/config dist/server/main.js",
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

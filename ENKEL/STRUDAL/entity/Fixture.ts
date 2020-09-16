@@ -5,15 +5,15 @@ import { Team } from "./Team.js";
 
 @Entity()
 export class Fixture {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @ManyToOne(type => Team)
-    homeTeam!: Team;
+  @ManyToOne(() => Team)
+  homeTeam!: Team;
 
-    @ManyToOne(type => Team)
-    awayTeam!: Team;
+  @ManyToOne(() => Team)
+  awayTeam!: Team;
 
-    @Column({type: "enum", enum: FixtureResult})
-    fixtureResult!: FixtureResult;
+  @Column({ type: "enum", enum: FixtureResult })
+  fixtureResult!: FixtureResult;
 }
