@@ -2,19 +2,19 @@ import { Prediction } from "../../../../STRUDAL/entity/Prediction.js";
 import { PredictionDAO } from "../../../../STRUDAL/DAO/PredictionDAO.js";
 
 export class PredictionsHandler {
-  private predictionDAO: PredictionDAO;
+  private _predictionDAO: PredictionDAO;
 
   constructor() {
-    this.predictionDAO = new PredictionDAO();
+    this._predictionDAO = new PredictionDAO();
   }
 
   public async getAllPredictions(): Promise<Prediction[]> {
-    return await this.predictionDAO.getAllEntities();
+    return await this._predictionDAO.getAllEntities();
   }
 
   public savePrediction(requestBody: string): string {
     const prediction: Prediction = JSON.parse(requestBody);
-    this.predictionDAO.saveEntity(prediction);
+    this._predictionDAO.saveEntity(prediction);
     return "";
   }
 }

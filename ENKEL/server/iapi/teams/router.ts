@@ -12,11 +12,11 @@ import { TeamsHandler } from "./handlers/teamsHandler.js";
  * DELETE:/<team_id>  : Delete a given prediciton
  */
 export class IApiTeamsRouter extends RouterBase {
-  private teamsHandler: TeamsHandler;
+  private _teamsHandler: TeamsHandler;
 
   constructor() {
     super();
-    this.teamsHandler = new TeamsHandler();
+    this._teamsHandler = new TeamsHandler();
   }
 
   protected initLocalRoutes(): void {
@@ -33,13 +33,13 @@ export class IApiTeamsRouter extends RouterBase {
     res.status(404).send("Unsupprted API endpoint");
   }
 
-  private getAllTeams(req: Request, res: Response) {
-    res.json(this.teamsHandler.getAllTeams());
+  private async getAllTeams(req: Request, res: Response) {
+    res.json(await this._teamsHandler.getAllTeams());
   }
 
   private saveTeam(req: Request, res: Response) {
     console.log(req.headers)
-    const errorMessage: string = this.teamsHandler.saveTeam(req.body);
+    const errorMessage: string = this._teamsHandler.saveTeam(req.body);
     console.log("got err mess:");
     console.log(errorMessage);
     if (errorMessage == "") {
