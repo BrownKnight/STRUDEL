@@ -1,5 +1,5 @@
 import { Prediction } from "../../../../STRUDAL/entity/Prediction.js";
-import { PredictionDAO } from "../../../../STRUDAL/PredictionDAO.js";
+import { PredictionDAO } from "../../../../STRUDAL/DAO/PredictionDAO.js";
 
 export class PredictionsHandler {
   private predictionDAO: PredictionDAO;

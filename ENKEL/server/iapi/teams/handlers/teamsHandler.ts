@@ -1,5 +1,5 @@
 import { Team } from "../../../../STRUDAL/entity/Team.js";
-import { TeamDAO } from "../../../../STRUDAL/TeamDAO.js";
+import { TeamDAO } from "../../../../STRUDAL/DAO/TeamDAO.js";
 
 export class TeamsHandler {
   private teamDAO: TeamDAO;
