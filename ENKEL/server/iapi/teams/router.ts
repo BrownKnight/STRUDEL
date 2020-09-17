@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
+import { ApiResponse } from "../apiResponse.js";
 import { TeamsHandler } from "./handlers/teamsHandler.js";
 
 /**
@@ -37,15 +38,13 @@ export class IApiTeamsRouter extends RouterBase {
     res.json(await this._teamsHandler.getAllTeams());
   }
 
-  private saveTeam(req: Request, res: Response) {
+  private async saveTeam(req: Request, res: Response) {
     console.log(req.headers)
-    const errorMessage: string = this._teamsHandler.saveTeam(req.body);
-    console.log("got err mess:");
-    console.log(errorMessage);
-    if (errorMessage == "") {
-      res.status(200).json({ success: true });
+    const apiResponse: ApiResponse = await this._teamsHandler.saveTeam(req.body);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
     } else {
-      res.status(400).json({ error: errorMessage.toString() });
+      res.status(400).json(apiResponse);
     }
   }
 }

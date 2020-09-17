@@ -1,5 +1,6 @@
 import { Team } from "../../../../STRUDAL/entity/Team.js";
 import { TeamDAO } from "../../../../STRUDAL/DAO/TeamDAO.js";
+import { ApiResponse } from "../../apiResponse.js";
 
 export class TeamsHandler {
   private teamDAO: TeamDAO;
@@ -12,19 +13,22 @@ export class TeamsHandler {
     return await this.teamDAO.getAllEntities();
   }
 
-  public saveTeam(requestBody: unknown): string {
+  public async saveTeam(requestBody: unknown): Promise<ApiResponse> {
+    const apiResponse = new ApiResponse();
     console.log("Saving Team");
     console.log(requestBody);
 
     const team: Team = requestBody as Team;
     // TODO: Likely should verify this actually is a Team entity
     try {
-      this.teamDAO.saveEntity(team);
+      apiResponse.entity = await this.teamDAO.saveEntity(team);
     } catch (error) {
       console.error("Error occurred trying to save Team entity");
       console.error(error);
-      return error;
+      apiResponse.errorMessage = error;
+      apiResponse.success = false;
     }
-    return "";
+
+    return apiResponse;
   }
 }

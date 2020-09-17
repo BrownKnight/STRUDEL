@@ -26,7 +26,7 @@ export class BaseDAO<T> {
     return this._repository.findOne(findConditions);
   } 
 
-  async saveEntity(entity: T): Promise<void> {
-    this._repository.save(entity);
+  async saveEntity(entity: T): Promise<T> {
+    return this._repository.save(entity);
   }
 }
