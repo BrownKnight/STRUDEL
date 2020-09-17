@@ -5,9 +5,9 @@ import { Fixture } from "./entity/Fixture.js";
 import { Prediction } from "./entity/Prediction.js";
 const { createConnection } = pkg
 
-export function initDb() {
-    console.log(`Connecting to db at ${process.env.STRUDAL_DATABASE_HOST}`)
-    createConnection({
+export async function initDb() {
+    console.log(`Connecting to db at ${process.env.STRUDAL_DATABASE_HOST}:${process.env.STRUDAL_DATABASE_PORT}`)
+    await createConnection({
         type: "postgres",
         host: process.env.STRUDAL_DATABASE_HOST,
         port: parseInt(process.env.STRUDAL_DATABASE_PORT ?? ""),
@@ -21,8 +21,10 @@ export function initDb() {
             Prediction
         ],
         synchronize: true
+    }).then(() => {
+        console.log(`Conected to db at ${process.env.STRUDAL_DATABASE_HOST}:${process.env.STRUDAL_DATABASE_PORT}`);
     }).catch(err => {
-        console.error("Could not connect to db");
+        console.error(`Could not connect to db at ${process.env.STRUDAL_DATABASE_HOST}:${process.env.STRUDAL_DATABASE_PORT}`);
         console.error(err);
     })
 }
