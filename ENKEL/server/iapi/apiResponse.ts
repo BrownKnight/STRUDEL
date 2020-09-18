@@ -1,4 +1,4 @@
-export class ApiResponse {
+export class EntityApiResponse {
   success: boolean;
   errorMessage: string;
   entity: object;

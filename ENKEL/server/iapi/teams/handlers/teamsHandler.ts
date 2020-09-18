@@ -1,6 +1,6 @@
 import { Team } from "../../../../STRUDAL/entity/Team.js";
 import { TeamDAO } from "../../../../STRUDAL/DAO/TeamDAO.js";
-import { ApiResponse } from "../../apiResponse.js";
+import { EntityApiResponse } from "../../apiResponse.js";
 
 export class TeamsHandler {
   private teamDAO: TeamDAO;
@@ -13,8 +13,8 @@ export class TeamsHandler {
     return await this.teamDAO.getAllEntities();
   }
 
-  public async saveTeam(requestBody: unknown): Promise<ApiResponse> {
-    const apiResponse = new ApiResponse();
+  public async saveTeam(requestBody: unknown): Promise<EntityApiResponse> {
+    const apiResponse = new EntityApiResponse();
     console.log("Saving Team");
     console.log(requestBody);
 

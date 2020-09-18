@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
-import { ApiResponse } from "../apiResponse.js";
+import { EntityApiResponse } from "../apiResponse.js";
 import { TeamsHandler } from "./handlers/teamsHandler.js";
 
 /**
@@ -40,7 +40,7 @@ export class IApiTeamsRouter extends RouterBase {
 
   private async saveTeam(req: Request, res: Response) {
     console.log(req.headers)
-    const apiResponse: ApiResponse = await this._teamsHandler.saveTeam(req.body);
+    const apiResponse: EntityApiResponse = await this._teamsHandler.saveTeam(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {
