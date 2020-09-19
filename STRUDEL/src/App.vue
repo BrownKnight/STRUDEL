@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <Header />
+    <p>Welcome to the STRUDEL Homepage!</p>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
+import Header from "@/components/Header.vue";
 
 @Component({
   components: {
-    HelloWorld
+    Header
   }
 })
 export default class App extends Vue {}

@@ -10,7 +10,7 @@ import { LoginApiHandler } from "./handlers/login.js";
 export class IApiRouter extends RouterBase {
   protected initLocalRoutes(): void {
     this.router.all("/", this.index.bind(this));
-    this.router.get("/login", this.login.bind(this));
+    this.router.get("/users", this.login.bind(this));
   }
 
   protected initChildRoutes(): void {
