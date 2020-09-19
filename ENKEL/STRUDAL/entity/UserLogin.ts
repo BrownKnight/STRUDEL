@@ -1,16 +1,18 @@
-import {Entity, Column} from "typeorm";
+import "reflect-metadata";
+import pkg from "typeorm";
+const { PrimaryColumn, Entity, Column } = pkg;
 
 @Entity()
 export class UserLogin {
-    @Column("character varying")
-    userID!: string;
+  @PrimaryColumn("character varying")
+  id!: string;
 
-    @Column("character varying")
-    emailAddress!: string;
+  @Column("character varying")
+  emailAddress!: string;
 
-    @Column("character varying")
-    password!: string;
+  @Column("character varying")
+  password!: string;
 
-    @Column("character varying")
-    salt!: string;
+  @Column("character varying")
+  salt!: string;
 }

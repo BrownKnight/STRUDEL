@@ -1,17 +1,19 @@
-import {Entity, Column} from "typeorm";
+import pkg from "typeorm";
+const { PrimaryGeneratedColumn, Entity, Column, ManyToOne } = pkg;
 import { FixtureResult } from "./dataTypes/FixtureResult.js";
+import { Team } from "./Team.js";
 
 @Entity()
 export class Fixture {
-    @Column("integer")
-    fixtureID!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column("integer")
-    homeTeamID!: number;
+  @ManyToOne(() => Team)
+  homeTeam!: Team;
 
-    @Column("integer")
-    awayTeamID!: number;
+  @ManyToOne(() => Team)
+  awayTeam!: Team;
 
-    @Column({type: "enum", enum: FixtureResult})
-    fixtureResult!: FixtureResult;
+  @Column({ type: "enum", enum: FixtureResult })
+  fixtureResult!: FixtureResult;
 }

@@ -1,10 +1,11 @@
-import {Entity, Column} from "typeorm";
+import pkg from "typeorm";
+const { PrimaryGeneratedColumn, Entity, Column } = pkg;
 
 @Entity()
 export class Team {
-    @Column("integer")
-    teamID!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column("character varying")
-    teamName!: string;
+  @Column("character varying")
+  teamName!: string;
 }
