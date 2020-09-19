@@ -1,31 +1,22 @@
 <template>
   <div id="hey">
-    <p>Welcome to the Users!</p>
-    <b-table striped :items="userList"></b-table>
+    <p>Users</p>
+    <EntityManagement @edit-entity="entity = $event" v-bind:apiEndpoint="'/iapi/users'"></EntityManagement>
+    <UserForm v-bind:entity="entity"></UserForm>
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import EntityManagement from "@/components/EntityManagement.vue";
+import UserForm from "@/components/entity-forms/UserForm.vue";
 
 @Component({
-  components: {}
+  components: { EntityManagement, UserForm }
 })
 export default class Users extends Vue {
-  userList = [];
-
-  async getUserList() {
-    return await fetch("/iapi/users")
-      .then(res => res.json())
-      .then(json => {
-        this.userList = json;
-      });
-  }
-
-  async created() {
-    this.getUserList();
-  }
+  entity = null;
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="dark" type="dark" fixed="top" v-bindsticky=true>
+  <b-navbar variant="dark" type="dark" fixed="top">
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
     <b-navbar-nav>
       <b-nav-item to="users">Users</b-nav-item>

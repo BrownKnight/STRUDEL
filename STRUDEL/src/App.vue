@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Header />
-    <p>Welcome to the STRUDEL Homepage!</p>
     <router-view></router-view>
   </div>
 </template>

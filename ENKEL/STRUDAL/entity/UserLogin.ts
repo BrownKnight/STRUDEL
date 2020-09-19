@@ -13,6 +13,6 @@ export class UserLogin {
   @Column("character varying")
   password!: string;
 
-  @Column("character varying")
+  @Column("character varying", { nullable: true })
   salt!: string;
 }

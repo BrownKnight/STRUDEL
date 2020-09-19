@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { RouterBase } from "../routerBase.js";
 import { IApiPredictionsRouter } from "./predictions/router.js";
 import { IApiTeamsRouter } from "./teams/router.js";
+import { IApiUsersRouter } from "./users/router.js";
 import { LoginApiHandler } from "./handlers/login.js";
 
 /**
@@ -16,6 +17,7 @@ export class IApiRouter extends RouterBase {
   protected initChildRoutes(): void {
     this.router.use("/predictions", new IApiPredictionsRouter().router);
     this.router.use("/teams", new IApiTeamsRouter().router);
+    this.router.use("/users", new IApiUsersRouter().router);
   }
 
   private async login(req: Request, res: Response) {
