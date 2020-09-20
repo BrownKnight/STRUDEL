@@ -1,7 +1,11 @@
 <template>
   <div id="users-page">
     <h3>Maintain Users</h3>
-    <EntityManagement v-bind:apiEndpoint="'/iapi/users'" :entityFormComponent="UserForm"></EntityManagement>
+    <EntityManagement
+      v-bind:apiEndpoint="'/iapi/users'"
+      :entityFormComponent="UserForm"
+      :fields="fields"
+    ></EntityManagement>
   </div>
 </template>
 
@@ -16,6 +20,12 @@ import UserForm from "@/components/entity-forms/UserForm.vue";
 })
 export default class Users extends Vue {
   UserForm = UserForm;
+
+  fields = [
+    { key: "id", sortable: true, label: "id" },
+    { key: "emailAddress", label: "Email Address", sortable: true },
+    { key: "Action" }
+  ];
 }
 </script>
 

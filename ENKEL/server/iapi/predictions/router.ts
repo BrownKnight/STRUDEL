@@ -40,7 +40,6 @@ export class IApiPredictionsRouter extends RouterBase {
   }
 
   private async savePrediction(req: Request, res: Response) {
-    console.log(req.headers);
     const apiResponse: EntityApiResponse = await this._predictionsHandler.saveEntity(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);

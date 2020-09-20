@@ -14,16 +14,16 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
     this._repository = getRepository<TEntity>(this._entityClass);
   }
 
-  async getAllEntities(): Promise<TEntity[]> {
-    return this._repository.find();
+  async getAllEntities(findOptions: pkg.FindManyOptions<TEntity> = {}): Promise<TEntity[]> {
+    return this._repository.find(findOptions);
   }
 
-  async getEntityByID(id: string): Promise<TEntity | undefined> {
-    return this._repository.findOne(id);
+  async getEntityByID(id: string, findOptions: pkg.FindOneOptions<TEntity> = {}): Promise<TEntity | undefined> {
+    return this._repository.findOne(id, findOptions);
   }
 
-  async findEntity(findConditions: pkg.FindConditions<TEntity>): Promise<TEntity | undefined> {
-    return this._repository.findOne(findConditions);
+  async findEntity(findOptions: pkg.FindOneOptions<TEntity>): Promise<TEntity | undefined> {
+    return this._repository.findOne(findOptions);
   }
 
   async saveEntity(entity: TEntity): Promise<TEntity> {

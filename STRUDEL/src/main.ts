@@ -9,6 +9,7 @@ import App from "@/App.vue";
 import Home from "@/pages/Home.vue";
 import Users from "@/pages/Users.vue";
 import Teams from "@/pages/Teams.vue";
+import Fixtures from "@/pages/Fixtures.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -18,7 +19,8 @@ Vue.use(IconsPlugin);
 const routes = [
   { path: "/index", component: Home },
   { path: "/users", component: Users },
-  { path: "/teams", component: Teams }
+  { path: "/teams", component: Teams },
+  { path: "/fixtures", component: Fixtures }
 ];
 
 const router = new VueRouter({

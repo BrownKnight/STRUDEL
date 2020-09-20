@@ -1,6 +1,6 @@
 <template>
   <div id="user-form">
-    <b-form v-if="entityModel != null && showForm">
+    <b-form v-if="entityModel != null && showForm" @submit.prevent="emitSubmitEvent">
       <b-form-group id="input-label-user-id" label="User ID" label-for="input-user=id">
         <b-form-input id="input-user-id" v-model="entityModel.id" required :disabled="!entityModel.new"></b-form-input>
       </b-form-group>
@@ -15,7 +15,7 @@
       <b-form-group id="input-label-user-password" label="Password" label-for="input-user-password">
         <b-form-input id="input-user-password" v-model="entityModel.password" type="password" required></b-form-input>
       </b-form-group>
-      <b-button variant="success" v-on:click="submitEntity()">Save Entity</b-button>
+      <b-button type="submit" variant="success">Save Entity</b-button>
     </b-form>
 
     <b-alert v-model="showSuccessResponseInfo" variant="success" dismissible>Entity Saved!</b-alert>

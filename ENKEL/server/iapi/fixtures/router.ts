@@ -40,7 +40,6 @@ export class IApiFixturesRouter extends RouterBase {
   }
 
   private async saveFixture(req: Request, res: Response) {
-    console.log(req.headers);
     const apiResponse: EntityApiResponse = await this._fixturesHandler.saveEntity(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);

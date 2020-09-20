@@ -4,17 +4,17 @@
     <b-navbar-nav>
       <b-nav-item to="users">Users</b-nav-item>
       <b-nav-item to="teams">Teams</b-nav-item>
+      <b-nav-item to="fixtures">Fixtures</b-nav-item>
+      <b-nav-item to="predictions">Predictions</b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Header extends Vue {
-  // @Prop() private msg!: string;
-}
+export default class Header extends Vue {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

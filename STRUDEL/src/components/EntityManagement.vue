@@ -14,6 +14,7 @@
       :entity="formEntity"
       :showForm="showForm"
       @submit="handleFormSubmit"
+      class="mt-2"
     ></component>
 
     <b-alert v-model="showSuccessResponseInfo" variant="success" dismissible>Entity Saved!</b-alert>
@@ -30,7 +31,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class EntityManagement extends Vue {
   entityList: string[] = [];
-  fields: string[] = [];
 
   showSuccessResponseInfo = false;
   showErrorResponseInfo = false;
@@ -41,24 +41,16 @@ export default class EntityManagement extends Vue {
 
   @Prop()
   apiEndpoint: string | undefined;
-
   @Prop()
   entityFormComponent: Vue | undefined;
+  @Prop()
+  fields: Record<string, unknown> | undefined;
 
   async getAllEntities(apiEndpoint: string) {
     return await fetch(apiEndpoint)
       .then(res => res.json())
       .then(json => {
         this.entityList = json;
-        if (this.entityList.length > 0) {
-          // TODO: Make this a list of objects that allow for sorting of certain columns
-          this.fields = Object.getOwnPropertyNames(this.entityList[0])
-            .filter(e => e != "__ob__")
-            .sort();
-          this.fields.push("Action");
-        } else {
-          this.fields = [];
-        }
       });
   }
 

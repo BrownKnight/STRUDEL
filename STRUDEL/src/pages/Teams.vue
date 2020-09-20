@@ -1,7 +1,11 @@
 <template>
   <div id="teams-page">
     <h3>Maintain Teams</h3>
-    <EntityManagement v-bind:apiEndpoint="'/iapi/teams'" :entityFormComponent="TeamForm"></EntityManagement>
+    <EntityManagement
+      v-bind:apiEndpoint="'/iapi/teams'"
+      :entityFormComponent="TeamForm"
+      :fields="fields"
+    ></EntityManagement>
   </div>
 </template>
 
@@ -16,6 +20,12 @@ import TeamForm from "@/components/entity-forms/TeamForm.vue";
 })
 export default class Teams extends Vue {
   TeamForm = TeamForm;
+
+  fields = [
+    { key: "id", sortable: true, label: "id" },
+    { key: "teamName", label: "Team Name", sortable: true },
+    { key: "Action" }
+  ];
 }
 </script>
 
