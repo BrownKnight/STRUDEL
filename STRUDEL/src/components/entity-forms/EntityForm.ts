@@ -13,7 +13,14 @@ export class EntityForm extends Vue {
 
   @Watch("entity")
   setEntityModel(value: unknown) {
+    if (value === {} || (value as Record<string, unknown>).new) {
+      value = this.createNewEntityModel(value);
+    }
     this.entityModel = value;
+  }
+
+  createNewEntityModel(value: unknown): unknown {
+    return value;
   }
 
   emitSubmitEvent() {

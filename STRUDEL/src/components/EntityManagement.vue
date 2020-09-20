@@ -74,7 +74,7 @@ export default class EntityManagement extends Vue {
     // TODO: not this
     console.log(`Deleting entity with id ${entity.id}`);
     this.handleDeleteEntity(entity);
-    this.formEntity = entity;
+    if (this.apiEndpoint) this.getAllEntities(this.apiEndpoint);
     this.showForm = false;
     this.showSuccessResponseInfo = false;
     this.showErrorResponseInfo = false;

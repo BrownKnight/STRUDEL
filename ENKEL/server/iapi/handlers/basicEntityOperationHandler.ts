@@ -11,7 +11,7 @@ export class BasicEntityOperationHandler<TEntity extends Entity> {
 
   public async getAllEntities(): Promise<TEntity[]> {
     const entities = await this._DAO.getAllEntities();
-    //console.log(entities);
+    console.log(entities);
     return entities;
   }
 

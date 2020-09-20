@@ -10,6 +10,7 @@ import Home from "@/pages/Home.vue";
 import Users from "@/pages/Users.vue";
 import Teams from "@/pages/Teams.vue";
 import Fixtures from "@/pages/Fixtures.vue";
+import Predictions from "@/pages/Predictions.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -20,7 +21,8 @@ const routes = [
   { path: "/index", component: Home },
   { path: "/users", component: Users },
   { path: "/teams", component: Teams },
-  { path: "/fixtures", component: Fixtures }
+  { path: "/fixtures", component: Fixtures },
+  { path: "/predictions", component: Predictions }
 ];
 
 const router = new VueRouter({
