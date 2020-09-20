@@ -1,20 +1,9 @@
 import { Prediction } from "../../../../STRUDAL/entity/Prediction.js";
 import { PredictionDAO } from "../../../../STRUDAL/DAO/PredictionDAO.js";
+import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
 
-export class PredictionsHandler {
-  private _predictionDAO: PredictionDAO;
-
+export class PredictionsHandler extends BasicEntityOperationHandler<Prediction> {
   constructor() {
-    this._predictionDAO = new PredictionDAO();
-  }
-
-  public async getAllPredictions(): Promise<Prediction[]> {
-    return await this._predictionDAO.getAllEntities();
-  }
-
-  public savePrediction(requestBody: string): string {
-    const prediction: Prediction = JSON.parse(requestBody);
-    this._predictionDAO.saveEntity(prediction);
-    return "";
+    super(new PredictionDAO());
   }
 }

@@ -6,4 +6,8 @@ export class FixtureDAO extends BaseDAO<Fixture> {
   constructor() {
     super(Fixture);
   }
+
+  async getAllEntities(): Promise<Fixture[]> {
+    return super.getAllEntities({ relations: ["homeTeam", "awayTeam"] });
+  }
 }

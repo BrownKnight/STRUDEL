@@ -22,7 +22,8 @@ export class IApiFixturesRouter extends RouterBase {
 
   protected initLocalRoutes(): void {
     this.router.get("/", this.getAllFixtures.bind(this));
-    this.router.put("/", this.saveTeam.bind(this));
+    this.router.put("/", this.saveFixture.bind(this));
+    this.router.delete("/:fixtureId", this.deleteFixture.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -35,12 +36,20 @@ export class IApiFixturesRouter extends RouterBase {
   }
 
   private async getAllFixtures(req: Request, res: Response) {
-    res.json(await this._fixturesHandler.getAllFixtures());
+    res.json(await this._fixturesHandler.getAllEntities());
   }
 
-  private async saveTeam(req: Request, res: Response) {
-    console.log(req.headers);
-    const apiResponse: EntityApiResponse = await this._fixturesHandler.saveFixture(req.body);
+  private async saveFixture(req: Request, res: Response) {
+    const apiResponse: EntityApiResponse = await this._fixturesHandler.saveEntity(req.body);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
+    } else {
+      res.status(400).json(apiResponse);
+    }
+  }
+
+  private async deleteFixture(req: Request, res: Response) {
+    const apiResponse: EntityApiResponse = await this._fixturesHandler.deleteEntity(req.params["fixtureId"]);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {
