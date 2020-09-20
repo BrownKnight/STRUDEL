@@ -14,6 +14,6 @@ export class Fixture {
   @ManyToOne(() => Team)
   awayTeam!: Team;
 
-  @Column({ type: "enum", enum: FixtureResult })
+  @Column({ type: "enum", enum: FixtureResult, nullable: true })
   fixtureResult!: FixtureResult;
 }
