@@ -8,6 +8,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import App from "@/App.vue";
 import Home from "@/pages/Home.vue";
 import Users from "@/pages/Users.vue";
+import Teams from "@/pages/Teams.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -16,7 +17,8 @@ Vue.use(IconsPlugin);
 
 const routes = [
   { path: "/index", component: Home },
-  { path: "/users", component: Users }
+  { path: "/users", component: Users },
+  { path: "/teams", component: Teams }
 ];
 
 const router = new VueRouter({

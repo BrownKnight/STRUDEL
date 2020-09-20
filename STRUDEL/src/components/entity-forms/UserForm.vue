@@ -4,7 +4,7 @@
 
     <b-form v-if="entityModel != null">
       <b-form-group id="input-label-user-id" label="User ID" label-for="input-user=id">
-        <b-form-input id="input-user-id" v-model="entityModel.id" required></b-form-input>
+        <b-form-input id="input-user-id" v-model="entityModel.id" required :disabled="!entityModel.new"></b-form-input>
       </b-form-group>
       <b-form-group id="input-label-user-email-address" label="Email Address" label-for="input-user-email-address">
         <b-form-input
@@ -27,67 +27,13 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
+import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
 
 @Component({
   components: {}
 })
-export default class UserForm extends Vue {
-  @Prop()
-  entity = null;
-
-  // apiEndpoint = "/iapi/users";
-  entityModel = null;
-  showSuccessResponseInfo = false;
-  showErrorResponseInfo = false;
-
-  @Watch("entity")
-  setEntityModel(value) {
-    this.entityModel = value;
-  }
-
-  submitEntity() {
-    fetch(`/iapi/users`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.entityModel)
-    })
-      .catch(error => {
-        console.log("User Entity Save Failed!");
-        console.log(error);
-      })
-      .then(res => {
-        if (!res.ok) {
-          console.log("User Entity Save Error!");
-          console.log(res);
-          this.showErrorResponseInfo = true;
-        } else {
-          console.log("User Entity Save Succeeded!");
-          console.log(res);
-          this.entityModel = null;
-          this.showSuccessResponseInfo = true;
-        }
-      });
-  }
-
-  // @Prop()
-  // userId: number | null = null;
-
-  // async getEntity(apiEndpoint: string) {
-  //   return await fetch(apiEndpoint)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       this.entity = json;
-  //     });
-  // }
-
-  // @Watch("userId")
-  // async onUserChanged(value: number) {
-  //   console.log("userIdChanged");
-  //   const apiUrl = `${this.apiEndpoint}/${value}`;
-  //   this.entity = this.getEntity(apiUrl);
-  // }
-}
+export default class UserForm extends EntityForm {}
 </script>
 
 <style lang="scss"></style>

@@ -1,6 +1,6 @@
 <template>
   <div id="hey">
-    <p>Welcome to the Users!</p>
+    <p>Welcome to the Fixtures!</p>
     <b-table striped :items="fixtureList"></b-table>
   </div>
 </template>

@@ -3,6 +3,7 @@
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
     <b-navbar-nav>
       <b-nav-item to="users">Users</b-nav-item>
+      <b-nav-item to="teams">Teams</b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
