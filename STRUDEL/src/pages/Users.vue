@@ -1,12 +1,7 @@
 <template>
-  <div id="hey">
-    <p>Users</p>
-    <EntityManagement
-      @edit-entity="entity = $event"
-      @refresh-handler="entityRefresh = $event"
-      v-bind:apiEndpoint="'/iapi/users'"
-    ></EntityManagement>
-    <UserForm v-bind:entity="entity" @entity-submitted="entityRefresh()"></UserForm>
+  <div id="users-page">
+    <h3>Maintain Users</h3>
+    <EntityManagement v-bind:apiEndpoint="'/iapi/users'" :entityFormComponent="UserForm"></EntityManagement>
   </div>
 </template>
 
@@ -20,8 +15,7 @@ import UserForm from "@/components/entity-forms/UserForm.vue";
   components: { EntityManagement, UserForm }
 })
 export default class Users extends Vue {
-  entity = null;
-  entityRefresh = null;
+  UserForm = UserForm;
 }
 </script>
 

@@ -96,7 +96,7 @@ export default class EntityManagement extends Vue {
   }
 
   handleFormSubmit() {
-    console.log("form submitted and handled");
+    console.log("form submitted and being handled");
     if (!this.apiEndpoint) {
       console.error("No apiendpoint set");
       return;
@@ -126,9 +126,41 @@ export default class EntityManagement extends Vue {
           }
           this.formEntity = {};
           this.showSuccessResponseInfo = true;
+          this.showErrorResponseInfo = false;
           this.showForm = false;
         }
       });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleDeleteEntity(entity: any) {
+    if (!this.apiEndpoint) {
+      console.error("No apiendpoint set");
+      return;
+    }
+    if (entity && entity.id) {
+      fetch(`${this.apiEndpoint}/${entity.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      })
+        .catch(error => {
+          console.log("Entity Save Failed!");
+          console.log(error);
+        })
+        .then(res => {
+          console.log("Entity deletion successful");
+          console.log(res);
+          res = res as Response;
+          console.log(res.text());
+          this.formEntity = {};
+          this.showSuccessResponseInfo = true;
+          this.showErrorResponseInfo = false;
+          this.showForm = false;
+          if (this.apiEndpoint) {
+            this.getAllEntities(this.apiEndpoint);
+          }
+        });
+    }
   }
 }
 </script>

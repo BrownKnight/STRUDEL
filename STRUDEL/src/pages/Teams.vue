@@ -1,6 +1,6 @@
 <template>
-  <div id="hey">
-    <h3>Teams</h3>
+  <div id="teams-page">
+    <h3>Maintain Teams</h3>
     <EntityManagement v-bind:apiEndpoint="'/iapi/teams'" :entityFormComponent="TeamForm"></EntityManagement>
   </div>
 </template>

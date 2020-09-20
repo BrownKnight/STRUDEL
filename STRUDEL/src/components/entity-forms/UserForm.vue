@@ -1,8 +1,6 @@
 <template>
   <div id="user-form">
-    <p>{{ entityModel }}</p>
-
-    <b-form v-if="entityModel != null">
+    <b-form v-if="entityModel != null && showForm">
       <b-form-group id="input-label-user-id" label="User ID" label-for="input-user=id">
         <b-form-input id="input-user-id" v-model="entityModel.id" required :disabled="!entityModel.new"></b-form-input>
       </b-form-group>
