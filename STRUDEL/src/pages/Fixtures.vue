@@ -23,6 +23,7 @@ export default class Teams extends Vue {
 
   fields = [
     { key: "id", sortable: true, label: "id" },
+    { key: "date", sortable: true, label: "Fixture Date" },
     { key: "homeTeam.teamName", label: "Home Team", sortable: true },
     { key: "awayTeam.teamName", label: "Away Team", sortable: true },
     { key: "fixtureResult", label: "Fixture Result", sortable: true },
