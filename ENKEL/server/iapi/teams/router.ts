@@ -35,12 +35,12 @@ export class IApiTeamsRouter extends RouterBase {
   }
 
   private async getAllTeams(req: Request, res: Response) {
-    res.json(await this._teamsHandler.getAllTeams());
+    res.json(await this._teamsHandler.getAllEntities());
   }
 
   private async saveTeam(req: Request, res: Response) {
     console.log(req.headers)
-    const apiResponse: EntityApiResponse = await this._teamsHandler.saveTeam(req.body);
+    const apiResponse: EntityApiResponse = await this._teamsHandler.saveEntity(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {

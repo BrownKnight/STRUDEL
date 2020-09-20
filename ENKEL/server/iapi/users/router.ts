@@ -1,27 +1,27 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { UsersHandler } from "./handlers/usersHandler.js";
+import { UserLoginsHandler } from "./handlers/userLoginsHandler.js";
 
 /**
- * Router for all internal users-based api calls. Supports the fetching, updating, and deleting
+ * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting
  *
  * Routes:
- * GET:/              : Get all users
+ * GET:/              : Get all userLogins
  * GET:/<team_id>     : Get user for the given UserID
  * PUT:/              : Create or update a user
  * DELETE:/<team_id>  : Delete a given user
  */
-export class IApiUsersRouter extends RouterBase {
-  private _usersHandler: UsersHandler;
+export class IApiUserLoginsRouter extends RouterBase {
+  private _userLoginsHandler: UserLoginsHandler;
 
   constructor() {
     super();
-    this._usersHandler = new UsersHandler();
+    this._userLoginsHandler = new UserLoginsHandler();
   }
 
   protected initLocalRoutes(): void {
-    this.router.get("/", this.getAllUsers.bind(this));
+    this.router.get("/", this.getAllUserLogins.bind(this));
     this.router.put("/", this.saveUser.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
@@ -34,13 +34,13 @@ export class IApiUsersRouter extends RouterBase {
     res.status(404).send("Unsupprted API endpoint");
   }
 
-  private async getAllUsers(req: Request, res: Response) {
-    res.json(await this._usersHandler.getAllUsers());
+  private async getAllUserLogins(req: Request, res: Response) {
+    res.json(await this._userLoginsHandler.getAllEntities());
   }
 
   private async saveUser(req: Request, res: Response) {
     console.log(req.headers)
-    const apiResponse: EntityApiResponse = await this._usersHandler.saveUser(req.body);
+    const apiResponse: EntityApiResponse = await this._userLoginsHandler.saveEntity(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {

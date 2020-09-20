@@ -1,32 +1,37 @@
 import "reflect-metadata";
-import pkg from "typeorm";
+import pkg, { ObjectLiteral } from "typeorm";
+import { Entity } from "../entity/EntityType";
 const { getRepository } = pkg;
 
 /**
  * Base DAO for all entities' DAOs, implements basic entity CRUD operations
  */
-export class BaseDAO<T> {
-  private _repository: pkg.Repository<T>;
-  private _entityClass: (new () => T);
+export class BaseDAO<TEntity extends ObjectLiteral> {
+  private _repository: pkg.Repository<TEntity>;
+  private _entityClass: new () => TEntity;
 
-  constructor(entityClass: (new () => T)) {
+  constructor(entityClass: new () => TEntity) {
     this._entityClass = entityClass;
-    this._repository = getRepository<T>(this._entityClass);
+    this._repository = getRepository<TEntity>(this._entityClass);
   }
 
-  async getAllEntities(): Promise<T[]> {
+  async getAllEntities(): Promise<TEntity[]> {
     return this._repository.find();
   }
 
-  async getEntityByID(id: string): Promise<T | undefined> {
+  async getEntityByID(id: string): Promise<TEntity | undefined> {
     return this._repository.findOne(id);
   }
 
-  async findEntity(findConditions: pkg.FindConditions<T>): Promise<T | undefined> {
+  async findEntity(findConditions: pkg.FindConditions<TEntity>): Promise<TEntity | undefined> {
     return this._repository.findOne(findConditions);
-  } 
+  }
 
-  async saveEntity(entity: T): Promise<T> {
+  async saveEntity(entity: TEntity): Promise<TEntity> {
     return this._repository.save(entity);
+  }
+
+  async deleteEntity(entity: TEntity): Promise<TEntity> {
+    return this._repository.remove(entity);
   }
 }
