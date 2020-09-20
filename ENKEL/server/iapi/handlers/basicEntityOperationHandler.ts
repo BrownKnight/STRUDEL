@@ -30,12 +30,14 @@ export class BasicEntityOperationHandler<TEntity extends Entity> {
     return apiResponse;
   }
 
-  public async deleteEntity(entity: TEntity): Promise<EntityApiResponse> {
+  public async deleteEntity(entityStringId: string): Promise<EntityApiResponse> {
+    const entityId = parseInt(entityStringId);
+
     const apiResponse = new EntityApiResponse();
-    console.log(`Deleting Entity ${entity.id}`);
+    console.log(`Deleting Entity ${entityId}`);
 
     try {
-      apiResponse.entity = await this._DAO.deleteEntity(entity);
+      apiResponse.operationResult = await this._DAO.deleteEntity(entityId);
     } catch (error) {
       console.error("Error occurred trying to delete entity");
       console.error(error);

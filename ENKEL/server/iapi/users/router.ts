@@ -23,6 +23,7 @@ export class IApiUserLoginsRouter extends RouterBase {
   protected initLocalRoutes(): void {
     this.router.get("/", this.getAllUserLogins.bind(this));
     this.router.put("/", this.saveUser.bind(this));
+    this.router.delete("/:userId", this.deleteUser.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -39,8 +40,16 @@ export class IApiUserLoginsRouter extends RouterBase {
   }
 
   private async saveUser(req: Request, res: Response) {
-    console.log(req.headers)
     const apiResponse: EntityApiResponse = await this._userLoginsHandler.saveEntity(req.body);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
+    } else {
+      res.status(400).json(apiResponse);
+    }
+  }
+
+  private async deleteUser(req: Request, res: Response) {
+    const apiResponse: EntityApiResponse = await this._userLoginsHandler.deleteEntity(req.body);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {

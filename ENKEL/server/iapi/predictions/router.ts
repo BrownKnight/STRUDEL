@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
+import { EntityApiResponse } from "../apiResponse.js";
 import { PredictionsHandler } from "./handlers/predictionsHandler.js";
 
 /**
@@ -12,16 +13,17 @@ import { PredictionsHandler } from "./handlers/predictionsHandler.js";
  * DELETE:/<prediction_id>  : Delete a given prediciton
  */
 export class IApiPredictionsRouter extends RouterBase {
-  private predictionsHandler: PredictionsHandler;
+  private _predictionsHandler: PredictionsHandler;
 
   constructor() {
     super();
-    this.predictionsHandler = new PredictionsHandler();
+    this._predictionsHandler = new PredictionsHandler();
   }
 
   protected initLocalRoutes(): void {
     this.router.get("/", this.getAllPredictions.bind(this));
     this.router.put("/", this.savePrediction.bind(this));
+    this.router.delete("/:predictionId", this.deletePrediction.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -33,16 +35,26 @@ export class IApiPredictionsRouter extends RouterBase {
     res.status(404).send("Unsupprted API endpoint");
   }
 
-  private getAllPredictions(req: Request, res: Response) {
-    res.json(this.predictionsHandler.getAllPredictions());
+  private async getAllPredictions(req: Request, res: Response) {
+    res.json(await this._predictionsHandler.getAllEntities());
   }
 
-  private savePrediction(req: Request, res: Response) {
-    const errorMessage: string = this.predictionsHandler.savePrediction(req.body);
-    if (errorMessage != "") {
-      res.status(200);
+  private async savePrediction(req: Request, res: Response) {
+    console.log(req.headers);
+    const apiResponse: EntityApiResponse = await this._predictionsHandler.saveEntity(req.body);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
     } else {
-      res.status(400).json({ error: errorMessage });
+      res.status(400).json(apiResponse);
+    }
+  }
+
+  private async deletePrediction(req: Request, res: Response) {
+    const apiResponse: EntityApiResponse = await this._predictionsHandler.deleteEntity(req.params["predictionId"]);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
+    } else {
+      res.status(400).json(apiResponse);
     }
   }
 }

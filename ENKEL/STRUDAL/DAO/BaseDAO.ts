@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import pkg, { ObjectLiteral } from "typeorm";
-import { Entity } from "../entity/EntityType";
 const { getRepository } = pkg;
 
 /**
@@ -31,7 +30,7 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
     return this._repository.save(entity);
   }
 
-  async deleteEntity(entity: TEntity): Promise<TEntity> {
-    return this._repository.remove(entity);
+  async deleteEntity(entityId: number): Promise<pkg.DeleteResult> {
+    return this._repository.delete(entityId);
   }
 }

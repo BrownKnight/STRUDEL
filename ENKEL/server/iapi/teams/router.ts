@@ -23,6 +23,7 @@ export class IApiTeamsRouter extends RouterBase {
   protected initLocalRoutes(): void {
     this.router.get("/", this.getAllTeams.bind(this));
     this.router.put("/", this.saveTeam.bind(this));
+    this.router.delete("/:teamId", this.deleteTeam.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -39,8 +40,17 @@ export class IApiTeamsRouter extends RouterBase {
   }
 
   private async saveTeam(req: Request, res: Response) {
-    console.log(req.headers)
+    console.log(req.headers);
     const apiResponse: EntityApiResponse = await this._teamsHandler.saveEntity(req.body);
+    if (apiResponse.success) {
+      res.status(200).json(apiResponse);
+    } else {
+      res.status(400).json(apiResponse);
+    }
+  }
+
+  private async deleteTeam(req: Request, res: Response) {
+    const apiResponse: EntityApiResponse = await this._teamsHandler.deleteEntity(req.params["teamId"]);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {
