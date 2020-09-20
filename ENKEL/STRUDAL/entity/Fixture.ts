@@ -14,6 +14,9 @@ export class Fixture {
   @ManyToOne(() => Team)
   awayTeam!: Team;
 
+  @Column({ type: "date" })
+  date!: Date;
+
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   fixtureResult!: FixtureResult;
 }
