@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import UserForm from "@/components/entity-forms/UserForm.vue";
 

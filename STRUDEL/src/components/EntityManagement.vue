@@ -145,20 +145,27 @@ export default class EntityManagement extends Vue {
         headers: { "Content-Type": "application/json" }
       })
         .catch(error => {
-          console.log("Entity Save Failed!");
+          console.log("Entity Deletion Failed!");
           console.log(error);
         })
         .then(res => {
-          console.log("Entity deletion successful");
-          console.log(res);
           res = res as Response;
-          console.log(res.text());
-          this.formEntity = {};
-          this.showSuccessResponseInfo = true;
-          this.showErrorResponseInfo = false;
-          this.showForm = false;
-          if (this.apiEndpoint) {
-            this.getAllEntities(this.apiEndpoint);
+          if (!res.ok) {
+            console.log("Entity Deletion Error :(");
+            console.log(res);
+            res.text().then(text => console.error(text));
+            this.showErrorResponseInfo = true;
+          } else {
+            console.log("Entity Deletion Succeeded!");
+            console.log(res);
+            res.text().then(text => console.log(text));
+            if (this.formEntity.new && this.apiEndpoint) {
+              this.getAllEntities(this.apiEndpoint);
+            }
+            this.formEntity = {};
+            this.showSuccessResponseInfo = true;
+            this.showErrorResponseInfo = false;
+            this.showForm = false;
           }
         });
     }
