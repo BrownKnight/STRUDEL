@@ -18,4 +18,7 @@ export class UserLogin {
 
   @Column("character varying", { nullable: true })
   salt!: string;
+
+  @Column("character varying", { nullable: true })
+  token!: string;
 }

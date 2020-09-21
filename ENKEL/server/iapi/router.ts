@@ -4,7 +4,7 @@ import { IApiPredictionsRouter } from "./predictions/router.js";
 import { IApiTeamsRouter } from "./teams/router.js";
 import { IApiUserLoginsRouter } from "./users/router.js";
 import { IApiFixturesRouter } from "./fixtures/router.js";
-import { LoginApiHandler } from "./handlers/login.js";
+import { LoginApiHandler } from "../authMiddleware.js";
 
 /**
  * Base router for all internal API calls (i.e. from the front end)

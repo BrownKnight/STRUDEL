@@ -3,7 +3,7 @@ import { Entity } from "../../../STRUDAL/entity/EntityType.js";
 import { EntityApiResponse } from "../apiResponse.js";
 
 export class BasicEntityOperationHandler<TEntity extends Entity> {
-  private _DAO: BaseDAO<TEntity>;
+  protected _DAO: BaseDAO<TEntity>;
 
   constructor(DAO: BaseDAO<TEntity>) {
     this._DAO = DAO;
