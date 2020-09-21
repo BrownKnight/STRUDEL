@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { UserLogin } from "../../../STRUDAL/entity/UserLogin.js";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { LoginResponse } from "../loginResponse.js";
@@ -42,6 +43,7 @@ export class IApiUserLoginsRouter extends RouterBase {
 
   private async saveUser(req: Request, res: Response) {
     const apiResponse: EntityApiResponse = await this._userLoginsHandler.saveEntity(req.body);
+    (apiResponse.entity as UserLogin).password = "";
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {
