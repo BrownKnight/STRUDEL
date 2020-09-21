@@ -11,6 +11,9 @@ export class UserLogin {
   emailAddress!: string;
 
   @Column("character varying")
+  fullName!: string;
+
+  @Column("character varying")
   password!: string;
 
   @Column("character varying", { nullable: true })
