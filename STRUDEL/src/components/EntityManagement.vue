@@ -17,8 +17,9 @@
       class="mt-2"
     ></component>
 
-    <b-alert v-model="showSuccessResponseInfo" variant="success" dismissible>Entity Saved!</b-alert>
-    <b-alert v-model="showErrorResponseInfo" variant="danger" dismissible>Entity Save Error</b-alert>
+    <b-alert :show="entityAlert.show" :variant="entityAlert.variant" dismissible fade>
+      <span>{{ entityAlert.message }}></span>
+    </b-alert>
   </div>
 </template>
 
@@ -26,14 +27,15 @@
 import "reflect-metadata";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+const SHOW_ALERT_TIME = 20;
+
 @Component({
   components: {}
 })
 export default class EntityManagement extends Vue {
   entityList: string[] = [];
 
-  showSuccessResponseInfo = false;
-  showErrorResponseInfo = false;
+  entityAlert = {};
   showForm = false;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,8 +67,6 @@ export default class EntityManagement extends Vue {
     console.log(`Editing entity with id ${entity.id}`);
     this.formEntity = entity;
     this.showForm = true;
-    this.showSuccessResponseInfo = false;
-    this.showErrorResponseInfo = false;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,16 +76,12 @@ export default class EntityManagement extends Vue {
     this.handleDeleteEntity(entity);
     if (this.apiEndpoint) this.getAllEntities(this.apiEndpoint);
     this.showForm = false;
-    this.showSuccessResponseInfo = false;
-    this.showErrorResponseInfo = false;
   }
 
   createNewEntity() {
     console.log("New Entity Creation requested");
     this.formEntity = { new: true };
     this.showForm = true;
-    this.showSuccessResponseInfo = false;
-    this.showErrorResponseInfo = false;
   }
 
   handleFormSubmit() {
@@ -102,6 +98,7 @@ export default class EntityManagement extends Vue {
       .catch(error => {
         console.log("Entity Save Failed!");
         console.log(error);
+        this.showEntityAlert(SHOW_ALERT_TIME, "Error Saving Entity", "danger");
       })
       .then(res => {
         res = res as Response;
@@ -109,7 +106,7 @@ export default class EntityManagement extends Vue {
           console.log("Entity Save Error :(");
           console.log(res);
           res.text().then(text => console.error(text));
-          this.showErrorResponseInfo = true;
+          this.showEntityAlert(SHOW_ALERT_TIME, "Error Saving Entity", "danger");
         } else {
           console.log("Entity Save Succeeded!");
           console.log(res);
@@ -118,8 +115,7 @@ export default class EntityManagement extends Vue {
             this.getAllEntities(this.apiEndpoint);
           }
           this.formEntity = {};
-          this.showSuccessResponseInfo = true;
-          this.showErrorResponseInfo = false;
+          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Saved", "success");
           this.showForm = false;
         }
       });
@@ -140,6 +136,7 @@ export default class EntityManagement extends Vue {
         .catch(error => {
           console.log("Entity Deletion Failed!");
           console.log(error);
+          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deletion Error", "danger");
         })
         .then(res => {
           res = res as Response;
@@ -147,7 +144,7 @@ export default class EntityManagement extends Vue {
             console.log("Entity Deletion Error :(");
             console.log(res);
             res.text().then(text => console.error(text));
-            this.showErrorResponseInfo = true;
+            this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deletion Error", "danger");
           } else {
             console.log("Entity Deletion Succeeded!");
             console.log(res);
@@ -156,12 +153,19 @@ export default class EntityManagement extends Vue {
               this.getAllEntities(this.apiEndpoint);
             }
             this.formEntity = {};
-            this.showSuccessResponseInfo = true;
-            this.showErrorResponseInfo = false;
+            this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deleted", "success");
             this.showForm = false;
           }
         });
     }
+  }
+
+  showEntityAlert(shownForTime: number, message: string, variant: string) {
+    this.entityAlert = {
+      show: shownForTime,
+      message: message,
+      variant: variant
+    };
   }
 }
 </script>
