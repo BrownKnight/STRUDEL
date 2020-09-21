@@ -2,6 +2,7 @@ import { UserLogin } from "../../../../STRUDAL/entity/UserLogin.js";
 import { UserLoginDAO } from "../../../../STRUDAL/DAO/UserLoginDAO.js";
 import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
 import { LoginResponse } from "../../loginResponse.js";
+import bcrypt from "bcrypt";
 
 export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
   constructor() {
@@ -15,13 +16,15 @@ export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
     }
 
     const dao = this._DAO as UserLoginDAO;
-    // TODO: hash this password
-    const hashedPassword = requestBody.password;
     const user: UserLogin | undefined = await dao.findEntity({
-      where: { emailAddress: requestBody.emailAddress, password: hashedPassword },
+      where: { emailAddress: requestBody.emailAddress },
     });
 
     if (!user) {
+      return new LoginResponse(false, "Email Address or Password not correct");
+    }
+
+    if (!(await bcrypt.compare(requestBody.password, user.password))) {
       return new LoginResponse(false, "Email Address or Password not correct");
     }
 
