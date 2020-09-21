@@ -106,4 +106,4 @@ dist
 .tern-port
 .vscode/settings.json
 .vscode
-**/*.key
+**/*.pem
