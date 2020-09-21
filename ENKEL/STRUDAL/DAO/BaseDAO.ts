@@ -27,7 +27,9 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
   }
 
   async saveEntity(entity: TEntity): Promise<TEntity> {
-    return this._repository.save(entity);
+    // Create the entity from the request so that it calls BeforeInsert/BeforeUpdate correctly
+    const e = this._repository.create(entity);
+    return this._repository.save(e);
   }
 
   async deleteEntity(entityId: number): Promise<pkg.DeleteResult> {

@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import pkg from "typeorm";
-const { PrimaryGeneratedColumn, Entity, Column } = pkg;
+import bcrypt from "bcrypt";
+const { PrimaryGeneratedColumn, Entity, Column, BeforeUpdate, BeforeInsert } = pkg;
 
 @Entity()
 export class UserLogin {
@@ -17,5 +18,15 @@ export class UserLogin {
   password!: string;
 
   @Column("character varying", { nullable: true })
-  salt!: string;
+  token!: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  encryptPassword(): void {
+    // Check if password has actually changed
+    if (this.password) {
+      console.log("Password present on entity, hashing it");
+      this.password = bcrypt.hashSync(this.password, 10);
+    }
+  }
 }

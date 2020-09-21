@@ -4,7 +4,6 @@ import { IApiPredictionsRouter } from "./predictions/router.js";
 import { IApiTeamsRouter } from "./teams/router.js";
 import { IApiUserLoginsRouter } from "./users/router.js";
 import { IApiFixturesRouter } from "./fixtures/router.js";
-import { LoginApiHandler } from "./handlers/login.js";
 
 /**
  * Base router for all internal API calls (i.e. from the front end)
@@ -12,7 +11,6 @@ import { LoginApiHandler } from "./handlers/login.js";
 export class IApiRouter extends RouterBase {
   protected initLocalRoutes(): void {
     this.router.all("/", this.index.bind(this));
-    this.router.get("/users", this.login.bind(this));
   }
 
   protected initChildRoutes(): void {
@@ -20,12 +18,6 @@ export class IApiRouter extends RouterBase {
     this.router.use("/teams", new IApiTeamsRouter().router);
     this.router.use("/users", new IApiUserLoginsRouter().router);
     this.router.use("/fixtures", new IApiFixturesRouter().router);
-  }
-
-  private async login(req: Request, res: Response) {
-    const entity = await new LoginApiHandler().getTestResponse();
-
-    res.json(entity);
   }
 
   private index(req: Request, res: Response) {

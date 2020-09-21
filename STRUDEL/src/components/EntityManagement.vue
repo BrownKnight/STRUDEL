@@ -1,7 +1,16 @@
 <template>
   <div id="entity-management">
     <p v-if="entityList == []">Loading...</p>
-    <b-table striped :items="entityList" :fields="fields" show-empty>
+    <b-table
+      striped
+      :items="entityList"
+      :fields="fields"
+      show-empty
+      outline
+      borderless
+      head-variant="dark"
+      stacked="sm"
+    >
       <template v-slot:cell(Action)="data">
         <b-button size="sm" variant="outline-primary" v-on:click="editEntity(data.item)">Edit</b-button>
         <b-button size="sm" variant="outline-danger" v-on:click="deleteEntity(data.item)" class="ml-2">Delete</b-button>
