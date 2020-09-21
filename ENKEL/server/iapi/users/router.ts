@@ -25,7 +25,6 @@ export class IApiUserLoginsRouter extends RouterBase {
     this.router.get("/", this.getAllUserLogins.bind(this));
     this.router.put("/", this.saveUser.bind(this));
     this.router.delete("/:userId", this.deleteUser.bind(this));
-    this.router.post("/login", this.login.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -56,15 +55,6 @@ export class IApiUserLoginsRouter extends RouterBase {
       res.status(200).json(apiResponse);
     } else {
       res.status(400).json(apiResponse);
-    }
-  }
-
-  private async login(req: Request, res: Response) {
-    const loginResponse: LoginResponse = await this._userLoginsHandler.handleLoginAttempt(req.body);
-    if (loginResponse.success) {
-      res.status(200).json(loginResponse);
-    } else {
-      res.status(401).json(loginResponse);
     }
   }
 }
