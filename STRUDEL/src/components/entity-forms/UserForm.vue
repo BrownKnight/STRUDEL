@@ -1,25 +1,36 @@
 <template>
   <div id="user-form">
-    <b-form v-if="entityModel != null && showForm" @submit.prevent="emitSubmitEvent">
-      <b-form-group id="input-label-user-id" label="User ID" label-for="input-user=id">
-        <b-form-input id="input-user-id" v-model="entityModel.id" required :disabled="!entityModel.new"></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-label-user-email-address" label="Email Address" label-for="input-user-email-address">
-        <b-form-input
-          id="input-user-email-address"
-          v-model="entityModel.emailAddress"
-          type="email"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-label-user-password" label="Password" label-for="input-user-password">
-        <b-form-input id="input-user-password" v-model="entityModel.password" type="password" required></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="success">Save Entity</b-button>
-    </b-form>
+    <b-row align-h="center">
+      <b-form v-if="entityModel != null && showForm" @submit.prevent="emitSubmitEvent">
+        <label class="sr-only" id="input-label-user-id" for="input-user-id">User ID</label>
+        <b-input-group class="mr-2 my-3" prepend="User ID">
+          <b-form-input id="input-user-id" v-model.number="entityModel.id" disabled></b-form-input>
+        </b-input-group>
 
-    <b-alert v-model="showSuccessResponseInfo" variant="success" dismissible>Entity Saved!</b-alert>
-    <b-alert v-model="showErrorResponseInfo" variant="danger" dismissible>Entity Save Error</b-alert>
+        <label class="sr-only" id="input-label-user-name" for="input-user-name">Name</label>
+        <b-input-group class="my-3" prepend="Name">
+          <b-form-input id="input-user-name" v-model="entityModel.fullName" required></b-form-input>
+        </b-input-group>
+
+        <label class="sr-only" id="input-label-email-address" for="input-email-address">Email Address</label>
+        <b-input-group class="my-3" prepend="Email Address">
+          <b-form-input id="input-email-address" v-model.number="entityModel.emailAddress" required></b-form-input>
+        </b-input-group>
+
+        <label class="sr-only" id="input-label-password" for="input-password">Password</label>
+        <b-input-group class="my-3" prepend="Password">
+          <b-form-input
+            id="input-password"
+            v-model.number="entityModel.password"
+            required
+            :disabled="!entityModel.new"
+            type="password"
+          ></b-form-input>
+        </b-input-group>
+
+        <b-button class="ml-2 my-2" variant="success" type="submit">Save Entity</b-button>
+      </b-form>
+    </b-row>
   </div>
 </template>
 

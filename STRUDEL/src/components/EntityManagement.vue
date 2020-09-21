@@ -127,6 +127,7 @@ export default class EntityManagement extends Vue {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleDeleteEntity(entity: any) {
+    console.log("deleting entity", entity);
     if (!this.apiEndpoint) {
       console.error("No apiendpoint set");
       return;

@@ -49,7 +49,7 @@ export class IApiUserLoginsRouter extends RouterBase {
   }
 
   private async deleteUser(req: Request, res: Response) {
-    const apiResponse: EntityApiResponse = await this._userLoginsHandler.deleteEntity(req.body);
+    const apiResponse: EntityApiResponse = await this._userLoginsHandler.deleteEntity(req.params["userId"]);
     if (apiResponse.success) {
       res.status(200).json(apiResponse);
     } else {

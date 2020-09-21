@@ -1,10 +1,10 @@
 <template>
-  <div id="user-form">
+  <div id="fixture-form">
     <b-row align-h="center">
       <b-form v-if="entityModel != null && showForm" @submit.prevent="emitSubmitEvent">
         <label class="sr-only" id="input-label-team-id" for="input-team-id">Fixture ID</label>
         <b-input-group class="mr-2 my-3" prepend="Fixture ID">
-          <b-form-input id="input-team-id" v-model="entityModel.id" disabled></b-form-input>
+          <b-form-input id="input-team-id" v-model.number="entityModel.id" disabled></b-form-input>
         </b-input-group>
 
         <label class="sr-only" id="input-label-fixture-date" for="input-fixture-date">Fixture Date</label>

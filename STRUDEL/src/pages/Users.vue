@@ -24,6 +24,7 @@ export default class Users extends Vue {
   fields = [
     { key: "id", sortable: true, label: "id" },
     { key: "emailAddress", label: "Email Address", sortable: true },
+    { key: "fullName", sortable: true, label: "Name" },
     { key: "Action" }
   ];
 }

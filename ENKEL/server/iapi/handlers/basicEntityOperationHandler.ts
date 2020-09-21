@@ -33,6 +33,7 @@ export class BasicEntityOperationHandler<TEntity extends Entity> {
   }
 
   public async deleteEntity(entityStringId: string): Promise<EntityApiResponse> {
+    console.log("entity string id", entityStringId);
     const entityId = parseInt(entityStringId);
 
     const apiResponse = new EntityApiResponse();

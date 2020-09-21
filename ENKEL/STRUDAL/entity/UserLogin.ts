@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import pkg from "typeorm";
-const { PrimaryColumn, Entity, Column } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column } = pkg;
 
 @Entity()
 export class UserLogin {
-  @PrimaryColumn("character varying")
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Column("character varying")
   emailAddress!: string;
