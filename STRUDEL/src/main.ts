@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import VueRouter, { RouteConfig } from "vue-router";
 
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
@@ -17,8 +17,9 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
-const routes = [
+const routes: RouteConfig[] = [
   { path: "/index", component: Home },
+  { path: "/", redirect: "/index" },
   { path: "/users", component: Users },
   { path: "/teams", component: Teams },
   { path: "/fixtures", component: Fixtures },
