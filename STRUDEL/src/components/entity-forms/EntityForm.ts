@@ -8,8 +8,6 @@ export class EntityForm extends Vue {
   showForm: boolean | undefined;
 
   entityModel: unknown = null;
-  showSuccessResponseInfo = false;
-  showErrorResponseInfo = false;
 
   @Watch("entity")
   setEntityModel(value: unknown) {
@@ -25,5 +23,10 @@ export class EntityForm extends Vue {
 
   emitSubmitEvent() {
     this.$emit("submit");
+    if (this.formSubmitted) {
+      this.formSubmitted();
+    }
   }
+
+  protected formSubmitted?(): void;
 }

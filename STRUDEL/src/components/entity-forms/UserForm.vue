@@ -21,11 +21,19 @@
         <b-input-group class="my-3" prepend="Password">
           <b-form-input
             id="input-password"
-            v-model.number="entityModel.password"
+            v-model="entityModel.password"
             required
-            :disabled="!entityModel.new"
+            :disabled="!entityModel.new && !showPasswordField"
             type="password"
           ></b-form-input>
+          <b-input-group-append>
+            <b-button
+              variant="secondary"
+              @click="showPasswordField = true"
+              v-if="!entityModel.new && !showPasswordField"
+              >Change Password</b-button
+            >
+          </b-input-group-append>
         </b-input-group>
 
         <b-button class="ml-2 my-2" variant="success" type="submit">Save Entity</b-button>
@@ -42,7 +50,14 @@ import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
 @Component({
   components: {}
 })
-export default class UserForm extends EntityForm {}
+export default class UserForm extends EntityForm {
+  showPasswordField = false;
+
+  // When the form is subbmited, reset the showPasswordField setting
+  protected formSubmitted() {
+    this.showPasswordField = false;
+  }
+}
 </script>
 
 <style lang="scss"></style>

@@ -15,7 +15,7 @@ export class UserLogin {
   fullName!: string;
 
   @Column("character varying")
-  password!: string;
+  password!: string | undefined;
 
   @Column("character varying", { nullable: true })
   token!: string;

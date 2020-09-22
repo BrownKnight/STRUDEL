@@ -1,7 +1,7 @@
 <template>
   <b-navbar variant="dark" type="dark" fixed="top">
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
-    <b-navbar-nav>
+    <b-navbar-nav v-if="isLoggedIn">
       <b-nav-item to="users">Users</b-nav-item>
       <b-nav-item to="teams">Teams</b-nav-item>
       <b-nav-item to="fixtures">Fixtures</b-nav-item>
@@ -20,7 +20,11 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Header extends Vue {
   get userFullName() {
-    return this.$store.state.AuthModule.user.fullName ?? "Not Logged In";
+    return this.$store.state?.AuthModule?.user?.fullName ?? "Not Logged In";
+  }
+
+  get isLoggedIn() {
+    return this.$store.state?.AuthModule?.token !== null;
   }
 }
 </script>

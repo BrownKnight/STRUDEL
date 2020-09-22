@@ -1,11 +1,21 @@
 import { UserLogin } from "../entity/UserLogin.js";
 import { BaseDAO } from "./BaseDAO.js";
+import pkg from "typeorm";
 import jwt from "jsonwebtoken";
 import fs from "fs";
 
 export class UserLoginDAO extends BaseDAO<UserLogin> {
   constructor() {
     super(UserLogin);
+  }
+
+  // Overrise getAllEntities here to remove the password field
+  async getAllEntities(findOptions: pkg.FindManyOptions<UserLogin> = {}): Promise<UserLogin[]> {
+    const entities = await super.getAllEntities(findOptions);
+    entities.forEach((entity) => {
+      entity.password = undefined;
+    });
+    return entities;
   }
 
   generateAuthToken(userLogin: UserLogin): string {
