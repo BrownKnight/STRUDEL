@@ -21,7 +21,7 @@ export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
     });
 
     if (!user) {
-      return new LoginResponse(false, "Email Address or Password not correct");
+      return new LoginResponse(false, "Email Address or Password not correct :(");
     }
 
     if (!(await bcrypt.compare(requestBody.password, user.password))) {

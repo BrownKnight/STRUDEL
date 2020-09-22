@@ -26,8 +26,8 @@
       class="mt-2"
     ></component>
 
-    <b-alert :show="entityAlert.show" :variant="entityAlert.variant" dismissible fade>
-      <span>{{ entityAlert.message }}></span>
+    <b-alert :show="entityAlert.show" :variant="entityAlert.variant" dismissible fade @dismissed="entityAlert.show = 0">
+      <span>{{ entityAlert.message }}</span>
     </b-alert>
   </div>
 </template>
@@ -35,13 +35,14 @@
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { BaseComponent } from "@/components/BaseComponent.ts";
 
 const SHOW_ALERT_TIME = 20;
 
 @Component({
   components: {}
 })
-export default class EntityManagement extends Vue {
+export default class EntityManagement extends BaseComponent {
   entityList: string[] = [];
 
   entityAlert = {};
@@ -58,7 +59,7 @@ export default class EntityManagement extends Vue {
   fields: Record<string, unknown> | undefined;
 
   async getAllEntities(apiEndpoint: string) {
-    return await fetch(apiEndpoint)
+    return await this.callENKEL(apiEndpoint)
       .then(res => res.json())
       .then(json => {
         this.entityList = json;
@@ -99,35 +100,25 @@ export default class EntityManagement extends Vue {
       console.error("No apiendpoint set");
       return;
     }
-    fetch(this.apiEndpoint, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.formEntity)
-    })
-      .catch(error => {
-        console.log("Entity Save Failed!");
-        console.log(error);
+    this.callENKEL(this.apiEndpoint, "PUT", JSON.stringify(this.formEntity)).then(res => {
+      res = res as Response;
+      if (!res.ok) {
+        console.log("Entity Save Error :(");
+        console.log(res);
+        res.text().then(text => console.error(text));
         this.showEntityAlert(SHOW_ALERT_TIME, "Error Saving Entity", "danger");
-      })
-      .then(res => {
-        res = res as Response;
-        if (!res.ok) {
-          console.log("Entity Save Error :(");
-          console.log(res);
-          res.text().then(text => console.error(text));
-          this.showEntityAlert(SHOW_ALERT_TIME, "Error Saving Entity", "danger");
-        } else {
-          console.log("Entity Save Succeeded!");
-          console.log(res);
-          res.text().then(text => console.log(text));
-          if (this.formEntity.new && this.apiEndpoint) {
-            this.getAllEntities(this.apiEndpoint);
-          }
-          this.formEntity = {};
-          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Saved", "success");
-          this.showForm = false;
+      } else {
+        console.log("Entity Save Succeeded!");
+        console.log(res);
+        res.text().then(text => console.log(text));
+        if (this.formEntity.new && this.apiEndpoint) {
+          this.getAllEntities(this.apiEndpoint);
         }
-      });
+        this.formEntity = {};
+        this.showEntityAlert(SHOW_ALERT_TIME, "Entity Saved", "success");
+        this.showForm = false;
+      }
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -138,34 +129,25 @@ export default class EntityManagement extends Vue {
       return;
     }
     if (entity && entity.id) {
-      fetch(`${this.apiEndpoint}/${entity.id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" }
-      })
-        .catch(error => {
-          console.log("Entity Deletion Failed!");
-          console.log(error);
+      this.callENKEL(`${this.apiEndpoint}/${entity.id}`, "DELETE", "").then(res => {
+        res = res as Response;
+        if (!res.ok) {
+          console.log("Entity Deletion Error :(");
+          console.log(res);
+          res.text().then(text => console.error(text));
           this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deletion Error", "danger");
-        })
-        .then(res => {
-          res = res as Response;
-          if (!res.ok) {
-            console.log("Entity Deletion Error :(");
-            console.log(res);
-            res.text().then(text => console.error(text));
-            this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deletion Error", "danger");
-          } else {
-            console.log("Entity Deletion Succeeded!");
-            console.log(res);
-            res.text().then(text => console.log(text));
-            if (this.formEntity.new && this.apiEndpoint) {
-              this.getAllEntities(this.apiEndpoint);
-            }
-            this.formEntity = {};
-            this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deleted", "success");
-            this.showForm = false;
+        } else {
+          console.log("Entity Deletion Succeeded!");
+          console.log(res);
+          res.text().then(text => console.log(text));
+          if (this.formEntity.new && this.apiEndpoint) {
+            this.getAllEntities(this.apiEndpoint);
           }
-        });
+          this.formEntity = {};
+          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deleted", "success");
+          this.showForm = false;
+        }
+      });
     }
   }
 

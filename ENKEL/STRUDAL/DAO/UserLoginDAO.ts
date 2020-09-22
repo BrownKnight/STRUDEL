@@ -9,6 +9,7 @@ export class UserLoginDAO extends BaseDAO<UserLogin> {
   }
 
   generateAuthToken(userLogin: UserLogin): string {
+    console.log("Generating token");
     const privateKey = fs.readFileSync("auth.private.pem", "utf-8");
     const token = jwt.sign(
       { id: userLogin.id, emailAddress: userLogin.emailAddress, fullName: userLogin.fullName },
@@ -18,7 +19,8 @@ export class UserLoginDAO extends BaseDAO<UserLogin> {
 
     // Now that we've generated the token, save it against the user
     userLogin.token = token;
-    this.saveEntity(userLogin);
+    // Create a new object for the save so we don't save the password
+    this.saveEntity({ id: userLogin.id, token: userLogin.token });
 
     return token;
   }
