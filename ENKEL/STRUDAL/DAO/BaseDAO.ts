@@ -26,7 +26,7 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
     return this._repository.findOne(findOptions);
   }
 
-  async saveEntity(entity: TEntity): Promise<TEntity> {
+  async saveEntity(entity: Partial<TEntity>): Promise<TEntity> {
     // Create the entity from the request so that it calls BeforeInsert/BeforeUpdate correctly
     const e = this._repository.create(entity);
     return this._repository.save(e);
