@@ -14,7 +14,12 @@
 
         <label class="sr-only" id="input-label-email-address" for="input-email-address">Email Address</label>
         <b-input-group class="my-3" prepend="Email Address">
-          <b-form-input id="input-email-address" v-model.number="entityModel.emailAddress" required></b-form-input>
+          <b-form-input
+            id="input-email-address"
+            v-model.number="entityModel.emailAddress"
+            required
+            autocomplete="username"
+          ></b-form-input>
         </b-input-group>
 
         <label class="sr-only" id="input-label-password" for="input-password">Password</label>
@@ -25,6 +30,7 @@
             required
             :disabled="!entityModel.new && !showPasswordField"
             type="password"
+            autocomplete="new-password"
           ></b-form-input>
           <b-input-group-append>
             <b-button
