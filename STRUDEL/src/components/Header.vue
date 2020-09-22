@@ -9,7 +9,9 @@
     </b-navbar-nav>
 
     <b-navbar-nav class="ml-auto">
-      <b-nav-text>{{ userFullName }}</b-nav-text>
+      <b-nav-item-dropdown right :text="userFullName">
+        <b-dropdown-item @click="invalidateToken()">Logout</b-dropdown-item>
+      </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
 </template>
@@ -25,6 +27,11 @@ export default class Header extends Vue {
 
   get isLoggedIn() {
     return this.$store.state?.AuthModule?.token !== null;
+  }
+
+  invalidateToken() {
+    this.$store.commit("invalidateToken");
+    this.$router.push("/login");
   }
 }
 </script>
