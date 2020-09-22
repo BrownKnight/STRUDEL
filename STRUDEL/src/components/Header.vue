@@ -7,6 +7,10 @@
       <b-nav-item to="fixtures">Fixtures</b-nav-item>
       <b-nav-item to="predictions">Predictions</b-nav-item>
     </b-navbar-nav>
+
+    <b-navbar-nav class="ml-auto">
+      <b-nav-text>{{ userFullName }}</b-nav-text>
+    </b-navbar-nav>
   </b-navbar>
 </template>
 
@@ -14,7 +18,11 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  get userFullName() {
+    return this.$store.state.AuthModule.user.fullName ?? "Not Logged In";
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
