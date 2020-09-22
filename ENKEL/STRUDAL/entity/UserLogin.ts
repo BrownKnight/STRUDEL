@@ -23,7 +23,7 @@ export class UserLogin {
   @BeforeInsert()
   @BeforeUpdate()
   encryptPassword(): void {
-    // Check if password has actually changed
+    // If password is included in the request to update, then we assume its a new plaintext
     if (this.password) {
       console.log("Password present on entity, hashing it");
       this.password = bcrypt.hashSync(this.password, 10);
