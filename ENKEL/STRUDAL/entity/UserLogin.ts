@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import pkg from "typeorm";
 import bcrypt from "bcrypt";
+import { UserRole } from "./dataTypes/UserRoles.js";
 const { PrimaryGeneratedColumn, Entity, Column, BeforeUpdate, BeforeInsert } = pkg;
 
 @Entity()
@@ -19,6 +20,9 @@ export class UserLogin {
 
   @Column("character varying", { nullable: true })
   token!: string;
+
+  @Column({ type: "enum", enum: UserRole })
+  userRole!: UserRole;
 
   @BeforeInsert()
   @BeforeUpdate()
