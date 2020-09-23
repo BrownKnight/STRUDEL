@@ -7,6 +7,7 @@
       v-bind:apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"
       :fields="fields"
+      ::populateNewEntity="populateNewEntity"
     ></EntityManagement>
   </div>
 </template>
@@ -31,6 +32,14 @@ export default class Teams extends Vue {
     { key: "fixtureResult", label: "Fixture Result", sortable: true },
     { key: "Action" }
   ];
+
+  populateNewEntity(entity: any) {
+    console.log("populating")
+    entity.homeTeam = {};
+    entity.awayTeam = {};
+    entity.prediction = null;
+    entity.user = {};
+  }
 }
 </script>
 

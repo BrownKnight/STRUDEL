@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 
 @Component({
@@ -89,11 +89,10 @@ export default class PredictionEntry extends BaseComponent {
   submitPrediction(entity: any) {
     this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(entity)).then(res => {
       if (res.ok) {
-        //Show a toast here
-        this.ok = "yep";
+        this.showMessage("Prediction Submitted", "success");
         entity.changePrediction = false;
       } else {
-        this.ok = "nope";
+        this.showMessage(`Error occurred submitting prediction :( [${res.status}]`, "danger");
       }
     });
   }
@@ -101,7 +100,26 @@ export default class PredictionEntry extends BaseComponent {
   created() {
     this.getAllEntities();
   }
+
+  showMessage(message: string, variant?: string, delay?: number) {
+    this.$bvToast.toast(message, {
+      noCloseButton: true,
+      variant: variant,
+      autoHideDelay: 50000,
+      toaster: "b-toaster-top-right",
+      href: "javascript:$bvToast.hide()"
+    });
+  }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.b-toaster-top-right {
+  top: 56px !important;
+}
+
+.toast-body {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+</style>

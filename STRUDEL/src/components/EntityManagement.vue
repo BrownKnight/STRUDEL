@@ -57,6 +57,8 @@ export default class EntityManagement extends BaseComponent {
   entityFormComponent: Vue | undefined;
   @Prop()
   fields: Record<string, unknown> | undefined;
+  @Prop()
+  populateNewEntity: Function | undefined;
 
   async getAllEntities(apiEndpoint: string) {
     return await this.callENKEL(apiEndpoint)
@@ -91,6 +93,9 @@ export default class EntityManagement extends BaseComponent {
   createNewEntity() {
     console.log("New Entity Creation requested");
     this.formEntity = { new: true };
+    if (this.populateNewEntity) {
+      this.populateNewEntity(this.formEntity);
+    }
     this.showForm = true;
   }
 

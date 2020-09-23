@@ -76,8 +76,8 @@ export default class LoginForm extends Vue {
         }
       });
     } else {
-      if (loginResult.status === 404) {
-        this.showAlert(10, "Login Failed (No Connection)", "danger");
+      if (loginResult.status === 500) {
+        this.showAlert(10, "Login Failed (No Connection to ENKEL)", "danger");
       } else {
         this.showAlert(10, "Login Failed", "danger");
       }

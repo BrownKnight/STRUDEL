@@ -9,9 +9,9 @@ export class BaseComponent extends Vue {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.$store.state.AuthModule.token}` }
     })
       .then(res => {
-        if (res.status === 401) {
+        if (res.status === 401 || res.status === 500) {
           console.error(
-            `Attempted to call ${url} with a token (${this.$store.state.AuthModule.token}) that wasn't accepted`
+            `Attempted to call ${url} with a token (${this.$store.state.AuthModule.token}) that wasn't accepted, status ${res.status}`
           );
           this.$store.commit("invalidateToken");
           this.$router.push("/login");
@@ -20,6 +20,9 @@ export class BaseComponent extends Vue {
 
         return res;
       })
-      .catch();
+      .catch(error => {
+        console.error(error);
+        return Promise.reject();
+      });
   }
 }
