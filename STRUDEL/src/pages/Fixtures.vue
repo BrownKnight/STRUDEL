@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
@@ -26,6 +26,7 @@ export default class Teams extends BaseComponent {
   FixtureForm = FixtureForm;
   fields: {}[] = [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   populateNewEntity(entity: any) {
     console.log("populating");
     entity.homeTeam = {};

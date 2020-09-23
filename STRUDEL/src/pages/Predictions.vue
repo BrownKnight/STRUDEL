@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import PredictionForm from "@/components/entity-forms/PredictionForm.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
@@ -48,7 +48,7 @@ export default class Predictions extends BaseComponent {
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
         { key: "user.fullName", label: "User", sortable: true },
-        { key: "prediction", label: "Prediction", sortable: true },
+        { key: "prediction", label: "Prediction", sortable: true }
       ];
     }
   }

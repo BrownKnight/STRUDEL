@@ -64,7 +64,7 @@ import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
 export default class UserForm extends EntityForm {
   showPasswordField = false;
   userRoleOptions = [
-    { value: null, text: "Roles", disabled: true},
+    { value: null, text: "Roles", disabled: true },
     { value: "S", text: "Standard" },
     { value: "A", text: "Admin" }
   ];

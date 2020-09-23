@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 
 @Component({
@@ -86,13 +86,14 @@ export default class PredictionEntry extends BaseComponent {
       });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submitPrediction(entity: any) {
     this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(entity)).then(res => {
       if (res.ok) {
-        this.showMessage("Prediction Submitted", "success");
+        this.showMessage({ message: "Prediction Submitted", variant: "success" });
         entity.changePrediction = false;
       } else {
-        this.showMessage(`Error occurred submitting prediction :( [${res.status}]`, "danger");
+        this.showMessage({ message: `Error occurred submitting prediction :( [${res.status}]`, variant: "danger" });
       }
     });
   }
@@ -101,11 +102,11 @@ export default class PredictionEntry extends BaseComponent {
     this.getAllEntities();
   }
 
-  showMessage(message: string, variant?: string, delay?: number) {
+  showMessage({ message, variant, delay }: { message: string; variant?: string; delay?: number }) {
     this.$bvToast.toast(message, {
       noCloseButton: true,
       variant: variant,
-      autoHideDelay: 50000,
+      autoHideDelay: delay,
       toaster: "b-toaster-top-right",
       href: "javascript:$bvToast.hide()"
     });
