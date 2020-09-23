@@ -1,10 +1,11 @@
 import pkg from "typeorm";
-const { PrimaryGeneratedColumn, Entity, Column, ManyToOne } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column, ManyToOne, Unique } = pkg;
 import { FixtureResult } from "./dataTypes/FixtureResult.js";
 import { Fixture } from "./Fixture.js";
 import { UserLogin } from "./UserLogin.js";
 
 @Entity()
+@Unique("prediction_index", ["fixture", "user"])
 export class Prediction {
   @PrimaryGeneratedColumn()
   id!: number;
