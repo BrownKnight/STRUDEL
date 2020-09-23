@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { convertCompilerOptionsFromJson } from "typescript";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { PredictionsHandler } from "./handlers/predictionsHandler.js";
@@ -60,8 +59,6 @@ export class IApiPredictionsRouter extends RouterBase {
   }
 
   private async getPredictionsInDateRange(req: Request, res: Response) {
-    console.log(req.query);
-    console.log(req.query["startDate"], req.query["endDate"]);
     const startDate = req.query["startDate"]?.toString();
     const endDate = req.query["endDate"]?.toString();
     const user = req.query["user"]?.toString();
