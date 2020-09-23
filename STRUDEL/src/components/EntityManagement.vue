@@ -16,7 +16,10 @@
         <b-button size="sm" variant="outline-danger" v-on:click="deleteEntity(data.item)" class="ml-2">Delete</b-button>
       </template>
     </b-table>
-    <b-button size="sm" variant="outline-success" v-on:click="createNewEntity()">Create New</b-button>
+
+    <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()"
+      >Create New</b-button
+    >
 
     <component
       :is="entityFormComponent"

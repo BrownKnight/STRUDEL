@@ -42,6 +42,11 @@
           </b-input-group-append>
         </b-input-group>
 
+        <label class="sr-only" id="input-label-password" for="input-password">Role</label>
+        <b-input-group class="my-3" prepend="Role">
+          <b-form-select :options="userRoleOptions" v-model="entityModel.userRole" required></b-form-select>
+        </b-input-group>
+
         <b-button class="ml-2 my-2" variant="success" type="submit">Save Entity</b-button>
       </b-form>
     </b-row>
@@ -58,6 +63,11 @@ import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
 })
 export default class UserForm extends EntityForm {
   showPasswordField = false;
+  userRoleOptions = [
+    { value: null, text: "Roles", disabled: true},
+    { value: "S", text: "Standard" },
+    { value: "A", text: "Admin" }
+  ];
 
   // When the form is subbmited, reset the showPasswordField setting
   protected formSubmitted() {

@@ -2,8 +2,8 @@
   <b-navbar variant="dark" type="dark" fixed="top">
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
     <b-navbar-nav v-if="isLoggedIn">
-      <b-nav-item to="users">Users</b-nav-item>
-      <b-nav-item to="teams">Teams</b-nav-item>
+      <b-nav-item v-if="isAdmin()" to="users">Users</b-nav-item>
+      <b-nav-item v-if="isAdmin()" to="teams">Teams</b-nav-item>
       <b-nav-item to="fixtures">Fixtures</b-nav-item>
       <b-nav-item to="predictions">Predictions</b-nav-item>
     </b-navbar-nav>
@@ -18,9 +18,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { BaseComponent } from "@/components/BaseComponent.ts";
 
 @Component
-export default class Header extends Vue {
+export default class Header extends BaseComponent {
   get userFullName() {
     return this.$store.state?.AuthModule?.user?.fullName ?? "Not Logged In";
   }
