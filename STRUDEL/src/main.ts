@@ -36,18 +36,13 @@ const router = new VueRouter({
   routes: routes
 });
 
-const vue = new Vue({
-  render: h => h(App),
-  router: router,
-  store: Store
-}).$mount("#app");
-
 // Ensure user is authenticated before they are allowed to route
 router.beforeEach((to, from, next) => {
+  console.log("checking");
   const publicPages = ["/login"];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = !!vue.$store.state.AuthModule.token;
-  console.log(vue.$store.state.AuthModule.token);
+  const loggedIn = !!Store.state.AuthModule.token;
+  console.log(Store.state.AuthModule.token);
   console.log(authRequired, loggedIn);
 
   // trying to access a restricted page + not logged in
@@ -58,3 +53,9 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+new Vue({
+  render: h => h(App),
+  router: router,
+  store: Store
+}).$mount("#app");
