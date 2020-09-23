@@ -22,7 +22,12 @@ export class UserLoginDAO extends BaseDAO<UserLogin> {
     console.log("Generating token");
     const privateKey = fs.readFileSync("auth.private.pem", "utf-8");
     const token = jwt.sign(
-      { id: userLogin.id, emailAddress: userLogin.emailAddress, fullName: userLogin.fullName },
+      {
+        id: userLogin.id,
+        emailAddress: userLogin.emailAddress,
+        fullName: userLogin.fullName,
+        userRole: userLogin.userRole,
+      },
       privateKey,
       { algorithm: "RS512", expiresIn: "1h" }
     );
