@@ -12,6 +12,10 @@
       stacked="sm"
       table-variant="white"
     >
+      <template v-slot:cell(date)="data">
+        {{ formatDate(data.item.fixture.date) }}
+      </template>
+
       <template v-slot:cell(homeTeam)="data"> {{ data.item.fixture.homeTeam.teamName }} [Logo] </template>
       <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
 
@@ -50,11 +54,15 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
+import moment, { Moment } from "moment";
 
 @Component({
   components: {}
 })
 export default class PredictionEntry extends BaseComponent {
+  startDate?: Moment;
+  endDate?: Moment;
+
   entityList: unknown[] = [];
 
   predictionChanges = true;
@@ -62,7 +70,7 @@ export default class PredictionEntry extends BaseComponent {
   ok = "";
 
   fields = [
-    { key: "fixture.date", label: "Date", sortable: true },
+    { key: "date", label: "Date", sortable: true },
     { key: "homeTeam", label: "Home Team", sortable: true },
     { key: "awayTeam", label: "Away Team", sortable: true },
     { key: "prediction", label: "My Prediction" }
@@ -76,7 +84,15 @@ export default class PredictionEntry extends BaseComponent {
   ];
 
   async getAllEntities() {
-    return await this.callENKEL("/iapi/predictions")
+    if (!this.startDate || !this.endDate) {
+      return;
+    }
+
+    return await this.callENKEL(
+      `/iapi/predictions/bydate?startDate=${this.startDate.format("YYYY MM DD")}&endDate=${this.endDate.format(
+        "YYYY MM DD"
+      )}&user=${this.$store.state.AuthModule.user.id}`
+    )
       .then(res => res.json())
       .then(json => {
         json.forEach((element: { changePrediction: boolean }) => {
@@ -99,6 +115,8 @@ export default class PredictionEntry extends BaseComponent {
   }
 
   created() {
+    this.startDate = moment().startOf("week");
+    this.endDate = moment(this.startDate).add(1, "week");
     this.getAllEntities();
   }
 
@@ -110,6 +128,10 @@ export default class PredictionEntry extends BaseComponent {
       toaster: "b-toaster-top-right",
       href: "javascript:$bvToast.hide()"
     });
+  }
+
+  formatDate(date: string | Date): string {
+    return moment(date).format("ddd, Do MMM");
   }
 }
 </script>

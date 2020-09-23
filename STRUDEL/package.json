@@ -13,6 +13,7 @@
     "enkel": "file:../ENKEL",
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.0",
     "reflect-metadata": "^0.1.13",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
