@@ -160,13 +160,24 @@ export default class EntityManagement extends BaseComponent {
   }
 
   showEntityAlert(shownForTime: number, message: string, variant: string) {
-    this.entityAlert = {
-      show: shownForTime,
-      message: message,
-      variant: variant
-    };
+    this.$bvToast.toast(message, {
+      noCloseButton: true,
+      variant: variant,
+      autoHideDelay: shownForTime * 1000,
+      toaster: "b-toaster-top-right",
+      href: "#"
+    });
   }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.b-toaster-top-right {
+  top: 56px !important;
+}
+
+.toast-body {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+</style>

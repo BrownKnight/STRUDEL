@@ -126,7 +126,7 @@ export default class PredictionEntry extends BaseComponent {
       variant: variant,
       autoHideDelay: delay,
       toaster: "b-toaster-top-right",
-      href: "javascript:$bvToast.hide()"
+      href: "#"
     });
   }
 
