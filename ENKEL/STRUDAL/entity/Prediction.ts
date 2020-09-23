@@ -12,7 +12,7 @@ export class Prediction {
   @ManyToOne(() => Fixture)
   fixture!: Fixture;
 
-  @Column({ type: "enum", enum: FixtureResult })
+  @Column({ type: "enum", enum: FixtureResult, nullable: true })
   prediction!: FixtureResult;
 
   @ManyToOne(() => UserLogin)
