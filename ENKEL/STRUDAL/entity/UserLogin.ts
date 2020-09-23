@@ -19,7 +19,7 @@ export class UserLogin {
   password!: string | undefined;
 
   @Column("character varying", { nullable: true })
-  token!: string;
+  token!: string | null | undefined;
 
   @Column({ type: "enum", enum: UserRole })
   userRole!: UserRole;

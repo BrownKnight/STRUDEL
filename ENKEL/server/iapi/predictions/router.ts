@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { convertCompilerOptionsFromJson } from "typescript";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { PredictionsHandler } from "./handlers/predictionsHandler.js";
@@ -21,6 +22,7 @@ export class IApiPredictionsRouter extends RouterBase {
   }
 
   protected initLocalRoutes(): void {
+    this.router.get("/bydate", this.getPredictionsInDateRange.bind(this));
     this.router.get("/", this.getAllPredictions.bind(this));
     this.router.put("/", this.savePrediction.bind(this));
     this.router.delete("/:predictionId", this.deletePrediction.bind(this));
@@ -55,5 +57,30 @@ export class IApiPredictionsRouter extends RouterBase {
     } else {
       res.status(400).json(apiResponse);
     }
+  }
+
+  private async getPredictionsInDateRange(req: Request, res: Response) {
+    console.log(req.query);
+    console.log(req.query["startDate"], req.query["endDate"]);
+    const startDate = req.query["startDate"]?.toString();
+    const endDate = req.query["endDate"]?.toString();
+    const user = req.query["user"]?.toString();
+    let userId: number | undefined;
+    if (user) {
+      userId = parseInt(user);
+    }
+
+    if (!startDate && !endDate) {
+      res.status(400).json(new EntityApiResponse(false, "Start and End date not provided"));
+      return;
+    }
+
+    const predictions = await this._predictionsHandler
+      .getPredictionsInDateRange(new Date(startDate as string), new Date(endDate as string), userId)
+      .catch((err) => {
+        res.status(400).json(new EntityApiResponse(false, "error fetching predictions", {}, err));
+      });
+
+    res.status(200).json(predictions);
   }
 }

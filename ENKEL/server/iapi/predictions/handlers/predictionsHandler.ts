@@ -6,4 +6,9 @@ export class PredictionsHandler extends BasicEntityOperationHandler<Prediction> 
   constructor() {
     super(new PredictionDAO());
   }
+
+  async getPredictionsInDateRange(startDate: Date, endDate: Date, user?: number): Promise<Prediction[]> {
+    console.log(startDate, endDate);
+    return await (this._DAO as PredictionDAO).getEntitiesInDateRange(startDate, endDate, user);
+  }
 }
