@@ -1,6 +1,8 @@
 <template>
   <div id="fixtures-page">
-    <h3>Maintain Fixtures</h3>
+    <b-row>
+      <h3 class="my-5 mx-3">Maintain Fixtures</h3>
+    </b-row>
     <EntityManagement
       v-bind:apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"

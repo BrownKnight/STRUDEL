@@ -1,6 +1,8 @@
 <template>
   <div id="users-page">
-    <h3>Maintain Users</h3>
+    <b-row>
+      <h3 class="my-5 mx-3">Maintain Users</h3>
+    </b-row>
     <EntityManagement
       v-bind:apiEndpoint="'/iapi/users'"
       :entityFormComponent="UserForm"

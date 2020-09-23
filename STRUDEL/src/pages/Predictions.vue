@@ -1,6 +1,8 @@
 <template>
   <div id="predictions-page">
-    <h3>Maintain Predictions</h3>
+    <b-row>
+      <h3 class="my-5 mx-3">Maintain Predictions</h3>
+    </b-row>
     <EntityManagement
       v-bind:apiEndpoint="'/iapi/predictions'"
       :entityFormComponent="PredictionForm"

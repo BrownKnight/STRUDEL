@@ -10,6 +10,7 @@
       borderless
       head-variant="dark"
       stacked="sm"
+      table-variant="white"
     >
       <template v-slot:cell(homeTeam)="data"> {{ data.item.fixture.homeTeam.teamName }} [Logo] </template>
       <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
@@ -68,7 +69,7 @@ export default class PredictionEntry extends BaseComponent {
   ];
 
   predictionOptions = [
-    { value: null, text: "Predict" },
+    { value: null, text: "No Prediction" },
     { value: "H", text: "Home Win" },
     { value: "A", text: "Away Win" },
     { value: "D", text: "Draw" }

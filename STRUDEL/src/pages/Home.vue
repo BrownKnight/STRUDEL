@@ -1,6 +1,8 @@
 <template>
   <div id="hey">
-    <p>Home! WIP</p>
+    <b-row>
+      <h3 class="my-5 mx-3">My Predictions (This Week)</h3>
+    </b-row>
     <PredictionEntry />
   </div>
 </template>
