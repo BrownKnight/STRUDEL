@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { PredictionsHandler } from "./handlers/predictionsHandler.js";
+import moment from "moment";
 
 /**
  * Router for all internal predictions-based api calls. Supports the fetching, updating, and deleting
@@ -25,6 +26,7 @@ export class IApiPredictionsRouter extends RouterBase {
     this.router.get("/", this.getAllPredictions.bind(this));
     this.router.put("/", this.savePrediction.bind(this));
     this.router.delete("/:predictionId", this.deletePrediction.bind(this));
+    this.router.post("/:userId/generate", this.generatePredictionsForUserInDateRange.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -79,5 +81,29 @@ export class IApiPredictionsRouter extends RouterBase {
       });
 
     res.status(200).json(predictions);
+  }
+
+  private async generatePredictionsForUserInDateRange(req: Request, res: Response) {
+    const startDate = req.query["startDate"]?.toString();
+    const endDate = req.query["endDate"]?.toString();
+    const userId = parseInt(req.params["userId"]);
+
+    if (!startDate && !endDate) {
+      res.status(400).json(new EntityApiResponse(false, "Start and End date not provided"));
+      return;
+    }
+
+    this._predictionsHandler
+      .generatePredictionsForUser(moment(startDate), moment(endDate), userId)
+      .then((result) => {
+        if (result.success) {
+          res.status(200).json(result);
+        } else {
+          res.status(400).json(result);
+        }
+      })
+      .catch((err) => {
+        res.status(400).json(new EntityApiResponse(false, "error generating predictions", {}, err));
+      });
   }
 }

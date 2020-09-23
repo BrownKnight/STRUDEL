@@ -7,7 +7,7 @@
       v-bind:apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"
       :fields="fields"
-      ::populateNewEntity="populateNewEntity"
+      :populateNewEntity="populateNewEntity"
     ></EntityManagement>
   </div>
 </template>

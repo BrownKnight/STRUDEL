@@ -10,11 +10,11 @@ export class Prediction {
   id!: number;
 
   @ManyToOne(() => Fixture)
-  fixture!: Fixture;
+  fixture!: Partial<Fixture>;
 
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   prediction!: FixtureResult;
 
   @ManyToOne(() => UserLogin)
-  user!: UserLogin;
+  user!: Partial<UserLogin>;
 }

@@ -6,7 +6,7 @@ const { getRepository } = pkg;
  * Base DAO for all entities' DAOs, implements basic entity CRUD operations
  */
 export class BaseDAO<TEntity extends ObjectLiteral> {
-  private _repository: pkg.Repository<TEntity>;
+  protected _repository: pkg.Repository<TEntity>;
   private _entityClass: new () => TEntity;
 
   constructor(entityClass: new () => TEntity) {
@@ -30,6 +30,10 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
     // Create the entity from the request so that it calls BeforeInsert/BeforeUpdate correctly
     const e = this._repository.create(entity);
     return this._repository.save(e);
+  }
+
+  async saveAll(entities: Partial<TEntity>[]): Promise<TEntity[]> {
+    return this._repository.save(entities);
   }
 
   async deleteEntity(entityId: number): Promise<pkg.DeleteResult> {

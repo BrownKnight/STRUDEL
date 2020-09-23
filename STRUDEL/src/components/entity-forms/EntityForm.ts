@@ -1,7 +1,8 @@
 import "reflect-metadata";
-import { Prop, Vue, Watch } from "vue-property-decorator";
+import { Prop, Watch } from "vue-property-decorator";
+import { BaseComponent } from "@/components/BaseComponent.ts";
 
-export class EntityForm extends Vue {
+export class EntityForm extends BaseComponent {
   @Prop()
   entity: unknown;
   @Prop()
