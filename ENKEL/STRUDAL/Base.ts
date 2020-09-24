@@ -13,7 +13,7 @@ export async function initDb(): Promise<void> {
     port: parseInt(process.env.STRUDAL_DATABASE_PORT ?? ""),
     username: process.env.STRUDAL_DATABASE_USERNAME,
     password: process.env.STRUDAL_DATABASE_PASSWORD,
-    database: "STRUDELDB",
+    database: process.env.STRUDAL_DATABASE_NAME,
     entities: [UserLogin, Team, Fixture, Prediction],
     synchronize: true,
     //logging: true,
