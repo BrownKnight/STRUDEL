@@ -115,7 +115,9 @@ export default class PredictionEntry extends BaseComponent {
   }
 
   created() {
-    this.startDate = moment().startOf("week");
+    this.startDate = moment()
+      .startOf("week")
+      .add(1, "day");
     this.endDate = moment(this.startDate).add(1, "week");
     this.getAllEntities();
   }
@@ -124,7 +126,7 @@ export default class PredictionEntry extends BaseComponent {
     this.$bvToast.toast(message, {
       noCloseButton: true,
       variant: variant,
-      autoHideDelay: delay,
+      autoHideDelay: delay ?? 5000,
       toaster: "b-toaster-top-right",
       href: "#"
     });
