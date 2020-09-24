@@ -18,11 +18,8 @@
       head-variant="dark"
       stacked="sm"
       table-variant="white"
+      :sort-by="'fixture.date'"
     >
-      <template v-slot:cell(date)="data">
-        {{ formatDate(data.item.fixture.date) }}
-      </template>
-
       <template v-slot:cell(homeTeam)="data"> {{ data.item.fixture.homeTeam.teamName }} [Logo] </template>
       <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
 
@@ -77,7 +74,7 @@ export default class PredictionEntry extends BaseComponent {
   ok = "";
 
   fields = [
-    { key: "date", label: "Date", sortable: true },
+    { key: "fixture.date", label: "Date", sortable: true, formatter: this.formatDate },
     { key: "homeTeam", label: "Home Team", sortable: true },
     { key: "awayTeam", label: "Away Team", sortable: true },
     { key: "prediction", label: "My Prediction" }
