@@ -5,11 +5,16 @@ import { IApiRouter } from "./iapi/router.js";
 import { ApiRouter } from "./api/router.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import { LoginHandler } from "./loginHandler.js";
+//import path from "path";
+import compression from "compression";
+import helmet from "helmet";
 // Wait for a connection to be established before starting the server
 await initDb();
 
 const app: express.Application = express();
 
+// Sets a few headers to try to improve security
+app.use(helmet());
 app.use(express.json());
 app.use(authMiddleware);
 
@@ -21,8 +26,13 @@ const loginHandler = new LoginHandler();
 
 app.post("/login", loginHandler.login.bind(loginHandler));
 
+// Compress all the responses
+app.use(compression());
 app.use("/iapi", new IApiRouter().router);
 app.use("/api", new ApiRouter().router);
+
+// Not currently needed, until we want to serve static content (even then we'd modify the web server with a proxy instead)
+//app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(3000, function () {
   console.log("App is listening of port 3000");

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserLogin } from "../../../STRUDAL/entity/UserLogin.js";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { LoginResponse } from "../loginResponse.js";
 import { UserLoginsHandler } from "./handlers/userLoginsHandler.js";
 
 /**
