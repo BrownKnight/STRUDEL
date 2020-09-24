@@ -142,8 +142,17 @@ export default class EntityManagement extends BaseComponent {
         if (!res.ok) {
           console.log("Entity Deletion Error :(");
           console.log(res);
-          res.text().then(text => console.error(text));
-          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deletion Error", "danger");
+          res
+            .text()
+            .then(text => JSON.parse(text))
+            .then(errorJson => {
+              console.error(errorJson);
+              this.showEntityAlert(
+                SHOW_ALERT_TIME,
+                `Entity Deletion Error  (${errorJson?.errorMessage?.detail ?? "Cannot find error message"})`,
+                "danger"
+              );
+            });
         } else {
           console.log("Entity Deletion Succeeded!");
           console.log(res);
