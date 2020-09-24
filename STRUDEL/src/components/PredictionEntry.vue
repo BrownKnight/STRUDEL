@@ -1,7 +1,14 @@
 <template>
   <div id="entity-management">
-    <p v-if="entityList == []">Loading...</p>
+    <b-button
+      v-if="!entityList || entityList.length === 0"
+      variant="outline-success"
+      size="lg"
+      @click="generateThisWeeksPredictionsForUser()"
+      >Predict This Weeks Fixtures</b-button
+    >
     <b-table
+      v-if="entityList && entityList.length > 0"
       striped
       :items="entityList"
       :fields="fields"
@@ -83,6 +90,14 @@ export default class PredictionEntry extends BaseComponent {
     { value: "D", text: "Draw" }
   ];
 
+  created() {
+    this.startDate = moment()
+      .startOf("week")
+      .add(3, "day");
+    this.endDate = moment(this.startDate).add(1, "week");
+    this.getAllEntities();
+  }
+
   async getAllEntities() {
     if (!this.startDate || !this.endDate) {
       return;
@@ -114,12 +129,49 @@ export default class PredictionEntry extends BaseComponent {
     });
   }
 
-  created() {
-    this.startDate = moment()
+  generateThisWeeksPredictionsForUser() {
+    const startDate = moment()
       .startOf("week")
-      .add(1, "day");
-    this.endDate = moment(this.startDate).add(1, "week");
-    this.getAllEntities();
+      .add(3, "day");
+    const endDate = moment(this.startDate).add(1, "week");
+
+    this.callENKEL(
+      `/iapi/predictions/${this.$store.state.AuthModule.user.id}/generate?startDate=${startDate.format(
+        "YYYY-MM-DD"
+      )}&endDate=${endDate.format("YYYY-MM-DD")}`,
+      "POST"
+    ).then(res => {
+      if (res.status !== 200 && res.status !== 400) {
+        this.showMessage({
+          message: `Could not generate this weeks predictions (${res.status})`,
+          variant: "danger",
+          delay: 10000
+        });
+        return;
+      }
+
+      res
+        .text()
+        .then(text => JSON.parse(text))
+        .then(json => {
+          if (!json.success) {
+            this.showMessage({
+              message: `Could not generate predictions. API Response: ${json.errorMessage}`,
+              variant: "danger"
+            });
+            return;
+          }
+
+          if (json.success) {
+            this.showMessage({
+              message: "Predictions Generated",
+              variant: "success"
+            });
+            this.getAllEntities();
+            return;
+          }
+        });
+    });
   }
 
   showMessage({ message, variant, delay }: { message: string; variant?: string; delay?: number }) {
