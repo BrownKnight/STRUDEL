@@ -24,26 +24,24 @@
       <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
 
       <template v-slot:cell(prediction)="data">
-        <b-col class="w-75 mx-auto">
-          <b-input-group size="sm" align-self="center">
-            <b-form-select
+        <b-col class="mx-auto prediction-column">
+          <b-input-group size="sm" class="justify-content-center">
+            <b-form-radio-group
               id="my-prediction"
               v-model="data.item.prediction"
               :options="predictionOptions"
-              :disabled="!data.item.changePrediction"
-            ></b-form-select>
+              buttons
+              size="sm"
+              name="my-prediction"
+              button-variant="outline-primary"
+              class="w-75"
+            ></b-form-radio-group>
             <b-input-group-append>
               <b-button
-                variant="secondary"
-                v-if="!data.item.changePrediction"
-                @click="data.item.changePrediction = true"
-                >Change</b-button
-              >
-              <b-button variant="danger" v-if="data.item.changePrediction" @click="data.item.changePrediction = false"
-                >Cancel</b-button
-              >
-              <b-button variant="success" v-if="data.item.changePrediction" @click="submitPrediction(data.item)"
-                >Submit</b-button
+                variant="success"
+                v-if="data.item.previousPrediction !== data.item.prediction"
+                @click="submitPrediction(data.item)"
+                >Confirm</b-button
               >
             </b-input-group-append>
           </b-input-group>
@@ -81,7 +79,7 @@ export default class PredictionEntry extends BaseComponent {
   ];
 
   predictionOptions = [
-    { value: null, text: "No Prediction" },
+    { value: null, text: "None" },
     { value: "H", text: "Home Win" },
     { value: "A", text: "Away Win" },
     { value: "D", text: "Draw" }
@@ -107,8 +105,8 @@ export default class PredictionEntry extends BaseComponent {
     )
       .then(res => res.json())
       .then(json => {
-        json.forEach((element: { changePrediction: boolean }) => {
-          element.changePrediction = false;
+        json.forEach((element: { previousPrediction: string; prediction: string }) => {
+          element.previousPrediction = element.prediction;
         });
         this.entityList = json;
       });
@@ -119,7 +117,7 @@ export default class PredictionEntry extends BaseComponent {
     this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(entity)).then(res => {
       if (res.ok) {
         this.showMessage({ message: "Prediction Submitted", variant: "success" });
-        entity.changePrediction = false;
+        entity.previousPrediction = entity.prediction;
       } else {
         this.showMessage({ message: `Error occurred submitting prediction :( [${res.status}]`, variant: "danger" });
       }
@@ -175,7 +173,7 @@ export default class PredictionEntry extends BaseComponent {
     this.$bvToast.toast(message, {
       noCloseButton: true,
       variant: variant,
-      autoHideDelay: delay ?? 5000,
+      autoHideDelay: delay ?? 3000,
       toaster: "b-toaster-top-right",
       href: "#"
     });
