@@ -10,6 +10,7 @@
       borderless
       head-variant="dark"
       stacked="sm"
+      small
     >
       <template v-slot:cell(Action)="data">
         <b-button size="sm" variant="outline-primary" v-on:click="editEntity(data.item)">Edit</b-button>
@@ -165,4 +166,8 @@ export default class EntityManagement extends BaseComponent {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+td {
+  vertical-align: middle !important;
+}
+</style>

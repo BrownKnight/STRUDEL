@@ -1,7 +1,7 @@
 <template>
   <div id="predictions-page">
-    <b-row>
-      <h3 class="my-5 mx-3">{{ isAdmin() ? "Maintain" : "View" }} Predictions</h3>
+    <b-row class="my-5 mx-1">
+      <h3>{{ isAdmin() ? "Maintain" : "Everyone's" }} Predictions</h3>
     </b-row>
     <EntityManagement
       v-bind:apiEndpoint="'/iapi/predictions'"
@@ -43,6 +43,7 @@ export default class Predictions extends BaseComponent {
     if (this.isAdmin()) {
       this.fields = [
         { key: "id", sortable: true, label: "id" },
+        { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
         { key: "user", label: "User", sortable: true, formatter: value => `${value.fullName} (${value.id})` },
@@ -51,6 +52,7 @@ export default class Predictions extends BaseComponent {
       ];
     } else {
       this.fields = [
+        { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
         { key: "user", label: "User", sortable: true, formatter: value => `${value.fullName}` },
