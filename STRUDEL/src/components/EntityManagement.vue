@@ -28,10 +28,6 @@
       @submit="handleFormSubmit"
       class="mt-2"
     ></component>
-
-    <b-alert :show="entityAlert.show" :variant="entityAlert.variant" dismissible fade @dismissed="entityAlert.show = 0">
-      <span>{{ entityAlert.message }}</span>
-    </b-alert>
   </div>
 </template>
 
@@ -48,7 +44,6 @@ const SHOW_ALERT_TIME = 20;
 export default class EntityManagement extends BaseComponent {
   entityList: string[] = [];
 
-  entityAlert = {};
   showForm = false;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,26 +162,7 @@ export default class EntityManagement extends BaseComponent {
       });
     }
   }
-
-  showEntityAlert(shownForTime: number, message: string, variant: string) {
-    this.$bvToast.toast(message, {
-      noCloseButton: true,
-      variant: variant,
-      autoHideDelay: shownForTime * 1000,
-      toaster: "b-toaster-top-right",
-      href: "#"
-    });
-  }
 }
 </script>
 
-<style lang="scss">
-.b-toaster-top-right {
-  top: 56px !important;
-}
-
-.toast-body {
-  text-decoration: none !important;
-  color: inherit !important;
-}
-</style>
+<style lang="scss"></style>

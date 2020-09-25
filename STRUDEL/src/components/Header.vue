@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="dark" type="dark" fixed="top" toggleable="">
+  <b-navbar variant="dark" type="dark" fixed="top" toggleable="md">
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
     <b-navbar-toggle target="navbar-collapse"></b-navbar-toggle>
     <b-collapse id="navbar-collapse" is-nav>
@@ -44,4 +44,8 @@ export default class Header extends BaseComponent {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.navbar-dark .navbar-toggler {
+  border-color: transparent;
+}
+</style>

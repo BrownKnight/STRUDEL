@@ -51,47 +51,8 @@ export default class LoginForm extends Vue {
 
   alert = {};
 
-  async login() {
-    if (!this.emailAddress || !this.password) {
-      this.showAlert(5, "Please supply Email Address and Password", "danger");
-      return;
-    }
-
-    const loginResult = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ emailAddress: this.emailAddress, password: this.password })
-    });
-
-    if (loginResult.ok) {
-      loginResult.text().then(text => {
-        const json = JSON.parse(text);
-        const token = json["token"];
-        if (token !== null && token !== "") {
-          this.$store.commit("setToken", json["token"]);
-          this.$router.push("/index");
-          return;
-        } else {
-          this.showAlert(10, "Login Failed (No Token?)", "danger");
-          return;
-        }
-      });
-    } else {
-      if (loginResult.status === 500) {
-        this.showAlert(10, "Login Failed (No Connection to ENKEL)", "danger");
-      } else {
-        this.showAlert(10, "Login Failed", "danger");
-      }
-      return;
-    }
-  }
-
-  showAlert(shownForTime: number, message: string, variant: string) {
-    this.alert = {
-      show: shownForTime,
-      message: message,
-      variant: variant
-    };
+  login() {
+    this.$emit("submit", this.emailAddress, this.password);
   }
 }
 </script>

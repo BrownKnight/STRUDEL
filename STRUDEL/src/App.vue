@@ -36,7 +36,8 @@ export default class App extends Vue {}
   flex: 1;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 body {
@@ -45,5 +46,13 @@ body {
 }
 .content {
   flex: 1 0 auto;
+}
+.b-toaster-top-right {
+  top: 56px !important;
+}
+
+.toast-body {
+  text-decoration: none !important;
+  color: inherit !important;
 }
 </style>

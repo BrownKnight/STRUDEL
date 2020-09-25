@@ -26,6 +26,16 @@ export class BaseComponent extends Vue {
       });
   }
 
+  showEntityAlert(shownForTime: number, message: string, variant: string) {
+    this.$bvToast.toast(message, {
+      noCloseButton: true,
+      variant: variant,
+      autoHideDelay: shownForTime * 1000,
+      toaster: "b-toaster-top-right",
+      href: "#"
+    });
+  }
+
   isAdmin(): boolean {
     return this.$store?.state?.AuthModule?.user?.userRole === "A";
   }

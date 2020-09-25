@@ -8,7 +8,9 @@
     </b-modal> -->
 
     <b-container>
-      <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>Found an issue?</b-button>
+      <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>
+        <b-icon icon="bug" class="align-top"></b-icon> Found an issue?</b-button
+      >
     </b-container>
   </footer>
 </template>
