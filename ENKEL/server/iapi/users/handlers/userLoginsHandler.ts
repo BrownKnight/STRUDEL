@@ -3,6 +3,8 @@ import { UserLoginDAO } from "../../../../STRUDAL/DAO/UserLoginDAO.js";
 import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
 import { LoginResponse } from "../../loginResponse.js";
 import bcrypt from "bcrypt";
+import { EntityApiResponse } from "../../apiResponse.js";
+import { UserRole } from "../../../../STRUDAL/entity/dataTypes/UserRoles.js";
 
 export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
   constructor() {
@@ -34,5 +36,15 @@ export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
 
     const token = dao.generateAuthToken(user);
     return new LoginResponse(true, "", token);
+  }
+
+  async handleUserRegister(requestBody: Record<string, string>): Promise<EntityApiResponse> {
+    const newUserEntity = {
+      fullName: requestBody.fullName,
+      emailAddress: requestBody.emailAddress,
+      password: requestBody.password,
+      userRole: UserRole.STANDARD,
+    };
+    return this.saveEntity(newUserEntity);
   }
 }

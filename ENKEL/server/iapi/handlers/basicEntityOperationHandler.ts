@@ -15,7 +15,7 @@ export class BasicEntityOperationHandler<TEntity extends Entity> {
     return entities;
   }
 
-  public async saveEntity(entity: TEntity): Promise<EntityApiResponse> {
+  public async saveEntity(entity: Partial<TEntity>): Promise<EntityApiResponse> {
     const apiResponse = new EntityApiResponse();
     console.log(`Saving Entity ${entity.id}`);
     console.log(entity);

@@ -8,7 +8,7 @@ export type TokenPayload = { id: string };
 
 export async function authMiddleware(req: Request, res: Response, next: () => void): Promise<void> {
   // If trying to access the /users/login page, then don't block it
-  if (req.path === "/login") {
+  if (req.path.startsWith("/login")) {
     console.log("Skipping auth middleware as accessing login page");
     next();
     return;

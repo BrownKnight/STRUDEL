@@ -25,6 +25,7 @@ app.all("/", function (req, res) {
 const loginHandler = new LoginHandler();
 
 app.post("/login", loginHandler.login.bind(loginHandler));
+app.put("/login/register", loginHandler.register.bind(loginHandler));
 
 // Compress all the responses
 app.use(compression());
