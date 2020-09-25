@@ -9,7 +9,13 @@
 
         <label class="sr-only" id="input-label-fixture-date" for="input-fixture-date">Fixture Date</label>
         <b-input-group class="my-3" prepend="Fixture Date">
-          <b-form-input id="input-fixture-date" v-model="entityModel.date" type="date" required></b-form-input>
+          <b-form-input
+            id="input-fixture-date"
+            v-model="entityModel.date"
+            type="date"
+            required
+            autofocus
+          ></b-form-input>
         </b-input-group>
 
         <label class="sr-only" id="input-label-home-team" for="input-home-team">Home Team</label>

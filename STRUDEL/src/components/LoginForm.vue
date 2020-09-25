@@ -10,6 +10,7 @@
             type="email"
             required
             autocomplete="username"
+            autofocus
           ></b-form-input>
         </b-input-group>
 
