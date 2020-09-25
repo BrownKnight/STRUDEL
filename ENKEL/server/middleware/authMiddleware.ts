@@ -27,7 +27,7 @@ export async function authMiddleware(req: Request, res: Response, next: () => vo
   let tokenPayload: any;
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tokenPayload = <any>jwt.verify(token, publicKey);
+    tokenPayload = <any>jwt.verify(token, publicKey, { algorithms: ["RS512"] });
   } catch (error) {
     res.status(401).send(new LoginResponse(false, "JWT Token not valid! error:" + error, token));
     return;
