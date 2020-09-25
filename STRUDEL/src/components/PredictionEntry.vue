@@ -19,13 +19,14 @@
       stacked="sm"
       table-variant="white"
       :sort-by="'fixture.date'"
+      small
     >
       <template v-slot:cell(homeTeam)="data"> {{ data.item.fixture.homeTeam.teamName }} [Logo] </template>
       <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
 
       <template v-slot:cell(prediction)="data">
         <b-col class="mx-auto prediction-column">
-          <b-input-group size="sm" class="justify-content-center">
+          <b-input-group size="sm" style="justify-content:stretch">
             <b-form-radio-group
               id="my-prediction"
               v-model="data.item.prediction"
@@ -34,15 +35,10 @@
               size="sm"
               name="my-prediction"
               button-variant="outline-primary"
-              class="w-75"
+              class="flex-grow-1"
             ></b-form-radio-group>
-            <b-input-group-append>
-              <b-button
-                variant="success"
-                v-if="data.item.previousPrediction !== data.item.prediction"
-                @click="submitPrediction(data.item)"
-                >Confirm</b-button
-              >
+            <b-input-group-append class="flex-grow-1" v-if="data.item.previousPrediction !== data.item.prediction">
+              <b-button class="w-100" variant="success" @click="submitPrediction(data.item)">Confirm</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-col>
@@ -79,7 +75,6 @@ export default class PredictionEntry extends BaseComponent {
   ];
 
   predictionOptions = [
-    { value: null, text: "None" },
     { value: "H", text: "Home Win" },
     { value: "A", text: "Away Win" },
     { value: "D", text: "Draw" }
