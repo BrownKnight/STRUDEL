@@ -24,6 +24,19 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+@use "sass:map";
+$enable-shadows: true;
+$enable-gradients: true;
+$theme-colors: (
+  "primary": #2B6EB7,
+  "light": #E1E3DF,
+  "dark": #17161F,
+  "info": #2B6EB7,
+  "success": #50af72,
+  "warning": #d28f2b,
+  "danger": #f44336
+);
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +65,21 @@ body {
 }
 
 .toast-body {
+  @extend .shadow-lg;
   text-decoration: none !important;
   color: inherit !important;
 }
+
+.nav-pills {
+  @extend .shadow-sm;
+  @extend .rounded;
+}
+
+.router-link-active {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+// Import Bootstrap and BootstrapVue source SCSS files
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";
 </style>

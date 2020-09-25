@@ -5,7 +5,7 @@
     </b-row>
     <b-row>
       <b-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3" class="align-self-center">
-        <b-card no-body>
+        <b-card no-body class="shadow">
           <b-tabs pills card justified>
             <b-tab title="Login" active>
               <LoginForm @submit="handleLogin"></LoginForm>

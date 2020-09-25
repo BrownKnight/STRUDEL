@@ -13,8 +13,12 @@
       small
     >
       <template v-slot:cell(Action)="data">
-        <b-button size="sm" variant="outline-primary" v-on:click="editEntity(data.item)">Edit</b-button>
-        <b-button size="sm" variant="outline-danger" v-on:click="deleteEntity(data.item)" class="ml-2">Delete</b-button>
+        <b-button size="sm" variant="success" v-on:click="editEntity(data.item)">
+          <b-icon icon="pencil"></b-icon>
+        </b-button>
+        <b-button size="sm" variant="danger" v-on:click="deleteEntity(data.item)" class="ml-2">
+          <b-icon icon="x"></b-icon>
+        </b-button>
       </template>
     </b-table>
 

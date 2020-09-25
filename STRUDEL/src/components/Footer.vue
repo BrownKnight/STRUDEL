@@ -1,11 +1,11 @@
 <template>
-  <footer class="footer bg-light">
-    <!-- <b-modal id="issue-modal" title="Report an issue" :aria-busy="true" hide-footer>
+  <footer class="footer bg-light mt-5">
+    <b-modal id="issue-modal" title="Report an issue" :aria-busy="true" hide-footer>
       <p>
         Found an issue? Please report it <a href="https://github.com/BrownKnight/STRUDEL/issues">here on GitHub</a>, so
         I can <em>professionally</em> ignore it.
       </p>
-    </b-modal> -->
+    </b-modal>
 
     <b-container>
       <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>

@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="dark" type="dark" fixed="top" toggleable="md">
+  <b-navbar variant="primary" type="dark" fixed="top" toggleable="md">
     <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
     <b-navbar-toggle target="navbar-collapse"></b-navbar-toggle>
     <b-collapse id="navbar-collapse" is-nav>
