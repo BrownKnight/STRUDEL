@@ -27,6 +27,6 @@ export class BaseComponent extends Vue {
   }
 
   isAdmin(): boolean {
-    return this.$store.state.AuthModule.user.userRole === "A";
+    return this.$store?.state?.AuthModule?.user?.userRole === "A";
   }
 }

@@ -29,5 +29,9 @@ export class EntityForm extends BaseComponent {
     }
   }
 
+  created() {
+    this.entityModel = this.entity;
+  }
+
   protected formSubmitted?(): void;
 }
