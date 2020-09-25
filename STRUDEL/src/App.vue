@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header />
-    <b-container>
+    <b-container class="content">
       <router-view></router-view>
     </b-container>
     <Footer />
@@ -31,5 +31,19 @@ export default class App extends Vue {}
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 0 auto;
 }
 </style>
