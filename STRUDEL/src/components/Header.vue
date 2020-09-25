@@ -9,7 +9,11 @@
     </b-navbar-nav>
 
     <b-navbar-nav class="ml-auto">
-      <b-nav-item-dropdown right :text="userFullName">
+      <b-nav-item-dropdown right>
+        <template v-slot:button-content>
+          <b-icon icon="person-circle" size="sm" variant="light" class="align-top"></b-icon>
+          <span class="ml-2">{{ userFullName }}</span>
+        </template>
         <b-dropdown-item @click="invalidateToken()">Logout</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
