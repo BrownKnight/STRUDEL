@@ -28,10 +28,10 @@ export default class App extends Vue {}
 $enable-shadows: true;
 $enable-gradients: true;
 $theme-colors: (
-  "primary": #2B6EB7,
-  "light": #E1E3DF,
-  "dark": #17161F,
-  "info": #2B6EB7,
+  "primary": #2b6eb7,
+  "light": #e1e3df,
+  "dark": #17161f,
+  "info": #2b6eb7,
   "success": #50af72,
   "warning": #d28f2b,
   "danger": #f44336
@@ -79,6 +79,14 @@ body {
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
+svg {
+  vertical-align: text-top !important;
+}
+
+a,
+button {
+  font-weight: normal !important;
+}
 // Import Bootstrap and BootstrapVue source SCSS files
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~bootstrap-vue/src/index.scss";

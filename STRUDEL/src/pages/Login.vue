@@ -7,10 +7,19 @@
       <b-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3" class="align-self-center">
         <b-card no-body class="shadow">
           <b-tabs pills card justified>
-            <b-tab title="Login" active>
+            <b-tab active>
+              <template v-slot:title>
+                <b-icon class="mr-2" icon="box-arrow-in-right" scale="1em"></b-icon>
+                <span>Login</span>
+              </template>
               <LoginForm @submit="handleLogin"></LoginForm>
             </b-tab>
-            <b-tab title="Register">
+            <b-tab>
+              <template v-slot:title>
+                <b-icon class="mr-2" icon="person-lines-fill" scale="1em"></b-icon>
+                <span>Register</span>
+              </template>
+
               <UserForm
                 :entity="newEntity"
                 :saveButtonText="'Register'"
