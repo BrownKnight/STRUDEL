@@ -1,14 +1,28 @@
 <template>
   <div id="entity-management">
+    <b-input-group size="sm" style="justify-content:stretch" class="mb-2">
+      <b-form-spinbutton
+        id="week-selection"
+        v-model="weekSelection"
+        :formatter-fn="weekSelectionFormatter"
+        min="-1"
+        max="1"
+        size="sm"
+        name="week-selection"
+        class="flex-grow-1"
+      ></b-form-spinbutton>
+    </b-input-group>
+
     <b-button
-      v-if="!entityList || entityList.length === 0"
+      v-if="(!entityList || entityList.length === 0) && weekSelection > -1"
       variant="outline-success"
       size="lg"
       @click="generateThisWeeksPredictionsForUser()"
       >Predict This Weeks Fixtures</b-button
     >
+
     <b-table
-      v-if="entityList && entityList.length > 0"
+      v-if="weekSelection === -1 || (entityList && entityList.length > 0)"
       striped
       :items="entityList"
       :fields="fields"
@@ -50,16 +64,24 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
-import moment, { Moment } from "moment";
+import moment from "moment";
 
 @Component({
   components: {}
 })
 export default class PredictionEntry extends BaseComponent {
-  startDate?: Moment;
-  endDate?: Moment;
+  startDate = moment()
+    .startOf("week")
+    .format("YYYY-MM-DD");
+  endDate = moment(this.startDate)
+    .add(1, "week")
+    .format("YYYY-MM-DD");
+
+  get apiEndpoint() {
+    return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}&user=${this.$store.state.AuthModule.user.id}`;
+  }
 
   entityList: unknown[] = [];
 
@@ -80,9 +102,30 @@ export default class PredictionEntry extends BaseComponent {
     { value: "D", text: "Draw" }
   ];
 
+  weekSelection = 0;
+  weekSelectionFormats = ["Last Week", "This Week", "Next Week"];
+  weekSelectionFormatter(value: number) {
+    return this.weekSelectionFormats[value + 1];
+  }
+
   created() {
-    this.startDate = moment().startOf("week");
-    this.endDate = moment(this.startDate).add(1, "week");
+    this.getAllEntities();
+  }
+
+  @Watch("weekSelection")
+  setWeekSelection(weekNumber: number) {
+    this.startDate = moment()
+      .startOf("week")
+      .add(weekNumber, "week")
+      .format("YYYY-MM-DD");
+
+    this.endDate = moment(this.startDate)
+      .add(1, "week")
+      .format("YYYY-MM-DD");
+  }
+
+  @Watch("apiEndpoint")
+  apiEndpointUpdated() {
     this.getAllEntities();
   }
 
@@ -91,11 +134,7 @@ export default class PredictionEntry extends BaseComponent {
       return;
     }
 
-    return await this.callENKEL(
-      `/iapi/predictions/bydate?startDate=${this.startDate.format("YYYY MM DD")}&endDate=${this.endDate.format(
-        "YYYY MM DD"
-      )}&user=${this.$store.state.AuthModule.user.id}`
-    )
+    return await this.callENKEL(this.apiEndpoint)
       .then(res => res.json())
       .then(json => {
         json.forEach((element: { previousPrediction: string; prediction: string }) => {
