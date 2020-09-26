@@ -32,6 +32,22 @@ export class BasicEntityOperationHandler<TEntity extends Entity> {
     return apiResponse;
   }
 
+  public async saveMultipleEntities(entities: Partial<TEntity>[]): Promise<EntityApiResponse> {
+    const apiResponse = new EntityApiResponse();
+    console.log(`Saving ${entities.length} Entities`);
+
+    try {
+      apiResponse.entity = await this._DAO.saveAll(entities);
+    } catch (error) {
+      console.error("Error occurred trying to save entity");
+      console.error(error);
+      apiResponse.errorMessage = error;
+      apiResponse.success = false;
+    }
+
+    return apiResponse;
+  }
+
   public async deleteEntity(entityStringId: string): Promise<EntityApiResponse> {
     console.log("entity string id", entityStringId);
     const entityId = parseInt(entityStringId);

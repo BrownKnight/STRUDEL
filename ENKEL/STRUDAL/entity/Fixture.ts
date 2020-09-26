@@ -22,6 +22,6 @@ export class Fixture {
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   fixtureResult!: FixtureResult;
 
-  @OneToMany(() => Prediction, (prediction) => prediction.fixture)
+  @OneToMany(() => Prediction, (prediction) => prediction.fixture, { cascade: true })
   predictions!: Prediction[];
 }

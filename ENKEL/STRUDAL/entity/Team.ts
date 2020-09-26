@@ -4,9 +4,9 @@ const { PrimaryGeneratedColumn, Entity, Column, Index } = pkg;
 @Entity()
 export class Team {
   @PrimaryGeneratedColumn()
-  id!: number | undefined;
+  id?: number;
 
   @Column("character varying")
   @Index({ unique: true })
-  teamName!: string;
+  teamName?: string;
 }

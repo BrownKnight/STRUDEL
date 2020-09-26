@@ -4,6 +4,7 @@ import { IApiPredictionsRouter } from "./predictions/router.js";
 import { IApiTeamsRouter } from "./teams/router.js";
 import { IApiUserLoginsRouter } from "./users/router.js";
 import { IApiFixturesRouter } from "./fixtures/router.js";
+import { IApiExternalRouter } from "./external/router.js";
 
 /**
  * Base router for all internal API calls (i.e. from the front end)
@@ -18,6 +19,7 @@ export class IApiRouter extends RouterBase {
     this.router.use("/teams", new IApiTeamsRouter().router);
     this.router.use("/users", new IApiUserLoginsRouter().router);
     this.router.use("/fixtures", new IApiFixturesRouter().router);
+    this.router.use("/external", new IApiExternalRouter().router);
   }
 
   private index(req: Request, res: Response) {
