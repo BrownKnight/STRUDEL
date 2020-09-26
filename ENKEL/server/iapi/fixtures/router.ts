@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { FixturesHandler } from "./handlers/fixturesHandler.js";
-import _ from "lodash";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 
 /**
@@ -96,17 +95,19 @@ export class IApiFixturesRouter extends RouterBase {
     return flattenedFixture;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private convertToCSV(objArray: any) {
     const dict: Record<string, Record<number, string>> = {};
     // headerRow, with basics
     dict["date"] = {};
     dict["homeTeamName"] = {};
     dict["awayTeamName"] = {};
-    objArray.forEach((fixture: any, index: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    objArray.forEach((fixture: Record<string, any>, index: number) => {
       dict["date"][index] = fixture.date;
       dict["homeTeamName"][index] = fixture.homeTeamName;
       dict["awayTeamName"][index] = fixture.awayTeamName;
-      fixture.predictions.forEach((prediction: any) => {
+      fixture.predictions.forEach((prediction: Record<string, string>) => {
         if (!dict[prediction.userFullName]) {
           dict[prediction.userFullName] = {};
         }
