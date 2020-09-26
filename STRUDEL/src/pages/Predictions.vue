@@ -1,11 +1,16 @@
 <template>
   <div id="predictions-page">
-    <b-row class="my-5 mx-1">
-      <h3 class="mb-1">{{ isAdmin() ? "Maintain" : "Everyone's" }} Predictions</h3>
-      <b-button class="ml-auto mb-1" size="sm" variant="outline-info" @click="downloadPredictions()">
-        <b-icon class="mr-2 ml-1" icon="download"></b-icon>
-        <span>Download Predictions</span>
-      </b-button>
+    <b-row>
+      <b-col col="12" md="6">
+        <h3 class="my-5 mb-1 text-left">{{ isAdmin() ? "Maintain" : "Everyone's" }} Predictions</h3>
+      </b-col>
+
+      <b-col cols="12" md="3" offset-md="3" class="d-flex justify-content-md-end justify-content-center">
+        <b-button class="mb-1 align-self-center" size="sm" variant="outline-info" @click="downloadPredictions()">
+          <b-icon class="mr-2 ml-1" icon="download"></b-icon>
+          <span>Download Predictions</span>
+        </b-button>
+      </b-col>
     </b-row>
     <EntityManagement
       v-bind:apiEndpoint="'/iapi/predictions'"
