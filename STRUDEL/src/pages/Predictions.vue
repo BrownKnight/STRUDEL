@@ -1,7 +1,7 @@
 <template>
   <div id="predictions-page">
     <b-row>
-      <b-col col="12" md="6">
+      <b-col cols="12" md="6">
         <h3 class="my-5 mb-1 text-left">{{ isAdmin() ? "Maintain" : "Everyone's" }} Predictions</h3>
       </b-col>
 
@@ -12,8 +12,18 @@
         </b-button>
       </b-col>
     </b-row>
+
+    <b-row class="my-2">
+      <b-col cols="12" md="6" offset-md="3">
+        <b-input-group size="sm" prepend="Predictions between">
+          <b-form-input v-model="startDate" type="date" id="filter-start-date"></b-form-input>
+          <b-input-group-append is-text>and</b-input-group-append>
+          <b-form-input v-model="endDate" type="date" id="filter-end-date"></b-form-input>
+        </b-input-group>
+      </b-col>
+    </b-row>
     <EntityManagement
-      v-bind:apiEndpoint="'/iapi/predictions'"
+      :apiEndpoint="apiEndpoint"
       :entityFormComponent="PredictionForm"
       :fields="fields"
     ></EntityManagement>
@@ -36,10 +46,16 @@ export default class Predictions extends BaseComponent {
 
   startDate = moment()
     .startOf("week")
-    .add(3, "day");
+    .add(3, "day")
+    .format("YYYY-MM-DD");
   endDate = moment(this.startDate)
     .add(1, "week")
-    .add(1, "day");
+    .add(1, "day")
+    .format("YYYY-MM-DD");
+
+  get apiEndpoint() {
+    return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}`
+  }
 
   fields = [
     { key: "id", sortable: true, label: "id" },
@@ -79,35 +95,32 @@ export default class Predictions extends BaseComponent {
   }
 
   downloadPredictions() {
-    this.callENKEL(
-      `/iapi/fixtures/bydate?startDate=${this.startDate.format("YYYY-MM-DD")}&endDate=${this.endDate.format(
-        "YYYY-MM-DD"
-      )}&format=csv`,
-      "GET"
-    ).then(res => {
-      if (!res.ok) {
-        res
-          .text()
-          .then(text => JSON.parse(text))
-          .then(json => {
-            this.showEntityAlert(5, `"Could not download :( ${json.errorMessage}`, "danger");
+    this.callENKEL(`/iapi/fixtures/bydate?startDate=${this.startDate}&endDate=${this.endDate}&format=csv`, "GET").then(
+      res => {
+        if (!res.ok) {
+          res
+            .text()
+            .then(text => JSON.parse(text))
+            .then(json => {
+              this.showEntityAlert(5, `"Could not download :( ${json.errorMessage}`, "danger");
+            });
+        } else {
+          this.showEntityAlert(2, "Downloading...", "success");
+          res.text().then(text => {
+            const element = document.createElement("a");
+            element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+            element.setAttribute("download", "fixture_predictions.csv");
+
+            element.style.display = "none";
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
           });
-      } else {
-        this.showEntityAlert(2, "Downloading...", "success");
-        res.text().then(text => {
-          const element = document.createElement("a");
-          element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
-          element.setAttribute("download", "fixture_predictions.csv");
-
-          element.style.display = "none";
-          document.body.appendChild(element);
-
-          element.click();
-
-          document.body.removeChild(element);
-        });
+        }
       }
-    });
+    );
   }
 }
 </script>

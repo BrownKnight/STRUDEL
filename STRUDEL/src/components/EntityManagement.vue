@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 
 const SHOW_ALERT_TIME = 20;
@@ -74,6 +74,13 @@ export default class EntityManagement extends BaseComponent {
   async created() {
     if (this.apiEndpoint) {
       this.getAllEntities(this.apiEndpoint);
+    }
+  }
+
+  @Watch("apiEndpoint")
+  endpointUpdated(apiEndpoint: string) {
+    if (apiEndpoint) {
+      this.getAllEntities(apiEndpoint);
     }
   }
 
