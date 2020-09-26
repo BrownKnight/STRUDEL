@@ -7,10 +7,10 @@ import { FixturesHandler } from "./handlers/fixturesHandler.js";
  * Router for all internal fixtures-based api calls. Supports the fetching, updating, and deleting
  *
  * Routes:
- * GET:/              : Get all Fixtures
- * GET:/<team_id>     : Get Fixture for the given FixtureID
- * PUT:/              : Create or update a team
- * DELETE:/<team_id>  : Delete a given prediciton
+ * GET:/                  : Get all Fixtures
+ * GET:/bydate            : Get Fixture for a given date range (params: startDate, endDate)
+ * PUT:/                  : Create or update a team
+ * DELETE:/<fixture_id>   : Delete a given fixture
  */
 export class IApiFixturesRouter extends RouterBase {
   private _fixturesHandler: FixturesHandler;
@@ -22,6 +22,7 @@ export class IApiFixturesRouter extends RouterBase {
 
   protected initLocalRoutes(): void {
     this.router.get("/", this.getAllFixtures.bind(this));
+    this.router.get("/bydate", this.getFixturesByDate.bind(this));
     this.router.put("/", this.saveFixture.bind(this));
     this.router.delete("/:fixtureId", this.deleteFixture.bind(this));
     this.router.all("/*", this.index.bind(this));
@@ -37,6 +38,17 @@ export class IApiFixturesRouter extends RouterBase {
 
   private async getAllFixtures(req: Request, res: Response) {
     res.json(await this._fixturesHandler.getAllEntities());
+  }
+
+  private async getFixturesByDate(req: Request, res: Response) {
+    const startDate = req.query["startDate"];
+    const endDate = req.query["endDate"];
+    if (!startDate || !endDate) {
+      res.status(400).json(new EntityApiResponse(false, "No start/end date supplied"));
+      return;
+    }
+
+    res.json(await this._fixturesHandler.getFixturesForDateRange(startDate as string, endDate as string));
   }
 
   private async saveFixture(req: Request, res: Response) {

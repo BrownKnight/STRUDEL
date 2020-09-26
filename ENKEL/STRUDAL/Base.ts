@@ -16,7 +16,7 @@ export async function initDb(): Promise<void> {
     database: process.env.STRUDAL_DATABASE_NAME,
     entities: [UserLogin, Team, Fixture, Prediction],
     synchronize: true,
-    //logging: true,
+    logging: true,
   })
     .then(() => {
       console.log(`Conected to db at ${process.env.STRUDAL_DATABASE_HOST}:${process.env.STRUDAL_DATABASE_PORT}`);

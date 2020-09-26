@@ -1,6 +1,7 @@
 import pkg from "typeorm";
-const { PrimaryGeneratedColumn, Entity, Column, ManyToOne } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column, ManyToOne, OneToMany } = pkg;
 import { FixtureResult } from "./dataTypes/FixtureResult.js";
+import { Prediction } from "./Prediction.js";
 import { Team } from "./Team.js";
 
 @Entity()
@@ -19,4 +20,7 @@ export class Fixture {
 
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   fixtureResult!: FixtureResult;
+
+  @OneToMany(() => Prediction, (prediction) => prediction.fixture)
+  predictions!: Prediction[];
 }

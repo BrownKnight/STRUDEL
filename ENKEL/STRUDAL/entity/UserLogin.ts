@@ -2,7 +2,7 @@ import "reflect-metadata";
 import pkg from "typeorm";
 import bcrypt from "bcrypt";
 import { UserRole } from "./dataTypes/UserRoles.js";
-const { PrimaryGeneratedColumn, Entity, Column, BeforeUpdate, BeforeInsert } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column, BeforeUpdate, BeforeInsert, Index } = pkg;
 
 @Entity()
 export class UserLogin {
@@ -10,6 +10,7 @@ export class UserLogin {
   id!: number;
 
   @Column("character varying")
+  @Index({ unique: true })
   emailAddress!: string;
 
   @Column("character varying")
