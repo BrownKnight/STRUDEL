@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { FixturesHandler } from "./handlers/fixturesHandler.js";
+import _ from "lodash";
+import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 
 /**
  * Router for all internal fixtures-based api calls. Supports the fetching, updating, and deleting
@@ -48,7 +50,15 @@ export class IApiFixturesRouter extends RouterBase {
       return;
     }
 
-    res.json(await this._fixturesHandler.getFixturesForDateRange(startDate as string, endDate as string));
+    const format = req.query["format"];
+    const fixtures = await this._fixturesHandler.getFixturesForDateRange(startDate as string, endDate as string);
+
+    if (format && format === "csv") {
+      const flattenedFixtures = this.flattenFixtures(fixtures);
+      res.send(this.convertToCSV(flattenedFixtures));
+    } else {
+      res.json(fixtures);
+    }
   }
 
   private async saveFixture(req: Request, res: Response) {
@@ -67,5 +77,54 @@ export class IApiFixturesRouter extends RouterBase {
     } else {
       res.status(400).json(apiResponse);
     }
+  }
+
+  private flattenFixtures(fixtures: Fixture[]) {
+    const flattenedFixture = fixtures.map((fixture) => {
+      return {
+        date: fixture.date,
+        homeTeamName: fixture.homeTeam.teamName,
+        awayTeamName: fixture.awayTeam.teamName,
+        predictions: fixture.predictions.map((prediction) => {
+          return {
+            userFullName: prediction.user.fullName,
+            prediction: prediction.prediction,
+          };
+        }),
+      };
+    });
+    return flattenedFixture;
+  }
+
+  private convertToCSV(objArray: any) {
+    const dict: Record<string, Record<number, string>> = {};
+    // headerRow, with basics
+    dict["date"] = {};
+    dict["homeTeamName"] = {};
+    dict["awayTeamName"] = {};
+    objArray.forEach((fixture: any, index: number) => {
+      dict["date"][index] = fixture.date;
+      dict["homeTeamName"][index] = fixture.homeTeamName;
+      dict["awayTeamName"][index] = fixture.awayTeamName;
+      fixture.predictions.forEach((prediction: any) => {
+        if (!dict[prediction.userFullName]) {
+          dict[prediction.userFullName] = {};
+        }
+        dict[prediction.userFullName][index] = prediction.prediction;
+      });
+    });
+
+    let csvString = Object.keys(dict).join(",") + "\n";
+
+    for (let i = 0; i < objArray.length; i++) {
+      let line = "";
+      Object.keys(dict).forEach((key) => {
+        if (line !== "") line += ",";
+        line += dict[key][i] ?? "";
+      });
+      csvString += line + "\n";
+    }
+
+    return csvString;
   }
 }
