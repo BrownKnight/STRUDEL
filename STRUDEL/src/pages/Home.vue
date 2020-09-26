@@ -1,7 +1,7 @@
 <template>
   <div id="hey">
     <b-row>
-      <h3 class="my-5 mx-3">My Predictions (This Weekend)</h3>
+      <h3 class="my-5 mx-3">My Predictions</h3>
     </b-row>
     <PredictionEntry />
   </div>

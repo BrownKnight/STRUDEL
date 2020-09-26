@@ -52,7 +52,7 @@ export default class Predictions extends BaseComponent {
     .format("YYYY-MM-DD");
 
   get apiEndpoint() {
-    return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}`
+    return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
   }
 
   fields = [
