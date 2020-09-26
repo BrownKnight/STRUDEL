@@ -1,10 +1,11 @@
 import pkg from "typeorm";
-const { PrimaryGeneratedColumn, Entity, Column, ManyToOne, OneToMany } = pkg;
+const { PrimaryGeneratedColumn, Entity, Column, ManyToOne, OneToMany, Unique } = pkg;
 import { FixtureResult } from "./dataTypes/FixtureResult.js";
 import { Prediction } from "./Prediction.js";
 import { Team } from "./Team.js";
 
 @Entity()
+@Unique("fixture_index", ["date", "homeTeam", "awayTeam"])
 export class Fixture {
   @PrimaryGeneratedColumn()
   id!: number;
