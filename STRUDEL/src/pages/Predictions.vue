@@ -46,11 +46,9 @@ export default class Predictions extends BaseComponent {
 
   startDate = moment()
     .startOf("week")
-    .add(3, "day")
     .format("YYYY-MM-DD");
   endDate = moment(this.startDate)
     .add(1, "week")
-    .add(1, "day")
     .format("YYYY-MM-DD");
 
   get apiEndpoint() {

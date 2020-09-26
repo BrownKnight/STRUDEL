@@ -6,6 +6,8 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
+import moment from "moment";
+
 import App from "@/App.vue";
 import Home from "@/pages/Home.vue";
 import Users from "@/pages/Users.vue";
@@ -15,6 +17,13 @@ import Predictions from "@/pages/Predictions.vue";
 import Login from "@/pages/Login.vue";
 
 import { Store } from "@/authStore.ts";
+
+// Our "weeks" start on a tuesday, so set start of week to tuesday
+moment.locale("en", {
+  week: {
+    dow: 2
+  }
+});
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);

@@ -81,9 +81,7 @@ export default class PredictionEntry extends BaseComponent {
   ];
 
   created() {
-    this.startDate = moment()
-      .startOf("week")
-      .add(3, "day");
+    this.startDate = moment().startOf("week");
     this.endDate = moment(this.startDate).add(1, "week");
     this.getAllEntities();
   }
