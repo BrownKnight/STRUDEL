@@ -68,7 +68,6 @@
         </b-col>
       </template>
     </b-table>
-    <p>{{ ok }}</p>
   </div>
 </template>
 
@@ -96,8 +95,6 @@ export default class PredictionEntry extends BaseComponent {
   entityList: unknown[] = [];
 
   predictionChanges = true;
-
-  ok = "";
 
   fields = [
     { key: "fixture.date", label: "Date", sortable: true, formatter: this.formatDate },
