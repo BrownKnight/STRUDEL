@@ -105,8 +105,8 @@ export default class PredictionEntry extends BaseComponent {
 
   predictionOptions = [
     { value: "H", text: "Home Win" },
-    { value: "A", text: "Away Win" },
-    { value: "D", text: "Draw" }
+    { value: "D", text: "Draw" },
+    { value: "A", text: "Away Win" }
   ];
 
   weekSelection = 0;
