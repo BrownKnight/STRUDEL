@@ -2,13 +2,13 @@ module.exports = {
   devServer: {
     proxy: {
       "^/iapi": {
-        target: "http://localhost:3000"
+        target: process.env.ENKEL_API_SERVICE
       },
       "^/api": {
-        target: "http://localhost:3000"
+        target: process.env.ENKEL_API_SERVICE
       },
       "^/login": {
-        target: "http://localhost:3000"
+        target: process.env.ENKEL_API_SERVICE
       }
     }
   }
