@@ -35,8 +35,18 @@
       :sort-by="'fixture.date'"
       small
     >
-      <template v-slot:cell(homeTeam)="data"> {{ data.item.fixture.homeTeam.teamName }} [Logo] </template>
-      <template v-slot:cell(awayTeam)="data"> [Logo] {{ data.item.fixture.awayTeam.teamName }} </template>
+      <template v-slot:cell(homeTeam)="data">
+        <div class="w-100 justify-content-start justify-content-md-end d-flex align-items-center">
+          <span class="order-sm-1 order-2"> {{ data.item.fixture.homeTeam.teamName }}</span>
+          <img class="mx-2 order-sm-2 order-1" :src="data.item.fixture.homeTeam.teamLogoUrl" style="height: 2em;" />
+        </div>
+      </template>
+      <template v-slot:cell(awayTeam)="data">
+        <div class="w-100 text-left">
+          <img class="mx-2" :src="data.item.fixture.awayTeam.teamLogoUrl" style="height: 2em;" />
+          <span> {{ data.item.fixture.awayTeam.teamName }}</span>
+        </div>
+      </template>
 
       <template v-slot:cell(prediction)="data">
         <b-col class="mx-auto prediction-column">
