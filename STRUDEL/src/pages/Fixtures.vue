@@ -40,16 +40,16 @@ export default class Teams extends BaseComponent {
       this.fields = [
         { key: "id", sortable: true, label: "id" },
         { key: "date", sortable: true, label: "Date" },
-        { key: "homeTeam.teamName", label: "Home Team", sortable: true },
-        { key: "awayTeam.teamName", label: "Away Team", sortable: true },
+        { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
+        { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true },
         { key: "Action", label: "Action", sortable: false }
       ];
     } else {
       this.fields = [
         { key: "date", sortable: true, label: "Date" },
-        { key: "homeTeam.teamName", label: "Home Team", sortable: true },
-        { key: "awayTeam.teamName", label: "Away Team", sortable: true },
+        { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
+        { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true }
       ];
     }

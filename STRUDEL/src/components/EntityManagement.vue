@@ -20,6 +20,19 @@
           <b-icon icon="x"></b-icon>
         </b-button>
       </template>
+
+      <template v-slot:cell(fixtureHomeTeam)="data">
+        <div class="w-100 justify-content-start justify-content-md-end d-flex align-items-center text-right">
+          <span class="order-sm-1 order-2"> {{ data.item.homeTeam.teamName }}</span>
+          <img class="mx-2 order-sm-2 order-1" :src="data.item.homeTeam.teamLogoUrl" style="height: 2em;" />
+        </div>
+      </template>
+      <template v-slot:cell(fixtureAwayTeam)="data">
+        <div class="w-100 justify-content-start d-flex align-items-center text-left">
+          <span class="order-2"> {{ data.item.awayTeam.teamName }}</span>
+          <img class="mx-2 order-1" :src="data.item.awayTeam.teamLogoUrl" style="height: 2em;" />
+        </div>
+      </template>
     </b-table>
 
     <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()"

@@ -36,15 +36,15 @@
       small
     >
       <template v-slot:cell(homeTeam)="data">
-        <div class="w-100 justify-content-start justify-content-md-end d-flex align-items-center">
+        <div class="w-100 justify-content-start justify-content-md-end d-flex align-items-center text-right">
           <span class="order-sm-1 order-2"> {{ data.item.fixture.homeTeam.teamName }}</span>
           <img class="mx-2 order-sm-2 order-1" :src="data.item.fixture.homeTeam.teamLogoUrl" style="height: 2em;" />
         </div>
       </template>
       <template v-slot:cell(awayTeam)="data">
-        <div class="w-100 text-left">
-          <img class="mx-2" :src="data.item.fixture.awayTeam.teamLogoUrl" style="height: 2em;" />
-          <span> {{ data.item.fixture.awayTeam.teamName }}</span>
+        <div class="w-100 justify-content-start d-flex align-items-center text-left">
+          <span class="order-2"> {{ data.item.fixture.awayTeam.teamName }}</span>
+          <img class="mx-2 order-1" :src="data.item.fixture.awayTeam.teamLogoUrl" style="height: 2em;" />
         </div>
       </template>
 
