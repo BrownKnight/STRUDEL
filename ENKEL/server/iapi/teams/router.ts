@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { TeamsHandler } from "./handlers/teamsHandler.js";
+import { TeamsHandler } from "./teamsHandler.js";
 
 /**
  * Router for all internal teams-based api calls. Supports the fetching, updating, and deleting

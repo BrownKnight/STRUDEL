@@ -1,6 +1,6 @@
-import { BaseDAO } from "../../../STRUDAL/DAO/BaseDAO.js";
-import { Entity } from "../../../STRUDAL/entity/EntityType.js";
-import { EntityApiResponse } from "../apiResponse.js";
+import { BaseDAO } from "../../STRUDAL/DAO/BaseDAO.js";
+import { Entity } from "../../STRUDAL/entity/EntityType.js";
+import { EntityApiResponse } from "./apiResponse.js";
 
 export class BasicEntityOperationHandler<TEntity extends Entity> {
   protected _DAO: BaseDAO<TEntity>;

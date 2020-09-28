@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { FixturesHandler } from "../fixtures/handlers/fixturesHandler.js";
+import { FixturesHandler } from "../fixtures/fixturesHandler.js";
 import fetch from "node-fetch";
 import moment from "moment";
-import { TeamsHandler } from "../teams/handlers/teamsHandler.js";
+import { TeamsHandler } from "../teams/teamsHandler.js";
 
 /**
  * Router to handle requests to populate STRUDAL with information from third-party API's
@@ -63,6 +63,7 @@ export class IApiExternalRouter extends RouterBase {
         });
 
         const fixtures: Partial<Fixture>[] = apiFixtures.map(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (fixture: any): Partial<Fixture> => {
             return {
               date: moment(fixture.event_date).toDate(),

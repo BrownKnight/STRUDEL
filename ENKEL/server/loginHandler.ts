@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { EntityApiResponse } from "./iapi/apiResponse.js";
 import { LoginResponse } from "./iapi/loginResponse.js";
-import { UserLoginsHandler } from "./iapi/users/handlers/userLoginsHandler.js";
+import { UserLoginsHandler } from "./iapi/users/userLoginsHandler.js";
 
 export class LoginHandler {
   private _userLoginsHandler: UserLoginsHandler;

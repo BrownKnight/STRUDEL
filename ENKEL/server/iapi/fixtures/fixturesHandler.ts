@@ -1,6 +1,6 @@
-import { Fixture } from "../../../../STRUDAL/entity/Fixture.js";
-import { FixtureDAO } from "../../../../STRUDAL/DAO/FixtureDAO.js";
-import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
+import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
+import { FixtureDAO } from "../../../STRUDAL/DAO/FixtureDAO.js";
+import { BasicEntityOperationHandler } from "../basicEntityOperationHandler.js";
 import moment from "moment";
 
 export class FixturesHandler extends BasicEntityOperationHandler<Fixture> {

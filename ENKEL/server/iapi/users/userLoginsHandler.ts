@@ -1,10 +1,10 @@
-import { UserLogin } from "../../../../STRUDAL/entity/UserLogin.js";
-import { UserLoginDAO } from "../../../../STRUDAL/DAO/UserLoginDAO.js";
-import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
-import { LoginResponse } from "../../loginResponse.js";
+import { UserLogin } from "../../../STRUDAL/entity/UserLogin.js";
+import { UserLoginDAO } from "../../../STRUDAL/DAO/UserLoginDAO.js";
+import { BasicEntityOperationHandler } from "../basicEntityOperationHandler.js";
+import { LoginResponse } from "../loginResponse.js";
 import bcrypt from "bcrypt";
-import { EntityApiResponse } from "../../apiResponse.js";
-import { UserRole } from "../../../../STRUDAL/entity/dataTypes/UserRoles.js";
+import { EntityApiResponse } from "../apiResponse.js";
+import { UserRole } from "../../../STRUDAL/entity/dataTypes/UserRoles.js";
 
 export class UserLoginsHandler extends BasicEntityOperationHandler<UserLogin> {
   constructor() {

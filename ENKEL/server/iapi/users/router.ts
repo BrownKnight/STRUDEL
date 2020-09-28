@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserLogin } from "../../../STRUDAL/entity/UserLogin.js";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { UserLoginsHandler } from "./handlers/userLoginsHandler.js";
+import { UserLoginsHandler } from "./userLoginsHandler.js";
 
 /**
  * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting

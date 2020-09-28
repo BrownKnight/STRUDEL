@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { FixturesHandler } from "./handlers/fixturesHandler.js";
+import { FixturesHandler } from "./fixturesHandler.js";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 
 /**

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
-import { PredictionsHandler } from "./handlers/predictionsHandler.js";
+import { PredictionsHandler } from "./predictionsHandler.js";
 import moment from "moment";
 
 /**

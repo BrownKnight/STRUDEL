@@ -1,10 +1,10 @@
-import { Prediction } from "../../../../STRUDAL/entity/Prediction.js";
-import { PredictionDAO } from "../../../../STRUDAL/DAO/PredictionDAO.js";
-import { BasicEntityOperationHandler } from "../../handlers/basicEntityOperationHandler.js";
-import { EntityApiResponse } from "../../apiResponse.js";
-import { FixtureDAO } from "../../../../STRUDAL/DAO/FixtureDAO.js";
+import { Prediction } from "../../../STRUDAL/entity/Prediction.js";
+import { PredictionDAO } from "../../../STRUDAL/DAO/PredictionDAO.js";
+import { BasicEntityOperationHandler } from "../basicEntityOperationHandler.js";
+import { EntityApiResponse } from "../apiResponse.js";
+import { FixtureDAO } from "../../../STRUDAL/DAO/FixtureDAO.js";
 import { Moment } from "moment";
-import { Fixture } from "../../../../STRUDAL/entity/Fixture.js";
+import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 
 export class PredictionsHandler extends BasicEntityOperationHandler<Prediction> {
   private _fixtureDAO: FixtureDAO;
