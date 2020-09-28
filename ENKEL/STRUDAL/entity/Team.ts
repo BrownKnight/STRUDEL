@@ -9,4 +9,7 @@ export class Team {
   @Column("character varying")
   @Index({ unique: true })
   teamName?: string;
+
+  @Column("character varying", { nullable: true })
+  teamLogoUrl?: string;
 }
