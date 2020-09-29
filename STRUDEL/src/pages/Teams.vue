@@ -3,11 +3,7 @@
     <b-row>
       <h3 class="my-5 mx-3">Maintain Teams</h3>
     </b-row>
-    <EntityManagement
-      v-bind:apiEndpoint="'/iapi/teams'"
-      :entityFormComponent="TeamForm"
-      :fields="fields"
-    ></EntityManagement>
+    <EntityManagement :apiEndpoint="'/iapi/teams'" :entityFormComponent="TeamForm" :fields="fields"></EntityManagement>
   </div>
 </template>
 
