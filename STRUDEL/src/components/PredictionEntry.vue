@@ -21,53 +21,64 @@
       >Predict This Weeks Fixtures</b-button
     >
 
-    <b-table
-      v-if="weekSelection === -1 || (entityList && entityList.length > 0)"
-      striped
-      :items="entityList"
-      :fields="fields"
-      show-empty
-      outline
-      borderless
-      head-variant="dark"
-      stacked="sm"
-      table-variant="white"
-      :sort-by="'fixture.date'"
-      small
-    >
-      <template v-slot:cell(homeTeam)="data">
-        <div class="w-100 justify-content-start justify-content-md-end d-flex align-items-center text-right">
-          <span class="order-sm-1 order-2"> {{ data.item.fixture.homeTeam.teamName }}</span>
-          <img class="mx-2 order-sm-2 order-1" :src="data.item.fixture.homeTeam.teamLogoUrl" style="height: 2em;" />
-        </div>
-      </template>
-      <template v-slot:cell(awayTeam)="data">
-        <div class="w-100 justify-content-start d-flex align-items-center text-left">
-          <span class="order-2"> {{ data.item.fixture.awayTeam.teamName }}</span>
-          <img class="mx-2 order-1" :src="data.item.fixture.awayTeam.teamLogoUrl" style="height: 2em;" />
-        </div>
-      </template>
-
-      <template v-slot:cell(prediction)="data">
-        <b-col class="mx-auto prediction-column">
-          <b-input-group size="sm" style="justify-content:stretch">
-            <b-form-radio-group
-              id="my-prediction"
-              v-model="data.item.prediction"
-              :options="predictionOptions"
-              buttons
-              size="sm"
-              name="my-prediction"
-              button-variant="outline-primary"
-              class="flex-grow-1"
-            ></b-form-radio-group>
-            <b-input-group-append class="flex-grow-1" v-if="data.item.previousPrediction !== data.item.prediction">
-              <b-button class="w-100" variant="success" @click="submitPrediction(data.item)">Confirm</b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-col>
-      </template>
-    </b-table>
+    <template v-for="date in Object.keys(entityList).sort()">
+      <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
+        <h4>{{ formatDate(entityList[date][0].fixture.date) }}</h4>
+      </b-row>
+      <b-row :key="entityList[date][0].id + 1" class="mt-1">
+        <b-container>
+          <b-card-group
+            columns
+            :deck="entityList[date].length < 5"
+            v-if="weekSelection === -1 || (entityList[date] && entityList[date].length > 0)"
+          >
+            <b-card v-for="entity in entityList[date]" :key="entity.id" no-body class="shadow">
+              <b-card-body class="px-3 pt-3 pb-2">
+                <b-form-radio-group
+                  buttons
+                  v-model="entity.prediction"
+                  button-variant="prediction"
+                  class="d-flex flex-wrap justify-content-around"
+                >
+                  <b-form-radio
+                    name="prediction"
+                    value="H"
+                    class="w-50 d-flex flex-column align-items-center p-2 rounded"
+                  >
+                    <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
+                    <span class="mt-2 mb-1">{{ entity.fixture.homeTeam.teamName }}</span>
+                    <small class="mb-2">Home</small>
+                  </b-form-radio>
+                  <b-form-radio
+                    name="prediction"
+                    value="A"
+                    class="w-50 d-flex flex-column align-items-center p-2 rounded"
+                  >
+                    <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
+                    <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
+                    <small class="mb-2">Away</small>
+                  </b-form-radio>
+                  <b-form-radio name="prediction" value="D" class="flex-grow-0 d-flex rounded">
+                    <small class="my-1 mx-5">Draw</small>
+                  </b-form-radio>
+                </b-form-radio-group>
+              </b-card-body>
+              <b-button
+                class="w-100 p-1"
+                variant="outline-success"
+                v-if="entity.previousPrediction !== entity.prediction"
+                @click="submitPrediction(entity)"
+              >
+                <small>Submit Prediction</small>
+              </b-button>
+              <div class="w-100 p-1" variant="outline-secondary" disabled v-if="entity.prediction == null">
+                <small class="helper-text"><em>Tap on a team to make your prediction</em></small>
+              </div>
+            </b-card>
+          </b-card-group>
+        </b-container>
+      </b-row>
+    </template>
   </div>
 </template>
 
@@ -76,6 +87,7 @@ import "reflect-metadata";
 import { Component, Watch } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
+import _ from "lodash";
 
 @Component({
   components: {}
@@ -92,22 +104,9 @@ export default class PredictionEntry extends BaseComponent {
     return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}&user=${this.$store.state.AuthModule.user.id}`;
   }
 
-  entityList: unknown[] = [];
+  entityList: unknown = [];
 
   predictionChanges = true;
-
-  fields = [
-    { key: "fixture.date", label: "Date", sortable: true, formatter: this.formatDate },
-    { key: "homeTeam", label: "Home Team", sortable: true },
-    { key: "awayTeam", label: "Away Team", sortable: true },
-    { key: "prediction", label: "My Prediction" }
-  ];
-
-  predictionOptions = [
-    { value: "H", text: "Home Win" },
-    { value: "D", text: "Draw" },
-    { value: "A", text: "Away Win" }
-  ];
 
   weekSelection = 0;
   weekSelectionFormats = ["Last Week", "This Week", "Next Week"];
@@ -147,7 +146,7 @@ export default class PredictionEntry extends BaseComponent {
         json.forEach((element: { previousPrediction: string; prediction: string }) => {
           element.previousPrediction = element.prediction;
         });
-        this.entityList = json;
+        this.entityList = _.groupBy(json, "fixture.date");
       });
   }
 
@@ -225,12 +224,25 @@ export default class PredictionEntry extends BaseComponent {
 </script>
 
 <style lang="scss">
-.b-toaster-top-right {
-  top: 56px !important;
+@use "sass:map";
+
+.btn-prediction {
+  border-color: transparent;
+  // border-radius: 1em !important;
+  border-width: 2px;
 }
 
-.toast-body {
-  text-decoration: none !important;
-  color: inherit !important;
+.btn-prediction.active {
+  background-color: whitesmoke;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.btn-prediction:hover {
+  background-color: whitesmoke;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.helper-text {
+  font-weight: bold;
+  color: darkgrey;
 }
 </style>
