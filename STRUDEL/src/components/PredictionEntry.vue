@@ -32,7 +32,19 @@
             :deck="entityList[date].length < 5"
             v-if="weekSelection === -1 || (entityList[date] && entityList[date].length > 0)"
           >
-            <b-card v-for="entity in entityList[date]" :key="entity.id" no-body class="shadow">
+            <b-card
+              v-for="entity in entityList[date]"
+              :key="entity.id"
+              no-body
+              class="shadow"
+              :border-variant="
+                entity.fixture.fixtureResult
+                  ? entity.fixture.fixtureResult === entity.prediction
+                    ? 'success'
+                    : 'danger'
+                  : null
+              "
+            >
               <b-card-body class="px-3 pt-3 pb-2">
                 <b-form-radio-group
                   buttons
@@ -63,6 +75,11 @@
                   </b-form-radio>
                 </b-form-radio-group>
               </b-card-body>
+
+              <b-card-body v-if="entity.fixture.fixtureResult !== null">
+                <span>Actual Result: {{ formatFixtureResult(entity.fixture.fixtureResult) }}</span>
+              </b-card-body>
+
               <b-button
                 class="w-100 p-1"
                 variant="outline-success"
@@ -219,6 +236,17 @@ export default class PredictionEntry extends BaseComponent {
 
   formatDate(date: string | Date): string {
     return moment(date).format("ddd, Do MMM");
+  }
+
+  formatFixtureResult(result: string) {
+    switch (result) {
+      case "H":
+        return "Home Win";
+      case "A":
+        return "Away Win";
+      case "D":
+        return "Draw";
+    }
   }
 }
 </script>
