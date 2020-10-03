@@ -24,6 +24,7 @@
     </b-row>
     <EntityManagement
       :apiEndpoint="apiEndpoint"
+      :GETextension="GETextension"
       :entityFormComponent="PredictionForm"
       :fields="fields"
     ></EntityManagement>
@@ -51,9 +52,11 @@ export default class Predictions extends BaseComponent {
     .add(1, "week")
     .format("YYYY-MM-DD");
 
-  get apiEndpoint() {
-    return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
+  get GETextension() {
+    return `/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
   }
+
+  apiEndpoint = "/iapi/predictions";
 
   fields = [
     { key: "id", sortable: true, label: "id" },

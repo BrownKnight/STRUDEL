@@ -4,7 +4,7 @@
       <h3 class="my-5 mx-3">{{ isAdmin() ? "Maintain" : "View" }} Fixtures</h3>
     </b-row>
     <EntityManagement
-      v-bind:apiEndpoint="'/iapi/fixtures'"
+      :apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"
       :fields="fields"
       :populateNewEntity="populateNewEntity"

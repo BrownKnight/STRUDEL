@@ -70,6 +70,8 @@ export default class EntityManagement extends BaseComponent {
   @Prop()
   apiEndpoint: string | undefined;
   @Prop()
+  GETextension: string | undefined;
+  @Prop()
   entityFormComponent: Vue | undefined;
   @Prop()
   fields: Record<string, unknown> | undefined;
@@ -77,7 +79,12 @@ export default class EntityManagement extends BaseComponent {
   populateNewEntity: Function | undefined;
 
   async getAllEntities(apiEndpoint: string) {
-    return await this.callENKEL(apiEndpoint)
+    let endpoint = apiEndpoint;
+    if (this.GETextension) {
+      endpoint += this.GETextension;
+    }
+
+    return await this.callENKEL(endpoint)
       .then(res => res.json())
       .then(json => {
         this.entityList = json;
@@ -90,7 +97,7 @@ export default class EntityManagement extends BaseComponent {
     }
   }
 
-  @Watch("apiEndpoint")
+  @Watch("GETextension")
   endpointUpdated(apiEndpoint: string) {
     if (apiEndpoint) {
       this.getAllEntities(apiEndpoint);
