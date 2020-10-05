@@ -5,7 +5,7 @@
         id="week-selection"
         v-model="weekSelection"
         :formatter-fn="weekSelectionFormatter"
-        min="-1"
+        min="-7"
         max="1"
         size="sm"
         name="week-selection"
@@ -14,12 +14,19 @@
     </b-input-group>
 
     <b-button
-      v-if="(!entityList || entityList.length === 0) && weekSelection > -1"
+      v-if="(entityList == null || entityList.length === 0) && weekSelection >= 0"
       variant="outline-success"
       size="lg"
       @click="generateThisWeeksPredictionsForUser()"
       >Predict This Weeks Fixtures</b-button
     >
+
+    <b-alert :show="(entityList == null || entityList.length === 0) && weekSelection < 0" variant="warning">
+      <span>
+        <b-icon icon="exclamation-circle" class="align-top mr-1" font-scale="1.2" />
+        No Predictions found for this week
+      </span>
+    </b-alert>
 
     <template v-for="date in Object.keys(entityList).sort()">
       <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
@@ -30,7 +37,7 @@
           <b-card-group
             columns
             :deck="entityList[date].length < 5"
-            v-if="weekSelection === -1 || (entityList[date] && entityList[date].length > 0)"
+            v-if="entityList != null && entityList[date] && entityList[date].length > 0"
           >
             <b-card
               v-for="entity in entityList[date]"
@@ -51,11 +58,12 @@
                   v-model="entity.prediction"
                   button-variant="prediction"
                   class="d-flex flex-wrap justify-content-around"
+                  :disabled="entity.fixture.fixtureResult !== null"
                 >
                   <b-form-radio
                     name="prediction"
                     value="H"
-                    class="w-50 d-flex flex-column align-items-center p-2 rounded"
+                    class="w-50 d-flex flex-column align-items-center p-2 rounded justify-content-between"
                   >
                     <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
                     <span class="mt-2 mb-1">{{ entity.fixture.homeTeam.teamName }}</span>
@@ -64,7 +72,7 @@
                   <b-form-radio
                     name="prediction"
                     value="A"
-                    class="w-50 d-flex flex-column align-items-center p-2 rounded"
+                    class="w-50 d-flex flex-column align-items-center p-2 rounded justify-content-between"
                   >
                     <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
                     <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
@@ -128,7 +136,12 @@ export default class PredictionEntry extends BaseComponent {
   weekSelection = 0;
   weekSelectionFormats = ["Last Week", "This Week", "Next Week"];
   weekSelectionFormatter(value: number) {
-    return this.weekSelectionFormats[value + 1];
+    const index = value + 1;
+    if (index >= 0) {
+      return this.weekSelectionFormats[index];
+    } else {
+      return `${this.formatDate(this.startDate)} - ${this.formatDate(this.endDate)}`;
+    }
   }
 
   created() {
@@ -160,6 +173,11 @@ export default class PredictionEntry extends BaseComponent {
     return await this.callENKEL(this.apiEndpoint)
       .then(res => res.json())
       .then(json => {
+        if (json == null || json.length == 0) {
+          this.entityList = [];
+          return;
+        }
+
         json.forEach((element: { previousPrediction: string; prediction: string }) => {
           element.previousPrediction = element.prediction;
         });
@@ -260,11 +278,15 @@ export default class PredictionEntry extends BaseComponent {
   border-width: 2px;
 }
 
+.btn-prediction.disabled {
+  opacity: 80%;
+}
+
 .btn-prediction.active {
   background-color: whitesmoke;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
-.btn-prediction:hover {
+.btn-prediction:hover:not(.disabled) {
   background-color: whitesmoke;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
