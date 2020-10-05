@@ -17,6 +17,7 @@ export class FixtureDAO extends BaseDAO<Fixture> {
       .leftJoinAndSelect("fixture.predictions", "predictions")
       .leftJoinAndSelect("predictions.user", "user")
       .select(["fixture", "homeTeam", "awayTeam", "predictions.prediction", "user.fullName"])
+      .orderBy("fixture.date", "DESC")
       .getMany();
   }
 
@@ -31,6 +32,7 @@ export class FixtureDAO extends BaseDAO<Fixture> {
       .where({
         date: pkg.Between(startDate, endDate),
       })
+      .orderBy("fixture.date", "DESC")
       .getMany();
   }
 }
