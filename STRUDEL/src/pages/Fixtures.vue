@@ -12,7 +12,7 @@
       :populateNewEntity="populateNewEntity"
     ></EntityManagement>
 
-    <b-row>
+    <b-row v-if="isAdmin()">
       <h3 class="my-5 mx-3">Management</h3>
     </b-row>
     <b-row v-if="isAdmin()">
@@ -61,7 +61,7 @@ export default class Fixtures extends BaseComponent {
       this.fields = [
         { key: "expand", sortable: true, label: "Expand" },
         { key: "id", sortable: true, label: "id" },
-        { key: "date", sortable: true, label: "Date" },
+        { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
@@ -70,9 +70,11 @@ export default class Fixtures extends BaseComponent {
       ];
     } else {
       this.fields = [
-        { key: "date", sortable: true, label: "Date" },
+        { key: "expand", sortable: true, label: "Expand" },
+        { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
+        { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult }
       ];
     }

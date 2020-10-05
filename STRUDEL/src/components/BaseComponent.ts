@@ -1,4 +1,5 @@
 import Vue from "vue";
+import moment from "moment";
 
 export class BaseComponent extends Vue {
   callENKEL(url: string, method = "GET", body: string | null = null): Promise<Response> {
@@ -51,5 +52,9 @@ export class BaseComponent extends Vue {
       default:
         return "-";
     }
+  }
+
+  prettyFormatDate(date: string | Date): string {
+    return moment(date).format("ddd, Do MMM");
   }
 }

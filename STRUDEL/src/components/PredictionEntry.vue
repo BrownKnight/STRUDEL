@@ -30,7 +30,7 @@
 
     <template v-for="date in Object.keys(entityList).sort()">
       <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
-        <h4>{{ formatDate(entityList[date][0].fixture.date) }}</h4>
+        <h4>{{ prettyFormatDate(entityList[date][0].fixture.date) }}</h4>
       </b-row>
       <b-row :key="entityList[date][0].id + 1" class="mt-1">
         <b-container>
@@ -140,7 +140,7 @@ export default class PredictionEntry extends BaseComponent {
     if (index >= 0) {
       return this.weekSelectionFormats[index];
     } else {
-      return `${this.formatDate(this.startDate)} - ${this.formatDate(this.endDate)}`;
+      return `${this.prettyFormatDate(this.startDate)} - ${this.prettyFormatDate(this.endDate)}`;
     }
   }
 
@@ -250,10 +250,6 @@ export default class PredictionEntry extends BaseComponent {
       toaster: "b-toaster-top-right",
       href: "#"
     });
-  }
-
-  formatDate(date: string | Date): string {
-    return moment(date).format("ddd, Do MMM");
   }
 }
 </script>
