@@ -48,7 +48,7 @@ export class IApiExternalRouter extends RouterBase {
       .then((text) => JSON.parse(text))
       .then(async (json) => {
         const apiFixtures = json.api.fixtures;
-        if (apiFixtures && apiFixtures.length === 0) {
+        if (!apiFixtures || apiFixtures.length === 0) {
           res.status(400).send(new EntityApiResponse(false, "No fixtures found for this date"));
           return;
         }
@@ -83,7 +83,8 @@ export class IApiExternalRouter extends RouterBase {
             res.status(400).json(apiResponse);
           }
         });
-      });
+      })
+      .catch((error) => res.status(500).send(error));
   }
 
   private async saveFixtures(fixtures: Partial<Fixture>[]) {
