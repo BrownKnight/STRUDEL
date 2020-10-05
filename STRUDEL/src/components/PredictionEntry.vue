@@ -264,7 +264,7 @@ export default class PredictionEntry extends BaseComponent {
 }
 
 .btn-prediction.disabled {
-  opacity: 80%;
+  opacity: 0.8;
 }
 
 .btn-prediction.active {
