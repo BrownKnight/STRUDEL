@@ -67,9 +67,9 @@ export default class Predictions extends BaseComponent {
       label: "User",
       sortable: true,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      formatter: (value: any) => `${value.fullName} (${value.id})`
+      formatter: (value: any) => value.fullName
     },
-    { key: "prediction", label: "Prediction", sortable: true },
+    { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
     { key: "Action" }
   ];
 
@@ -80,8 +80,9 @@ export default class Predictions extends BaseComponent {
         { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
-        { key: "user", label: "User", sortable: true, formatter: value => `${value.fullName} (${value.id})` },
-        { key: "prediction", label: "Prediction", sortable: true },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { key: "user", label: "User", sortable: true, formatter: (value: any) => value.fullName },
+        { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
         { key: "Action" }
       ];
     } else {
@@ -89,8 +90,9 @@ export default class Predictions extends BaseComponent {
         { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
-        { key: "user", label: "User", sortable: true, formatter: value => `${value.fullName}` },
-        { key: "prediction", label: "Prediction", sortable: true }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { key: "user", label: "User", sortable: true, formatter: (value: any) => value.fullName },
+        { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult }
       ];
     }
   }

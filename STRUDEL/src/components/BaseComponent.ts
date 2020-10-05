@@ -39,4 +39,17 @@ export class BaseComponent extends Vue {
   isAdmin(): boolean {
     return this.$store?.state?.AuthModule?.user?.userRole === "A";
   }
+
+  formatFixtureResult(fixtureResult: string): string {
+    switch (fixtureResult) {
+      case "H":
+        return "Home Win";
+      case "A":
+        return "Away Win";
+      case "D":
+        return "Draw";
+      default:
+        return "-";
+    }
+  }
 }

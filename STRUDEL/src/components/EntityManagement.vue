@@ -12,6 +12,12 @@
       stacked="sm"
       small
     >
+      <template v-slot:cell(expand)="data">
+        <b-button size="sm" variant="outline-info" v-on:click="data.toggleDetails">
+          <b-icon icon="chevron-down" class="align-middle" :rotate="data.detailsShowing ? 180 : 0"></b-icon>
+        </b-button>
+      </template>
+
       <template v-slot:cell(Action)="data">
         <b-button size="sm" variant="success" v-on:click="editEntity(data.item)">
           <b-icon icon="pencil"></b-icon>
@@ -33,11 +39,14 @@
           <img class="mx-2 order-1" :src="data.item.awayTeam.teamLogoUrl" style="height: 2em;" />
         </div>
       </template>
+      <template v-slot:row-details="data">
+        <component :is="rowDetailsComponent" :data="data" />
+      </template>
     </b-table>
 
-    <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()"
-      >Create New</b-button
-    >
+    <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()">
+      Create New
+    </b-button>
 
     <component
       :is="entityFormComponent"
@@ -73,6 +82,8 @@ export default class EntityManagement extends BaseComponent {
   GETextension: string | undefined;
   @Prop()
   entityFormComponent: Vue | undefined;
+  @Prop()
+  rowDetailsComponent: Vue | undefined;
   @Prop()
   fields: Record<string, unknown> | undefined;
   @Prop()

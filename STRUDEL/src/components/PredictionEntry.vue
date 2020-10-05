@@ -255,17 +255,6 @@ export default class PredictionEntry extends BaseComponent {
   formatDate(date: string | Date): string {
     return moment(date).format("ddd, Do MMM");
   }
-
-  formatFixtureResult(result: string) {
-    switch (result) {
-      case "H":
-        return "Home Win";
-      case "A":
-        return "Away Win";
-      case "D":
-        return "Draw";
-    }
-  }
 }
 </script>
 

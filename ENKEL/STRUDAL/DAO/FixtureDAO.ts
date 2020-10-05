@@ -10,7 +10,14 @@ export class FixtureDAO extends BaseDAO<Fixture> {
   }
 
   async getAllEntities(): Promise<Fixture[]> {
-    return super.getAllEntities({ relations: ["homeTeam", "awayTeam"] });
+    return this._repository
+      .createQueryBuilder("fixture")
+      .leftJoinAndSelect("fixture.homeTeam", "homeTeam")
+      .leftJoinAndSelect("fixture.awayTeam", "awayTeam")
+      .leftJoinAndSelect("fixture.predictions", "predictions")
+      .leftJoinAndSelect("predictions.user", "user")
+      .select(["fixture", "homeTeam", "awayTeam", "predictions.prediction", "user.fullName"])
+      .getMany();
   }
 
   async getFixturesForDateRange(startDate: Moment, endDate: Moment): Promise<Fixture[]> {

@@ -6,6 +6,7 @@
     <EntityManagement
       :apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"
+      :rowDetailsComponent="FixtureRowDetails"
       :fields="fields"
       :populateNewEntity="populateNewEntity"
     ></EntityManagement>
@@ -17,13 +18,15 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
+import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 
 @Component({
-  components: { EntityManagement, FixtureForm }
+  components: { EntityManagement, FixtureForm, FixtureRowDetails }
 })
-export default class Teams extends BaseComponent {
+export default class Fixtures extends BaseComponent {
   FixtureForm = FixtureForm;
+  FixtureRowDetails = FixtureRowDetails;
   fields: {}[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,11 +41,13 @@ export default class Teams extends BaseComponent {
   created() {
     if (this.isAdmin()) {
       this.fields = [
+        { key: "expand", sortable: true, label: "Expand" },
         { key: "id", sortable: true, label: "id" },
         { key: "date", sortable: true, label: "Date" },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
-        { key: "fixtureResult", label: "Result", sortable: true },
+        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
+        { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
         { key: "Action", label: "Action", sortable: false }
       ];
     } else {
@@ -50,7 +55,7 @@ export default class Teams extends BaseComponent {
         { key: "date", sortable: true, label: "Date" },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
-        { key: "fixtureResult", label: "Result", sortable: true }
+        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult }
       ];
     }
   }
