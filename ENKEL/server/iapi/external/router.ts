@@ -42,7 +42,7 @@ export class IApiExternalRouter extends RouterBase {
     }
 
     fetch(`https://v2.api-football.com/fixtures/league/2790/${moment(date as string).format("YYYY-MM-DD")}`, {
-      headers: { "X-RapidApi-Key": "72599868178b48b03d0e1f00a8b667d0" },
+      headers: { "X-RapidApi-Key": process.env.FOOTBALL_API_KEY ?? "" },
     })
       .then((res) => res.text())
       .then((text) => JSON.parse(text))
