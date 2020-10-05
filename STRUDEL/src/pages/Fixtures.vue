@@ -3,6 +3,7 @@
     <b-row>
       <h3 class="my-5 mx-3">{{ isAdmin() ? "Maintain" : "View" }} Fixtures</h3>
     </b-row>
+
     <EntityManagement
       :apiEndpoint="'/iapi/fixtures'"
       :entityFormComponent="FixtureForm"
@@ -10,6 +11,20 @@
       :fields="fields"
       :populateNewEntity="populateNewEntity"
     ></EntityManagement>
+
+    <b-row>
+      <h3 class="my-5 mx-3">Management</h3>
+    </b-row>
+    <b-row v-if="isAdmin()">
+      <b-col cols="12" md="6" offset-md="3">
+        <b-input-group prepend="Import Fixtures for">
+          <b-form-input type="date" v-model="importFixturesDate"></b-form-input>
+          <b-input-group-append>
+            <b-button variant="primary" @click="importFixtures()">Import</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -20,6 +35,7 @@ import EntityManagement from "@/components/EntityManagement.vue";
 import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
 import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
+import moment from "moment";
 
 @Component({
   components: { EntityManagement, FixtureForm, FixtureRowDetails }
@@ -28,6 +44,8 @@ export default class Fixtures extends BaseComponent {
   FixtureForm = FixtureForm;
   FixtureRowDetails = FixtureRowDetails;
   fields: {}[] = [];
+
+  importFixturesDate = moment().format("YYYY-MM-DD");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   populateNewEntity(entity: any) {
@@ -58,6 +76,34 @@ export default class Fixtures extends BaseComponent {
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult }
       ];
     }
+  }
+
+  importFixtures() {
+    if (this.importFixturesDate == null || this.importFixturesDate == "") {
+      this.showEntityAlert(3, "Please enter a date to import fixtures for", "danger");
+      return;
+    }
+
+    this.callENKEL(
+      `/iapi/external/fixtures/bydate?date=${moment(this.importFixturesDate).format("YYYY-MM-DD")}`,
+      "POST"
+    ).then(res => {
+      res
+        .text()
+        .then(text => JSON.parse(text))
+        .then(json => {
+          if (!res.ok || !json.success) {
+            this.showEntityAlert(
+              5,
+              `Fixture import failed! ${json.errorMessage?.message ?? json.errorMessage}`,
+              "danger"
+            );
+            return;
+          }
+
+          this.showEntityAlert(3, `${json.entity.length} Fixtures imported!`, "success");
+        });
+    });
   }
 }
 </script>
