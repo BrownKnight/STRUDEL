@@ -306,7 +306,7 @@ export default class PredictionEntry extends BaseComponent {
 
 // Transitions for submit/helper-text
 .slide-fade-up-enter-active {
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 .slide-fade-up-leave-active {
   transition: all 0.3s ease;
