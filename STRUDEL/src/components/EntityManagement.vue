@@ -109,9 +109,9 @@ export default class EntityManagement extends BaseComponent {
   }
 
   @Watch("GETextension")
-  endpointUpdated(apiEndpoint: string) {
-    if (apiEndpoint) {
-      this.getAllEntities(apiEndpoint);
+  endpointUpdated() {
+    if (this.apiEndpoint) {
+      this.getAllEntities(this.apiEndpoint);
     }
   }
 

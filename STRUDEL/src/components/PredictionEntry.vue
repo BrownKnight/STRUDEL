@@ -52,7 +52,12 @@
                   : null
               "
             >
-              <b-card-body class="px-3 pt-3 pb-2">
+              <b-card-body class="p-0 pr-2 text-right helper-text border-0">
+                <small>
+                  {{ prettyFormatTime(entity.fixture.time) }}
+                </small>
+              </b-card-body>
+              <b-card-body class="px-3 pt-0 pb-2">
                 <b-form-radio-group
                   buttons
                   v-model="entity.prediction"
@@ -98,10 +103,10 @@
                 >
                   <small>Submit Prediction</small>
                 </b-button>
-                <div class="w-100 p-1 helper-text" v-if="entity.prediction == null" key="helper">
+                <div class="w-100 p-1 helper-text" v-else-if="entity.prediction == null" key="helper">
                   <small><em>Tap on a team to make your prediction</em></small>
                 </div>
-                <div class="w-100 p-1 helper-text" v-else key="helper">
+                <div class="w-100 p-1 helper-text" v-else key="my-prediction">
                   <small>
                     <em>
                       My Prediction: <b>{{ formatFixtureResult(entity.prediction) }}</b>
