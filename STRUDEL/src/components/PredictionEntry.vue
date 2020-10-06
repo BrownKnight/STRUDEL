@@ -88,17 +88,27 @@
                 <span>Actual Result: {{ formatFixtureResult(entity.fixture.fixtureResult) }}</span>
               </b-card-body>
 
-              <b-button
-                class="w-100 p-1"
-                variant="outline-success"
-                v-if="entity.previousPrediction !== entity.prediction"
-                @click="submitPrediction(entity)"
-              >
-                <small>Submit Prediction</small>
-              </b-button>
-              <div class="w-100 p-1" variant="outline-secondary" disabled v-if="entity.prediction == null">
-                <small class="helper-text"><em>Tap on a team to make your prediction</em></small>
-              </div>
+              <transition name="slide-fade-up" mode="out-in">
+                <b-button
+                  class="w-100 p-1 submit-button"
+                  variant="success"
+                  v-if="entity.previousPrediction !== entity.prediction"
+                  @click="submitPrediction(entity)"
+                  key="submit"
+                >
+                  <small>Submit Prediction</small>
+                </b-button>
+                <div class="w-100 p-1 helper-text" v-if="entity.prediction == null" key="helper">
+                  <small><em>Tap on a team to make your prediction</em></small>
+                </div>
+                <div class="w-100 p-1 helper-text" v-else key="helper">
+                  <small>
+                    <em>
+                      My Prediction: <b>{{ formatFixtureResult(entity.prediction) }}</b>
+                    </em>
+                  </small>
+                </div>
+              </transition>
             </b-card>
           </b-card-group>
         </b-container>
@@ -260,24 +270,53 @@ export default class PredictionEntry extends BaseComponent {
 .btn-prediction {
   border-color: transparent;
   // border-radius: 1em !important;
-  border-width: 2px;
+  border-width: 1px;
 }
 
+// .btn-prediction:first-child {
+//   border-bottom-color: black !important;
+// }
+
 .btn-prediction.disabled {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .btn-prediction.active {
   background-color: whitesmoke;
+  border-color: rgba(23, 22, 31, 0.2);
+  border-width: 1px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 .btn-prediction:hover:not(.disabled) {
   background-color: whitesmoke;
+  border-width: 1px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
 .helper-text {
   font-weight: bold;
   color: darkgrey;
+  border: 1px solid transparent;
+}
+
+.submit-button {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+// Transitions for submit/helper-text
+.slide-fade-up-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-up-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-up-enter {
+  transform: scale(1.1);
+  opacity: 0;
+}
+.slide-fade-up-leave-to {
+  transform: scale(0.2);
+  opacity: 0;
 }
 </style>
