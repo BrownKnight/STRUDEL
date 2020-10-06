@@ -68,23 +68,23 @@
                   <b-form-radio
                     name="prediction"
                     value="H"
-                    class="w-50 d-flex flex-column align-items-center p-2 rounded justify-content-between"
+                    class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
                   >
                     <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
                     <span class="mt-2 mb-1">{{ entity.fixture.homeTeam.teamName }}</span>
-                    <small class="mb-2">Home</small>
+                    <small>Home</small>
                   </b-form-radio>
                   <b-form-radio
                     name="prediction"
                     value="A"
-                    class="w-50 d-flex flex-column align-items-center p-2 rounded justify-content-between"
+                    class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
                   >
                     <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
                     <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
-                    <small class="mb-2">Away</small>
+                    <small>Away</small>
                   </b-form-radio>
-                  <b-form-radio name="prediction" value="D" class="flex-grow-0 d-flex rounded">
-                    <small class="my-1 mx-5">Draw</small>
+                  <b-form-radio name="prediction" value="D" class="flex-grow-1 d-flex rounded mt-2">
+                    <small class="mx-auto">Draw</small>
                   </b-form-radio>
                 </b-form-radio-group>
               </b-card-body>
@@ -323,5 +323,8 @@ export default class PredictionEntry extends BaseComponent {
 .slide-fade-up-leave-to {
   transform: scale(0.2);
   opacity: 0;
+}
+.w-45 {
+  width: 45%;
 }
 </style>
