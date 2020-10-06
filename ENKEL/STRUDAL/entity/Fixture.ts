@@ -19,6 +19,9 @@ export class Fixture {
   @Column({ type: "date" })
   date!: Date;
 
+  @Column({ type: "time", default: "00:00:00" })
+  time!: Date;
+
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   fixtureResult!: FixtureResult;
 
