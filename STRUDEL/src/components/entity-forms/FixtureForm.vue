@@ -18,6 +18,17 @@
           ></b-form-input>
         </b-input-group>
 
+        <label class="sr-only" id="input-label-fixture-time" for="input-fixture-time">Fixture Time</label>
+        <b-input-group class="my-3" prepend="Fixture Time">
+          <b-form-input
+            id="input-fixture-time"
+            v-model="entityModel.time"
+            type="time"
+            required
+            autofocus
+          ></b-form-input>
+        </b-input-group>
+
         <label class="sr-only" id="input-label-home-team" for="input-home-team">Home Team</label>
         <b-input-group class="my-3" prepend="Home Team">
           <b-form-select

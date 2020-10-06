@@ -57,4 +57,8 @@ export class BaseComponent extends Vue {
   prettyFormatDate(date: string | Date): string {
     return moment(date).format("ddd, Do MMM");
   }
+
+  prettyFormatTime(time: string | Date): string {
+    return moment(time, "HH:mm").format("HH:mm");
+  }
 }

@@ -62,6 +62,7 @@ export default class Fixtures extends BaseComponent {
         { key: "expand", sortable: true, label: "Expand" },
         { key: "id", sortable: true, label: "id" },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
+        { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
@@ -72,6 +73,7 @@ export default class Fixtures extends BaseComponent {
       this.fields = [
         { key: "expand", sortable: true, label: "Expand" },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
+        { key: "time", sortable: true, label: "Time" },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
