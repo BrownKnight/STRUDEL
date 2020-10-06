@@ -67,6 +67,7 @@ export class IApiExternalRouter extends RouterBase {
           (fixture: any): Partial<Fixture> => {
             return {
               date: moment(fixture.event_date).toDate(),
+              time: moment(fixture.event_date).toDate(),
               homeTeam: { id: teamDict[fixture.homeTeam.team_name] },
               awayTeam: { id: teamDict[fixture.awayTeam.team_name] },
             };
