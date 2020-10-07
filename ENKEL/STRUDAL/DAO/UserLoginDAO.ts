@@ -20,7 +20,7 @@ export class UserLoginDAO extends BaseDAO<UserLogin> {
 
   generateAuthToken(userLogin: UserLogin): string {
     console.log("Generating token");
-    const privateKey = fs.readFileSync("auth.private.pem", "utf-8");
+    const privateKey = fs.readFileSync("auth", "utf-8");
     const token = jwt.sign(
       {
         id: userLogin.id,

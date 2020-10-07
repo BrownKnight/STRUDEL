@@ -14,7 +14,7 @@ export async function authMiddleware(req: Request, res: Response, next: () => vo
     return;
   }
 
-  const publicKey = fs.readFileSync("../auth.public.pem", "utf-8");
+  const publicKey = fs.readFileSync("../auth.pub", "utf-8");
   const token = req.headers.authorization?.replace("Bearer ", "");
   console.log(`Received auth request with token ${token}`);
 

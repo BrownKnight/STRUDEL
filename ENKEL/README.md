@@ -4,8 +4,8 @@ Coming Soon (Probably)
 # Deployment
 Create private/public keys using the following commands
 ```
-ssh-keygen -t rsa -b 4096 -m PEM -f auth.private.pem
-openssl rsa -in auth.private.pem -pubout -outform PEM -out auth.public.pem
+ssh-keygen -t rsa -b 4096 -m PEM -f auth
+openssl rsa -in auth -pubout -outform PEM -out auth.pub
 ```
 Private key lives in the ENKEL dir, public lives in the project root dir (likely will/should change when i get around it it)
 
