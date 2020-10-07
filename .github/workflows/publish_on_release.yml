@@ -23,14 +23,14 @@ jobs:
     
     - uses: montudor/action-zip@v0.1.0
       with: 
-        args: zip -qq -r ENKEL.zip ./ENKEL/dist
+        args: zip -qq -r ENKEL.zip ./ENKEL/dist/
     
     - name: Upload ENKEL to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ENKEL.zip
-        asset_name: ENKEL
+        asset_name: ENKEL.zip
         tag: ${{ github.ref }}
   
   
@@ -52,13 +52,13 @@ jobs:
   
     - uses: montudor/action-zip@v0.1.0
       with: 
-        args: zip -qq -r STRUDEL.zip ./STRUDEL/dist
+        args: zip -qq -r STRUDEL.zip ./STRUDEL/dist/
     
     - name: Upload STRUDEL to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: STRUDEL.zip
-        asset_name: STRUDEL
+        asset_name: STRUDEL.zip
         tag: ${{ github.ref }}
   
