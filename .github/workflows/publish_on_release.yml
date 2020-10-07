@@ -23,7 +23,7 @@ jobs:
     
     - uses: montudor/action-zip@v0.1.0
       with: 
-        args: zip -qq -r ENKEL.zip ./ENKEL/dist/
+        args: zip -qq -r ENKEL.zip ./ENKEL/dist/ ./ENKEL/package.json
     
     - name: Upload ENKEL to release
       uses: svenstaro/upload-release-action@v2
