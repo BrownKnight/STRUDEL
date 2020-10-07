@@ -1,0 +1,65 @@
+name: Publish on New Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_ENKEL:
+    name: Build ENKEL
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - run: npm ci
+      working-directory: ./ENKEL
+
+    - run: npm run build --if-present
+      working-directory: ./ENKEL
+    
+    - uses: montudor/action-zip@v0.1.0
+      with: 
+        args: zip -qq -r ENKEL.zip ./ENKEL/dist
+    
+    - name: Upload ENKEL to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ENKEL.zip
+        asset_name: ENKEL
+        tag: ${{ github.ref }}
+  
+  
+  build_STRUDEL:
+    name: Build STRUDEL
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - run: npm ci
+      working-directory: STRUDEL
+
+    - run: npm run build --if-present
+      working-directory: STRUDEL
+  
+    - uses: montudor/action-zip@v0.1.0
+      with: 
+        args: zip -qq -r STRUDEL.zip ./STRUDEL/dist
+    
+    - name: Upload STRUDEL to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: STRUDEL.zip
+        asset_name: STRUDEL
+        tag: ${{ github.ref }}
+  
