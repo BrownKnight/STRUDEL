@@ -7,6 +7,7 @@
   "scripts": {
     "start": "tsc && node -r dotenv/config dist/server/main.js",
     "dev": "nodemon",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aman Dhoot",
