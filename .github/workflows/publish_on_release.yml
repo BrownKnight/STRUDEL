@@ -1,9 +1,8 @@
 name: Publish on New Release
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
 
 jobs:
   build_ENKEL:
