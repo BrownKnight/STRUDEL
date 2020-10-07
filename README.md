@@ -5,12 +5,22 @@ Simplified Truncated User Directed Endpoint Layer
 # Architecture
 
 ## STRUDEL
-STRU*DEL* is the Vue-based web front & back end, designed to support some small level of orchestration, but primarily 
-as a tool for data entry and the bug-the-user prediction reminder service (*Name in progress*).
+STRU*DEL* is the Vue-based web front end, designed to support some small level of orchestration (i.e. automated prediction management), 
+ but primarily as a tool for data entry/management and the "bug-the-user" prediction reminder/notification service (*Name TBD*).
 
-## STRUDAL
-STRU*DAL* is the database
+The most common use for STRUDEL will be the main Prediction Entry screen where users will be able to make predictions for the 
+ current/next weeks Premier League fixtures. STRUDEL can then be used to view other users predictions, compare those 
+ predictions against its supported automated prediction engines, and view analysis' of said predictions in it's Analytics Dashboard.
+
 
 ## ENKEL
 ENKEL is the internal/external-facing api layer designed to support interoperability with external services such as
- the [APPLE](https://github.com/benjaminjellis/APPLE) prediction engine
+ the [APPLE](https://github.com/benjaminjellis/APPLE) prediction engine. ENKEL also functions as the back-end for 
+ the STRUDEL front end, providing support for entity CRUD operations via the STRU*DAL* component.
+ 
+
+## STRUDAL
+STRU*DAL* encompasses the Data Access Layer used to ENKEL. Currently it is implemented using TypeORM. This component
+ of the system manages all CRUD operations, both simple and composite, as well as Entity definitions and the DAO's for
+ said entities. All database operations happen through STRUDAL.
+ 
