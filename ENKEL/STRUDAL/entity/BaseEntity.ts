@@ -5,6 +5,6 @@ export class BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @UpdateDateColumn({ type: "datetime" })
+  @UpdateDateColumn({ type: "timestamp" })
   dateModified?: Date;
 }
