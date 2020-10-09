@@ -128,6 +128,8 @@ import { Component, Watch } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import _ from "lodash";
+import { Prediction } from "@ENKEL/entity/Prediction";
+import { FixtureResult } from "@ENKEL/entity/dataTypes/FixtureResult";
 
 @Component({
   components: {}
@@ -200,8 +202,7 @@ export default class PredictionEntry extends BaseComponent {
       });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  submitPrediction(entity: any) {
+  submitPrediction(entity: Prediction & { previousPrediction: FixtureResult }) {
     this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(entity)).then(res => {
       if (res.ok) {
         this.showMessage({ message: "Prediction Submitted", variant: "success" });

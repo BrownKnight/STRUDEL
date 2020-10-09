@@ -61,7 +61,8 @@
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { BaseComponent } from "@/components/BaseComponent.ts";
+import { BaseComponent, FormEntity } from "@/components/BaseComponent.ts";
+import { AnyEntity } from "@ENKEL/entity/EntityHelper";
 
 const SHOW_ALERT_TIME = 20;
 
@@ -73,8 +74,7 @@ export default class EntityManagement extends BaseComponent {
 
   showForm = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formEntity: any = {};
+  formEntity: Partial<FormEntity> = {};
 
   @Prop()
   apiEndpoint: string | undefined;
@@ -115,15 +115,13 @@ export default class EntityManagement extends BaseComponent {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  editEntity(entity: any) {
+  editEntity(entity: AnyEntity) {
     console.log(`Editing entity with id ${entity.id}`);
     this.formEntity = entity;
     this.showForm = true;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  deleteEntity(entity: any) {
+  deleteEntity(entity: AnyEntity) {
     // TODO: not this
     console.log(`Deleting entity with id ${entity.id}`);
     this.handleDeleteEntity(entity);
@@ -167,8 +165,7 @@ export default class EntityManagement extends BaseComponent {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleDeleteEntity(entity: any) {
+  handleDeleteEntity(entity: AnyEntity) {
     console.log("deleting entity", entity);
     if (!this.apiEndpoint) {
       console.error("No apiendpoint set");

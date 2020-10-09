@@ -39,14 +39,15 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import LoginForm from "@/components/LoginForm.vue";
 import UserForm from "@/components/entity-forms/UserForm.vue";
-import { BaseComponent } from "@/components/BaseComponent.ts";
+import { BaseComponent, NewEntity } from "@/components/BaseComponent.ts";
+import { UserLogin } from "@ENKEL/entity/UserLogin";
+import { UserRole } from "@ENKEL/entity/dataTypes/UserRoles";
 
 @Component({
   components: { LoginForm, UserForm }
 })
 export default class Login extends BaseComponent {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  newEntity: any = {};
+  newEntity: Partial<UserLogin & NewEntity> = {};
 
   apiEndpoint = "/login/register";
 
@@ -55,7 +56,7 @@ export default class Login extends BaseComponent {
       new: true,
       // All new users are automatically standard users, only admins can change users to admins
       // This is also enforced on server-side
-      userRole: "S"
+      userRole: UserRole.STANDARD
     };
   }
 
@@ -81,7 +82,9 @@ export default class Login extends BaseComponent {
         console.log("Registration succeeded!");
         console.log(res);
         // if we register successfully, then we should log in with our new credentials
-        this.handleLogin(this.newEntity.emailAddress, this.newEntity.password);
+        if (this.newEntity.emailAddress && this.newEntity.password) {
+          this.handleLogin(this.newEntity.emailAddress, this.newEntity.password);
+        }
       }
     });
   }

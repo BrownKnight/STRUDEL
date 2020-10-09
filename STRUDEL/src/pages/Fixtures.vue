@@ -36,6 +36,7 @@ import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
 import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
+import { Fixture } from "@ENKEL/entity/Fixture";
 
 @Component({
   components: { EntityManagement, FixtureForm, FixtureRowDetails }
@@ -47,13 +48,10 @@ export default class Fixtures extends BaseComponent {
 
   importFixturesDate = moment().format("YYYY-MM-DD");
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  populateNewEntity(entity: any) {
+  populateNewEntity(entity: Fixture) {
     console.log("populating");
     entity.homeTeam = {};
     entity.awayTeam = {};
-    entity.prediction = null;
-    entity.user = {};
   }
 
   created() {
