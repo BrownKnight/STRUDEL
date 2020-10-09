@@ -1,5 +1,5 @@
 import pkg from "typeorm";
-import { BaseEntity } from "./BaseEntity";
+import { BaseEntity } from "./BaseEntity.js";
 const { Entity, Column, Index } = pkg;
 
 @Entity()

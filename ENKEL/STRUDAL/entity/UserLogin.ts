@@ -21,7 +21,7 @@ export class UserLogin extends BaseEntity {
   token!: string | null | undefined;
 
   @Column({ type: "enum", enum: UserRole })
-  userRole!: UserRole;
+  userRole!: UserRole | "A" | "S";
 
   @BeforeInsert()
   @BeforeUpdate()
