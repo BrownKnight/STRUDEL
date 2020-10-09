@@ -40,5 +40,8 @@
     "node_modules",
     "dist",
     "**/dist/**"
+  ],
+  "references": [
+    { "path": "../ENKEL"}
   ]
 }
