@@ -1,11 +1,9 @@
 import pkg from "typeorm";
-const { PrimaryGeneratedColumn, Entity, Column, Index } = pkg;
+import { BaseEntity } from "./BaseEntity.js";
+const { Entity, Column, Index } = pkg;
 
 @Entity()
-export class Team {
-  @PrimaryGeneratedColumn()
-  id?: number;
-
+export class Team extends BaseEntity {
   @Column("character varying")
   @Index({ unique: true })
   teamName?: string;

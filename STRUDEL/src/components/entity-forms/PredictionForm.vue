@@ -36,6 +36,8 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
+import { Prediction } from "@/ENKEL/entity/Prediction";
+import { NewEntity } from "../BaseComponent";
 
 @Component({
   components: {}
@@ -48,9 +50,8 @@ export default class PredictionForm extends EntityForm {
     { value: "A", text: "Away Win" }
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  createNewEntityModel(value: any) {
-    value.new = null;
+  createNewEntityModel(value: Prediction & NewEntity) {
+    value.new = true;
     value.fixture = {};
     value.user = {};
     return value;

@@ -64,6 +64,7 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
+import { Team } from "@/ENKEL/entity/Team";
 
 @Component({
   components: {}
@@ -86,8 +87,7 @@ export default class FixtureForm extends EntityForm {
     this.callENKEL("/iapi/teams", "GET")
       .then(res => res.json())
       .then(teams => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.teamOptions = (teams as []).map((team: any) => ({ value: team.id, text: team.teamName }));
+        this.teamOptions = (teams as []).map((team: Team) => ({ value: team.id, text: team.teamName }));
       });
   }
 }

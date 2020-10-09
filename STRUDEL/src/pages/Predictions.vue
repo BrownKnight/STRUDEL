@@ -38,6 +38,7 @@ import EntityManagement from "@/components/EntityManagement.vue";
 import PredictionForm from "@/components/entity-forms/PredictionForm.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
+import { UserLogin } from "@/ENKEL/entity/UserLogin";
 
 @Component({
   components: { EntityManagement, PredictionForm }
@@ -66,8 +67,7 @@ export default class Predictions extends BaseComponent {
       key: "user",
       label: "User",
       sortable: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      formatter: (value: any) => value.fullName
+      formatter: (value: UserLogin) => value.fullName
     },
     { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
     { key: "Action" }
@@ -80,8 +80,7 @@ export default class Predictions extends BaseComponent {
         { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { key: "user", label: "User", sortable: true, formatter: (value: any) => value.fullName },
+        { key: "user", label: "User", sortable: true, formatter: (value: UserLogin) => value.fullName },
         { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
         { key: "Action" }
       ];
@@ -90,8 +89,7 @@ export default class Predictions extends BaseComponent {
         { key: "fixture.date", label: "Date", sortable: true },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { key: "user", label: "User", sortable: true, formatter: (value: any) => value.fullName },
+        { key: "user", label: "User", sortable: true, formatter: (value: UserLogin) => value.fullName },
         { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult }
       ];
     }

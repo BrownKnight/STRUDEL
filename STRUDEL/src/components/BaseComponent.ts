@@ -1,5 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
+import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 
 export class BaseComponent extends Vue {
   callENKEL(url: string, method = "GET", body: string | null = null): Promise<Response> {
@@ -62,3 +63,6 @@ export class BaseComponent extends Vue {
     return moment(time, "HH:mm").format("HH:mm");
   }
 }
+
+export type FormEntity = AnyEntity & NewEntity & { previousPrediction: string };
+export type NewEntity = { new: boolean };

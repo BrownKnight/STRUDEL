@@ -2,13 +2,11 @@ import "reflect-metadata";
 import pkg from "typeorm";
 import bcrypt from "bcrypt";
 import { UserRole } from "./dataTypes/UserRoles.js";
-const { PrimaryGeneratedColumn, Entity, Column, BeforeUpdate, BeforeInsert, Index } = pkg;
+import { BaseEntity } from "./BaseEntity.js";
+const { Entity, Column, BeforeUpdate, BeforeInsert, Index } = pkg;
 
 @Entity()
-export class UserLogin {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class UserLogin extends BaseEntity {
   @Column("character varying")
   @Index({ unique: true })
   emailAddress!: string;
@@ -23,7 +21,7 @@ export class UserLogin {
   token!: string | null | undefined;
 
   @Column({ type: "enum", enum: UserRole })
-  userRole!: UserRole;
+  userRole!: UserRole | "A" | "S";
 
   @BeforeInsert()
   @BeforeUpdate()
