@@ -20,6 +20,9 @@
     "paths": {
       "@/*": [
         "src/*",
+      ],
+      "@ENKEL/*": [
+        "../ENKEL/dist/STRUDAL/*"
       ]
     },
     "lib": [
