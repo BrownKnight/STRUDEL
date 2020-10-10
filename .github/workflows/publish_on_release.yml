@@ -32,18 +32,7 @@ jobs:
         file: ENKEL.zip
         asset_name: ENKEL.zip
         tag: ${{ github.ref }}
-  
-  
-  build_STRUDEL:
-    name: Build STRUDEL
-    runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
     - run: npm ci
       working-directory: STRUDEL
 
