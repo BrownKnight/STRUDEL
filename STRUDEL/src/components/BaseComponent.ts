@@ -28,11 +28,11 @@ export class BaseComponent extends Vue {
       });
   }
 
-  showEntityAlert(shownForTime: number, message: string, variant: string) {
+  showMessage({ message, variant, delay }: { message: string; variant?: string; delay?: number }) {
     this.$bvToast.toast(message, {
       noCloseButton: true,
       variant: variant,
-      autoHideDelay: shownForTime * 1000,
+      autoHideDelay: delay ?? 3000,
       toaster: "b-toaster-top-right",
       href: "#"
     });

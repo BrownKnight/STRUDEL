@@ -82,7 +82,7 @@ export default class Fixtures extends BaseComponent {
 
   importFixtures() {
     if (this.importFixturesDate == null || this.importFixturesDate == "") {
-      this.showEntityAlert(3, "Please enter a date to import fixtures for", "danger");
+      this.showMessage({ delay: 3, message: "Please enter a date to import fixtures for", variant: "danger" });
       return;
     }
 
@@ -95,15 +95,20 @@ export default class Fixtures extends BaseComponent {
         .then(text => JSON.parse(text))
         .then(json => {
           if (!res.ok || !json.success) {
-            this.showEntityAlert(
-              5,
-              `Fixture import failed! ${json.errorMessage?.message ?? json.errorMessage}`,
-              "danger"
-            );
+            this.showMessage({
+              delay: 5,
+              message: `Fixture import failed! ${json.errorMessage?.message ?? json.errorMessage}`,
+              variant: "danger"
+            });
+
             return;
           }
 
-          this.showEntityAlert(2, `${json.entity.length} Fixtures imported!`, "success");
+          this.showMessage({
+            delay: 5,
+            message: `${json.entity.length} Fixtures imported!`,
+            variant: "danger"
+          });
         });
     });
   }

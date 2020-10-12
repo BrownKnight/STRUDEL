@@ -103,10 +103,10 @@ export default class Predictions extends BaseComponent {
             .text()
             .then(text => JSON.parse(text))
             .then(json => {
-              this.showEntityAlert(5, `Could not download :( ${json.errorMessage}`, "danger");
+              this.showMessage({ delay: 5, message: `Could not download :( ${json.errorMessage}`, variant: "danger" });
             });
         } else {
-          this.showEntityAlert(2, "Downloading...", "success");
+          this.showMessage({ delay: 2, message: "Downloading...", variant: "success" });
           res.text().then(text => {
             const element = document.createElement("a");
             element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));

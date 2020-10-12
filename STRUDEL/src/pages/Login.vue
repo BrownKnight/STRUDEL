@@ -75,7 +75,7 @@ export default class Login extends BaseComponent {
           .then(text => JSON.parse(text))
           .then(json => {
             console.error(json);
-            this.showEntityAlert(5, `Registration Error :( ${json.errorMessage}`, "danger");
+            this.showMessage({ delay: 5, message: `Registration Error :( ${json.errorMessage}`, variant: "danger" });
           });
       } else {
         console.log("Registration succeeded!");
@@ -90,7 +90,7 @@ export default class Login extends BaseComponent {
 
   async handleLogin(emailAddress: string, password: string) {
     if (!emailAddress || !password) {
-      this.showEntityAlert(5, "Please supply Email Address and Password", "danger");
+      this.showMessage({ delay: 5, message: "Please supply Email Address and Password", variant: "danger" });
       return;
     }
 
@@ -109,15 +109,15 @@ export default class Login extends BaseComponent {
           this.$router.push("/index");
           return;
         } else {
-          this.showEntityAlert(10, "Login Failed (No Token?)", "danger");
+          this.showMessage({ delay: 5, message: "Login Failed (No Token?)", variant: "danger" });
           return;
         }
       });
     } else {
       if (loginResult.status === 500) {
-        this.showEntityAlert(10, "Login Failed (No Connection to ENKEL)", "danger");
+        this.showMessage({ delay: 5, message: "Login Failed (No Connection to ENKEL)", variant: "danger" });
       } else {
-        this.showEntityAlert(10, "Login Failed", "danger");
+        this.showMessage({ delay: 5, message: "Login Failed", variant: "danger" });
       }
       return;
     }

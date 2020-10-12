@@ -150,7 +150,7 @@ export default class EntityManagement extends BaseComponent {
         console.log("Entity Save Error :(");
         console.log(res);
         res.text().then(text => console.error(text));
-        this.showEntityAlert(SHOW_ALERT_TIME, "Error Saving Entity", "danger");
+        this.showMessage({ delay: SHOW_ALERT_TIME, message: "Error Saving Entity", variant: "danger" });
       } else {
         console.log("Entity Save Succeeded!");
         console.log(res);
@@ -159,7 +159,7 @@ export default class EntityManagement extends BaseComponent {
           this.getAllEntities(this.apiEndpoint);
         }
         this.formEntity = {};
-        this.showEntityAlert(SHOW_ALERT_TIME, "Entity Saved", "success");
+        this.showMessage({ delay: SHOW_ALERT_TIME, message: "Entity Saved", variant: "success" });
         this.showForm = false;
       }
     });
@@ -182,11 +182,11 @@ export default class EntityManagement extends BaseComponent {
             .then(text => JSON.parse(text))
             .then(errorJson => {
               console.error(errorJson);
-              this.showEntityAlert(
-                SHOW_ALERT_TIME * 2,
-                `Entity Deletion Error  (${errorJson?.errorMessage?.detail ?? "Cannot find error message"})`,
-                "danger"
-              );
+              this.showMessage({
+                delay: SHOW_ALERT_TIME * 2,
+                message: `Entity Deletion Error  (${errorJson?.errorMessage?.detail ?? "Cannot find error message"})`,
+                variant: "danger"
+              });
             });
         } else {
           console.log("Entity Deletion Succeeded!");
@@ -196,7 +196,7 @@ export default class EntityManagement extends BaseComponent {
             this.getAllEntities(this.apiEndpoint);
           }
           this.formEntity = {};
-          this.showEntityAlert(SHOW_ALERT_TIME, "Entity Deleted", "success");
+          this.showMessage({ delay: SHOW_ALERT_TIME, message: "Entity Deleted", variant: "success" });
           this.showForm = false;
         }
       });
