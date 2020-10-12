@@ -103,7 +103,7 @@ export default class Predictions extends BaseComponent {
             .text()
             .then(text => JSON.parse(text))
             .then(json => {
-              this.showEntityAlert(5, `"Could not download :( ${json.errorMessage}`, "danger");
+              this.showEntityAlert(5, `Could not download :( ${json.errorMessage}`, "danger");
             });
         } else {
           this.showEntityAlert(2, "Downloading...", "success");

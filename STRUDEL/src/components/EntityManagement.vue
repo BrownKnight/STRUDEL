@@ -64,7 +64,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { BaseComponent, FormEntity } from "@/components/BaseComponent.ts";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 
-const SHOW_ALERT_TIME = 20;
+const SHOW_ALERT_TIME = 2;
 
 @Component({
   components: {}
@@ -183,7 +183,7 @@ export default class EntityManagement extends BaseComponent {
             .then(errorJson => {
               console.error(errorJson);
               this.showEntityAlert(
-                SHOW_ALERT_TIME,
+                SHOW_ALERT_TIME * 2,
                 `Entity Deletion Error  (${errorJson?.errorMessage?.detail ?? "Cannot find error message"})`,
                 "danger"
               );

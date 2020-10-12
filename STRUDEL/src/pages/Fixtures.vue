@@ -103,7 +103,7 @@ export default class Fixtures extends BaseComponent {
             return;
           }
 
-          this.showEntityAlert(3, `${json.entity.length} Fixtures imported!`, "success");
+          this.showEntityAlert(2, `${json.entity.length} Fixtures imported!`, "success");
         });
     });
   }
