@@ -51,7 +51,6 @@ export class IApiFixturesRouter extends RouterBase {
 
     const format = req.query["format"];
     const fixtures = await this._fixturesHandler.getFixturesForDateRange(startDate as string, endDate as string);
-
     if (format && format === "csv") {
       const flattenedFixtures = this.flattenFixtures(fixtures);
       res.send(this.convertToCSV(flattenedFixtures));
@@ -82,6 +81,7 @@ export class IApiFixturesRouter extends RouterBase {
     const flattenedFixture = fixtures.map((fixture) => {
       return {
         date: fixture.date,
+        time: fixture.time,
         homeTeamName: fixture.homeTeam.teamName,
         awayTeamName: fixture.awayTeam.teamName,
         predictions: fixture.predictions.map((prediction) => {
@@ -100,11 +100,13 @@ export class IApiFixturesRouter extends RouterBase {
     const dict: Record<string, Record<number, string>> = {};
     // headerRow, with basics
     dict["date"] = {};
+    dict["time"] = {};
     dict["homeTeamName"] = {};
     dict["awayTeamName"] = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     objArray.forEach((fixture: Record<string, any>, index: number) => {
       dict["date"][index] = fixture.date;
+      dict["time"][index] = fixture.time;
       dict["homeTeamName"][index] = fixture.homeTeamName;
       dict["awayTeamName"][index] = fixture.awayTeamName;
       fixture.predictions.forEach((prediction: Record<string, string>) => {
