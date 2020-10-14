@@ -118,6 +118,17 @@
           </b-card-group>
         </b-container>
       </b-row>
+      <b-row class="mt-2" :key="entityList[date][0].id + 2">
+        <transition name="slide-fade-up" mode="out-in">
+          <b-button
+            class="mx-auto"
+            variant="success"
+            v-if="anyPredictionsChanged(entityList[date])"
+            @click="submitAllPredictions(entityList[date])"
+            >Submit All</b-button
+          >
+        </transition>
+      </b-row>
     </template>
   </div>
 </template>
@@ -127,7 +138,7 @@ import "reflect-metadata";
 import { Component, Watch } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
-import _ from "lodash";
+import _, { Dictionary } from "lodash";
 import { Prediction } from "@/ENKEL/entity/Prediction";
 import { FixtureResult } from "@/ENKEL/entity/dataTypes/FixtureResult";
 
@@ -146,7 +157,7 @@ export default class PredictionEntry extends BaseComponent {
     return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}&user=${this.$store.state.AuthModule.user.id}`;
   }
 
-  entityList: unknown = [];
+  entityList: Dictionary<unknown[]> | [] = [];
 
   predictionChanges = true;
 
@@ -213,6 +224,14 @@ export default class PredictionEntry extends BaseComponent {
     });
   }
 
+  submitAllPredictions(entities: Array<Prediction & { previousPrediction: FixtureResult }>) {
+    entities.forEach(entity => {
+      if (entity.prediction !== entity.previousPrediction) {
+        this.submitPrediction(entity);
+      }
+    });
+  }
+
   generateThisWeeksPredictionsForUser() {
     const startDate = moment()
       .startOf("week")
@@ -258,14 +277,8 @@ export default class PredictionEntry extends BaseComponent {
     });
   }
 
-  showMessage({ message, variant, delay }: { message: string; variant?: string; delay?: number }) {
-    this.$bvToast.toast(message, {
-      noCloseButton: true,
-      variant: variant,
-      autoHideDelay: delay ?? 3000,
-      toaster: "b-toaster-top-right",
-      href: "#"
-    });
+  anyPredictionsChanged(entities: Array<Prediction & { previousPrediction: string }>) {
+    return _.some(entities, entity => entity.previousPrediction !== entity.prediction);
   }
 }
 </script>
@@ -312,7 +325,7 @@ export default class PredictionEntry extends BaseComponent {
 
 // Transitions for submit/helper-text
 .slide-fade-up-enter-active {
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 }
 .slide-fade-up-leave-active {
   transition: all 0.3s ease;
