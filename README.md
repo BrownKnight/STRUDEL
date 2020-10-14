@@ -17,6 +17,10 @@ The most common use for STRUDEL will be the main Prediction Entry screen where u
 ENKEL is the internal/external-facing api layer designed to support interoperability with external services such as
  the [APPLE](https://github.com/benjaminjellis/APPLE) prediction engine. ENKEL also functions as the back-end for 
  the STRUDEL front end, providing support for entity CRUD operations via the STRU*DAL* component.
+
+ ### API Documentation
+ For basic API Documentation, [see ENKEL's README here](ENKEL/README.md).
+ Advancded documentation can be found using Swagger.
  
 
 ## STRUDAL

@@ -17,3 +17,33 @@ STRUDAL_DATABASE_USERNAME=<master/iam username>
 STRUDAL_DATABASE_PASSWORD=<password>
 STRUDAL_DATABASE_NAME=STRUDELDB
 ```
+
+# API
+## Login
+All requests to the API must be authentication using JWT-based Bearer Authentication.
+To retrieve this token, you simply need to POST the following endpoint with your login information.
+
+
+Endpoint:
+```
+POST: /login
+```
+
+Request:
+```json
+{
+  "emailAddress": "<emailAddress>",
+  "password": "<password>"
+}
+```
+
+Response:
+```json
+{
+  "success": true|false,
+  "errorMessage": "<error message>",
+  "token": "<auth token>"
+}
+```
+
+After fetching this token, simply add it as a Bearer Authentication token to every request to ensure you are authenticated.
