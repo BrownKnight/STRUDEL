@@ -8,6 +8,9 @@ import { LoginHandler } from "./loginHandler.js";
 //import path from "path";
 import compression from "compression";
 import helmet from "helmet";
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocument } from "./swagger.js";
+
 // Wait for a connection to be established before starting the server
 await initDb();
 
@@ -29,6 +32,9 @@ app.put("/login/register", loginHandler.register.bind(loginHandler));
 
 // Compress all the responses
 app.use(compression());
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/iapi", new IApiRouter().router);
 app.use("/api", new ApiRouter().router);
 
