@@ -17,7 +17,11 @@ await initDb();
 const app: express.Application = express();
 
 // Sets a few headers to try to improve security
-app.use(helmet());
+if (process.env.NODE_ENV === "production") {
+  app.use(helmet());
+} else {
+  console.log("Not using helmet headers");
+}
 app.use(express.json());
 app.use(authMiddleware);
 

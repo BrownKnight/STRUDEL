@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 export type TokenPayload = { id: string };
 
 export async function authMiddleware(req: Request, res: Response, next: () => void): Promise<void> {
+  console.log("req");
   // If trying to access the /users/login page, then don't block it
   if (req.path.startsWith("/login") || req.path.startsWith("/api/docs")) {
     next();

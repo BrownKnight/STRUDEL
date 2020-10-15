@@ -11,3 +11,28 @@ export class EntityApiResponse {
     this.operationResult = operationResult;
   }
 }
+
+export const EntityApiResponseSchema = {
+  EntityApiResponse: {
+    type: "object",
+    properties: {
+      success: {
+        type: "boolean",
+      },
+      errorMessage: {
+        type: "string",
+      },
+      operationResult: {
+        type: "string",
+      },
+      entity: {
+        anyOf: [
+          { $ref: "#/components/schemas/Fixture" },
+          { $ref: "#/components/schemas/Prediction" },
+          { $ref: "#/components/schemas/Team" },
+          { $ref: "#/components/schemas/UserLogin" },
+        ],
+      },
+    },
+  },
+};

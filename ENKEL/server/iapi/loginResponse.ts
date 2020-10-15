@@ -9,3 +9,21 @@ export class LoginResponse {
     this.token = token;
   }
 }
+
+export const LoginResponseSchema = {
+  LoginResponse: {
+    type: "object",
+    properties: {
+      success: {
+        type: "boolean",
+      },
+      errorMessage: {
+        type: "string",
+      },
+      token: {
+        type: "string",
+        format: "JWT",
+      },
+    },
+  },
+};

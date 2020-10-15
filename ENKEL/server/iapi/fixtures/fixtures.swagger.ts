@@ -1,23 +1,33 @@
+import { generateCRUDOperationDocs } from "../basicEntityOperation.swagger.js";
+
 export const fixturesPaths = {
-  "/fixtures": {
+  ...generateCRUDOperationDocs("Fixture"),
+  "/iapi/fixtures/bydate": {
     get: {
-      tags: ["Fixtures"],
-      description: "Returns all fixtures",
-      responses: {
-        "200": {
-          description: "A list of all Fixtures",
-          content: {
-            "application/json": {
-              schema: {
-                type: "array",
-                items: {
-                  $ref: "#/components/schemas/Fixture",
-                },
-              },
-            },
+      tags: ["Fixture"],
+      description: "Returns all fixtures within the given date range",
+      parameters: [
+        {
+          name: "startDate",
+          in: "query",
+          description: "Beginning date of date range",
+          required: true,
+          schema: {
+            type: "string",
+            format: "date",
           },
         },
-      },
+        {
+          name: "endDate",
+          in: "query",
+          description: "End date of date range",
+          required: true,
+          schema: {
+            type: "string",
+            format: "date",
+          },
+        },
+      ],
     },
   },
 };
