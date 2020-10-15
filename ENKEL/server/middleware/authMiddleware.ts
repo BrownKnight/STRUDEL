@@ -3,11 +3,12 @@ import { UserLoginDAO } from "../../STRUDAL/DAO/UserLoginDAO.js";
 import { LoginResponse } from "../iapi/loginResponse.js";
 import fs from "fs";
 import jwt from "jsonwebtoken";
+import moment from "moment";
 
 export type TokenPayload = { id: string };
 
 export async function authMiddleware(req: Request, res: Response, next: () => void): Promise<void> {
-  console.log("req");
+  console.log(`Incoming request for ${req.path} at ${moment().format("DD/MM H:m:s")}`);
   // If trying to access the /users/login page, then don't block it
   if (req.path.startsWith("/login") || req.path.startsWith("/api/docs")) {
     next();
