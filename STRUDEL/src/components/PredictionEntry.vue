@@ -290,6 +290,7 @@ export default class PredictionEntry extends BaseComponent {
   border-color: transparent;
   // border-radius: 1em !important;
   border-width: 1px;
+  color: #757674;
 }
 
 // .btn-prediction:first-child {
@@ -301,15 +302,16 @@ export default class PredictionEntry extends BaseComponent {
 }
 
 .btn-prediction.active {
-  background-color: whitesmoke;
+  background-color: #f7f7f6;
   border-color: rgba(23, 22, 31, 0.2);
   border-width: 1px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.125) !important;
+  color: black;
 }
 .btn-prediction:hover:not(.disabled) {
-  background-color: whitesmoke;
+  background-color: #f7f7f6;
   border-width: 1px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.125) !important;
 }
 
 .helper-text {

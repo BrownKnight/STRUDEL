@@ -12,12 +12,12 @@
           <b-collapse id="generate-predictions-for-user">
             <b-list-group-item>
               <b-row>
-                <b-col cols="12" md="6">
+                <b-col cols="12" md="6" class="mt-1">
                   <b-input-group prepend="User">
                     <b-form-select v-model="selectedUserId" :options="userOptions"></b-form-select>
                   </b-input-group>
                 </b-col>
-                <b-col cols="12" md="6">
+                <b-col cols="12" md="6" class="mt-1">
                   <b-input-group prepend="Date">
                     <b-form-input
                       v-if="hasNativeDatePicker()"
@@ -33,8 +33,8 @@
                     ></b-form-datepicker>
                   </b-input-group>
                 </b-col>
-                <b-col cols="12">
-                  <b-button variant="success" size="sm" class="mt-2" @click="generatePredictionsForUser()">
+                <b-col cols="12" class="mt-2">
+                  <b-button variant="success" size="sm" @click="generatePredictionsForUser()">
                     Generate Empty Predictions
                   </b-button>
                 </b-col>
@@ -59,7 +59,7 @@ import { Component } from "vue-property-decorator";
 })
 export default class Management extends BaseComponent {
   selectedUserId = "";
-  userOptions = [];
+  userOptions: Array<{ value: number | null; text: string }> = [];
   date = moment().format("YYYY-MM-DD");
 
   created() {
