@@ -7,19 +7,26 @@
       </p>
     </b-modal>
 
-    <b-container>
-      <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>
-        <b-icon icon="bug" class="align-top"></b-icon> Found an issue?</b-button
-      >
-    </b-container>
+    <b-row class="px-3">
+      <b-col cols="6" md="4" offset-md="4" class="text-left text-md-center">
+        <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>
+          <b-icon icon="bug" class="align-top"></b-icon>
+          Found an issue?
+        </b-button>
+      </b-col>
+      <b-col cols="6" md="3" class="text-right" v-if="isAdmin()">
+        <b-button size="sm" variant="outline-primary" href="/api/docs">API Docs</b-button>
+      </b-col>
+    </b-row>
   </footer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
+import { BaseComponent } from "./BaseComponent";
 
 @Component
-export default class Header extends Vue {
+export default class Header extends BaseComponent {
   get userFullName() {
     return this.$store.state?.AuthModule?.user?.fullName ?? "Not Logged In";
   }

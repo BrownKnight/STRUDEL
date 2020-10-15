@@ -28,108 +28,112 @@
       </span>
     </b-alert>
 
-    <template v-for="date in Object.keys(entityList).sort()">
-      <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
-        <h4>{{ prettyFormatDate(entityList[date][0].fixture.date) }}</h4>
-      </b-row>
-      <b-row :key="entityList[date][0].id + 1" class="mt-1">
-        <b-container>
-          <b-card-group
-            columns
-            :deck="entityList[date].length < 5"
-            v-if="entityList != null && entityList[date] && entityList[date].length > 0"
-          >
-            <b-card
-              v-for="entity in entityList[date]"
-              :key="entity.id"
-              no-body
-              class="shadow"
-              :border-variant="
-                entity.fixture.fixtureResult
-                  ? entity.fixture.fixtureResult === entity.prediction
-                    ? 'success'
-                    : 'danger'
-                  : null
-              "
-            >
-              <b-card-body class="p-0 pr-2 text-right helper-text border-0">
-                <small>
-                  {{ prettyFormatTime(entity.fixture.time) }}
-                </small>
-              </b-card-body>
-              <b-card-body class="px-3 pt-0 pb-2">
-                <b-form-radio-group
-                  buttons
-                  v-model="entity.prediction"
-                  button-variant="prediction"
-                  class="d-flex flex-wrap justify-content-around"
-                  :disabled="entity.fixture.fixtureResult !== null"
+    <transition-group name="slide-down" mode="out-in">
+      <template v-for="date in Object.keys(entityList).sort()">
+        <div :key="entityList[date][0].id + 4">
+          <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
+            <h4>{{ prettyFormatDate(entityList[date][0].fixture.date) }}</h4>
+          </b-row>
+          <b-row :key="entityList[date][0].id + 1" class="mt-1">
+            <b-container>
+              <b-card-group
+                columns
+                :deck="entityList[date].length < 5"
+                v-if="entityList != null && entityList[date] && entityList[date].length > 0"
+              >
+                <b-card
+                  v-for="entity in entityList[date]"
+                  :key="entity.id"
+                  no-body
+                  class="shadow"
+                  :border-variant="
+                    entity.fixture.fixtureResult
+                      ? entity.fixture.fixtureResult === entity.prediction
+                        ? 'success'
+                        : 'danger'
+                      : null
+                  "
                 >
-                  <b-form-radio
-                    name="prediction"
-                    value="H"
-                    class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
-                  >
-                    <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
-                    <span class="mt-2 mb-1">{{ entity.fixture.homeTeam.teamName }}</span>
-                    <small>Home</small>
-                  </b-form-radio>
-                  <b-form-radio
-                    name="prediction"
-                    value="A"
-                    class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
-                  >
-                    <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
-                    <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
-                    <small>Away</small>
-                  </b-form-radio>
-                  <b-form-radio name="prediction" value="D" class="flex-grow-1 d-flex rounded mt-2">
-                    <small class="mx-auto">Draw</small>
-                  </b-form-radio>
-                </b-form-radio-group>
-              </b-card-body>
+                  <b-card-body class="p-0 pr-2 text-right helper-text border-0">
+                    <small>
+                      {{ prettyFormatTime(entity.fixture.time) }}
+                    </small>
+                  </b-card-body>
+                  <b-card-body class="px-3 pt-0 pb-2">
+                    <b-form-radio-group
+                      buttons
+                      v-model="entity.prediction"
+                      button-variant="prediction"
+                      class="d-flex flex-wrap justify-content-around"
+                      :disabled="entity.fixture.fixtureResult !== null"
+                    >
+                      <b-form-radio
+                        name="prediction"
+                        value="H"
+                        class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
+                      >
+                        <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
+                        <span class="mt-2 mb-1">{{ entity.fixture.homeTeam.teamName }}</span>
+                        <small>Home</small>
+                      </b-form-radio>
+                      <b-form-radio
+                        name="prediction"
+                        value="A"
+                        class="w-45 flex-grow-0 d-flex flex-column align-items-center p-2 rounded justify-content-between"
+                      >
+                        <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 5em; width: 5em;" />
+                        <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
+                        <small>Away</small>
+                      </b-form-radio>
+                      <b-form-radio name="prediction" value="D" class="flex-grow-1 d-flex rounded mt-2">
+                        <small class="mx-auto">Draw</small>
+                      </b-form-radio>
+                    </b-form-radio-group>
+                  </b-card-body>
 
-              <b-card-body v-if="entity.fixture.fixtureResult !== null">
-                <span>Actual Result: {{ formatFixtureResult(entity.fixture.fixtureResult) }}</span>
-              </b-card-body>
+                  <b-card-body v-if="entity.fixture.fixtureResult !== null">
+                    <span>Actual Result: {{ formatFixtureResult(entity.fixture.fixtureResult) }}</span>
+                  </b-card-body>
 
-              <transition name="slide-fade-up" mode="out-in">
-                <b-button
-                  class="w-100 p-1 submit-button"
-                  variant="success"
-                  v-if="entity.previousPrediction !== entity.prediction"
-                  @click="submitPrediction(entity)"
-                  key="submit"
-                >
-                  <small>Submit Prediction</small>
-                </b-button>
-                <div class="w-100 p-1 helper-text" v-else-if="entity.prediction == null" key="helper">
-                  <small><em>Tap on a team to make your prediction</em></small>
-                </div>
-                <div class="w-100 p-1 helper-text" v-else key="my-prediction">
-                  <small>
-                    <em>
-                      My Prediction: <b>{{ formatFixtureResult(entity.prediction) }}</b>
-                    </em>
-                  </small>
-                </div>
-              </transition>
-            </b-card>
-          </b-card-group>
-        </b-container>
-      </b-row>
-      <b-row class="mt-2" :key="entityList[date][0].id + 2">
-        <transition name="slide-fade-up" mode="out-in">
-          <b-button
-            class="mx-auto"
-            variant="success"
-            v-if="anyPredictionsChanged(entityList[date])"
-            @click="submitAllPredictions(entityList[date])"
-            >Submit All</b-button
-          >
-        </transition>
-      </b-row>
-    </template>
+                  <transition name="zoom-in" mode="out-in">
+                    <b-button
+                      class="w-100 p-1 submit-button"
+                      variant="success"
+                      v-if="entity.previousPrediction !== entity.prediction"
+                      @click="submitPrediction(entity)"
+                      key="submit"
+                    >
+                      <small>Submit Prediction</small>
+                    </b-button>
+                    <div class="w-100 p-1 helper-text" v-else-if="entity.prediction == null" key="helper">
+                      <small><em>Tap on a team to make your prediction</em></small>
+                    </div>
+                    <div class="w-100 p-1 helper-text" v-else key="my-prediction">
+                      <small>
+                        <em>
+                          My Prediction: <b>{{ formatFixtureResult(entity.prediction) }}</b>
+                        </em>
+                      </small>
+                    </div>
+                  </transition>
+                </b-card>
+              </b-card-group>
+            </b-container>
+          </b-row>
+          <b-row class="mt-2" :key="entityList[date][0].id + 2">
+            <transition name="zoom-in" mode="out-in">
+              <b-button
+                class="mx-auto"
+                variant="success"
+                v-if="anyPredictionsChanged(entityList[date])"
+                @click="submitAllPredictions(entityList[date])"
+                >Submit All</b-button
+              >
+            </transition>
+          </b-row>
+        </div>
+      </template>
+    </transition-group>
   </div>
 </template>
 
@@ -326,20 +330,38 @@ export default class PredictionEntry extends BaseComponent {
 }
 
 // Transitions for submit/helper-text
-.slide-fade-up-enter-active {
+.zoom-in-enter-active {
   transition: all 0.2s ease;
 }
-.slide-fade-up-leave-active {
+.zoom-in-leave-active {
   transition: all 0.3s ease;
 }
-.slide-fade-up-enter {
+.zoom-in-enter {
   transform: scale(1.1);
   opacity: 0;
 }
-.slide-fade-up-leave-to {
+.zoom-in-leave-to {
   transform: scale(0.2);
   opacity: 0;
 }
+
+// Transitions for whole page slide
+.slide-down-enter-active {
+  transition: all 0.7s ease;
+  transition-delay: 0.7s;
+}
+.slide-down-leave-active {
+  transition: all 0.7s ease;
+}
+.slide-down-enter {
+  transform: translateY(-100px);
+  opacity: 0;
+}
+.slide-down-leave-to {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
 .w-45 {
   width: 45%;
 }
