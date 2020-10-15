@@ -1,6 +1,9 @@
 <template>
   <b-navbar variant="primary" type="dark" fixed="top" toggleable="md">
-    <b-navbar-brand to="index">BEAT THE BOT</b-navbar-brand>
+    <b-navbar-brand to="index">
+      <img src="@/assets/bot.svg" class="logo align-top" />
+      BEAT THE BOT
+      </b-navbar-brand>
     <b-navbar-toggle target="navbar-collapse"></b-navbar-toggle>
     <b-collapse id="navbar-collapse" is-nav>
       <b-navbar-nav v-if="isLoggedIn">
@@ -48,5 +51,11 @@ export default class Header extends BaseComponent {
 <style scoped lang="scss">
 .navbar-dark .navbar-toggler {
   border-color: transparent;
+}
+
+.logo {
+  color: white;
+  filter: invert(90%);
+  height: 1.4em;
 }
 </style>
