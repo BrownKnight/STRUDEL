@@ -8,13 +8,20 @@ import { LoginHandler } from "./loginHandler.js";
 //import path from "path";
 import compression from "compression";
 import helmet from "helmet";
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocument } from "./swagger.js";
+
 // Wait for a connection to be established before starting the server
 await initDb();
 
 const app: express.Application = express();
 
 // Sets a few headers to try to improve security
-app.use(helmet());
+if (process.env.NODE_ENV === "production") {
+  app.use(helmet());
+} else {
+  console.log("Not using helmet headers");
+}
 app.use(express.json());
 app.use(authMiddleware);
 
@@ -29,6 +36,9 @@ app.put("/login/register", loginHandler.register.bind(loginHandler));
 
 // Compress all the responses
 app.use(compression());
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/iapi", new IApiRouter().router);
 app.use("/api", new ApiRouter().router);
 

@@ -7,16 +7,15 @@ import jwt from "jsonwebtoken";
 export type TokenPayload = { id: string };
 
 export async function authMiddleware(req: Request, res: Response, next: () => void): Promise<void> {
+  console.log("req");
   // If trying to access the /users/login page, then don't block it
-  if (req.path.startsWith("/login")) {
-    console.log("Skipping auth middleware as accessing login page");
+  if (req.path.startsWith("/login") || req.path.startsWith("/api/docs")) {
     next();
     return;
   }
 
   const publicKey = fs.readFileSync("../auth.pub", "utf-8");
   const token = req.headers.authorization?.replace("Bearer ", "");
-  console.log(`Received auth request with token ${token}`);
 
   if (!token) {
     res.status(401).send(new LoginResponse(false, "JWT Token not provided in Bearer auth header", token));
