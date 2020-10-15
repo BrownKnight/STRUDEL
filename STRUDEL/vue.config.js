@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-    https: true,
+//    https: true,
     proxy: {
       "^/iapi": {
         target: process.env.ENKEL_API_SERVICE

@@ -15,6 +15,7 @@ import Teams from "@/pages/Teams.vue";
 import Fixtures from "@/pages/Fixtures.vue";
 import Predictions from "@/pages/Predictions.vue";
 import Login from "@/pages/Login.vue";
+import Management from "@/pages/Management.vue";
 
 import { Store } from "@/authStore.ts";
 
@@ -38,7 +39,8 @@ const routes: RouteConfig[] = [
   { path: "/teams", component: Teams },
   { path: "/fixtures", component: Fixtures },
   { path: "/predictions", component: Predictions },
-  { path: "/login", component: Login }
+  { path: "/login", component: Login },
+  { path: "/management", component: Management }
 ];
 
 const router = new VueRouter({

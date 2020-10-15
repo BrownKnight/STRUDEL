@@ -8,6 +8,7 @@
         <b-nav-item v-if="isAdmin()" to="teams">Teams</b-nav-item>
         <b-nav-item to="fixtures">Fixtures</b-nav-item>
         <b-nav-item to="predictions">Predictions</b-nav-item>
+        <b-nav-item v-if="isAdmin()" to="management">Manage</b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
