@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="primary" type="dark" fixed="top" toggleable="md">
-    <b-navbar-brand to="index">STRUDEL</b-navbar-brand>
+    <b-navbar-brand to="index">BEAT THE BOT</b-navbar-brand>
     <b-navbar-toggle target="navbar-collapse"></b-navbar-toggle>
     <b-collapse id="navbar-collapse" is-nav>
       <b-navbar-nav v-if="isLoggedIn">
@@ -8,7 +8,7 @@
         <b-nav-item v-if="isAdmin()" to="teams">Teams</b-nav-item>
         <b-nav-item to="fixtures">Fixtures</b-nav-item>
         <b-nav-item to="predictions">Predictions</b-nav-item>
-        <b-nav-item v-if="isAdmin()" to="management">Manage</b-nav-item>
+        <b-nav-item v-if="isAdmin()" to="management">Sys Management</b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
