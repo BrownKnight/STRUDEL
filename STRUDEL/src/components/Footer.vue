@@ -10,12 +10,15 @@
     <b-row class="px-3">
       <b-col cols="6" md="4" offset-md="4" class="text-left text-md-center">
         <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>
-          <b-icon icon="bug" class="align-top"></b-icon>
+          <b-icon icon="bug" class="align-top mr-1"></b-icon>
           Found an issue?
         </b-button>
       </b-col>
       <b-col cols="6" md="3" class="text-right" v-if="isAdmin()">
-        <b-button size="sm" variant="outline-primary" href="/api/docs">API Docs</b-button>
+        <b-button size="sm" variant="outline-primary" href="/api/docs">
+          <b-icon icon="newspaper" class="align-top mr-1"></b-icon>
+          API Docs
+        </b-button>
       </b-col>
     </b-row>
   </footer>
