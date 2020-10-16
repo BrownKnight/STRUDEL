@@ -1,7 +1,7 @@
 <template>
   <div id="analytics-items-list">
     <template v-for="entity in entityList">
-      <b-card class="shadow" :key="entity.id">
+      <b-card class="shadow mt-3" :key="entity.id">
         <h3>{{ entity.heading }}</h3>
         <b-container v-html="entity.html"></b-container>
         <ul>
