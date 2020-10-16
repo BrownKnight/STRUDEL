@@ -1,9 +1,10 @@
+import { AnalyticsItems } from "./AnalyticsItems.js";
 import { Fixture } from "./Fixture.js";
 import { Prediction } from "./Prediction.js";
 import { Team } from "./Team.js";
 import { UserLogin } from "./UserLogin.js";
 
-export type AnyEntity = Fixture | Prediction | Team | UserLogin;
+export type AnyEntity = Fixture | Prediction | Team | UserLogin | AnalyticsItems;
 
 export function sanitiseEntity<T extends AnyEntity>(entity: T): Partial<T> {
   entity.dateModified = undefined;
