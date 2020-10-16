@@ -16,7 +16,7 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { BaseComponent } from "./BaseComponent";
-import { AnalyticsItems } from "@/ENKEL/entity/AnalyticsItem";
+import { AnalyticsItems } from "@/ENKEL/entity/AnalyticsItems";
 
 @Component({})
 export default class AnalyticsItemsView extends BaseComponent {
