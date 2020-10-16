@@ -105,4 +105,25 @@ export const entitySchemas = {
       },
     },
   },
+  AnalyticsItem: {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+        description: "Named used to reference the item",
+      },
+      heading: {
+        type: "string",
+        description: "Heading to display on top of the item",
+      },
+      html: {
+        type: "string",
+        description: "HTML representation of item to display",
+      },
+      tagLineList: {
+        type: "string",
+        description: "Comma seperated list of tag lines",
+      },
+    },
+  },
 };

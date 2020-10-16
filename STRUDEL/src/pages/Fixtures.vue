@@ -4,8 +4,38 @@
       <h3 class="my-5 mx-3">{{ isAdmin() ? "Maintain" : "View" }} Fixtures</h3>
     </b-row>
 
+    <b-row class="my-2">
+      <b-col cols="12" md="6" offset-md="3">
+        <b-input-group size="sm" prepend="Fixtures between">
+          <b-form-input
+            v-if="hasNativeDatePicker()"
+            v-model="startDate"
+            type="date"
+            id="filter-start-date"
+          ></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="startDate"
+            id="filter-start-date"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+
+          <b-input-group-append is-text>and</b-input-group-append>
+
+          <b-form-input v-if="hasNativeDatePicker()" v-model="endDate" type="date" id="filter-end-date"></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="endDate"
+            id="filter-end-date"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+        </b-input-group>
+      </b-col>
+    </b-row>
+
     <EntityManagement
       :apiEndpoint="'/iapi/fixtures'"
+      :GETextension="GETextension"
       :entityFormComponent="FixtureForm"
       :rowDetailsComponent="FixtureRowDetails"
       :fields="fields"
@@ -19,6 +49,13 @@
       <b-col cols="12" md="6" offset-md="3">
         <b-input-group prepend="Import Fixtures for">
           <b-form-input type="date" v-model="importFixturesDate"></b-form-input>
+          <b-form-input v-if="hasNativeDatePicker()" v-model="importFixturesDate" type="date"></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="importFixturesDate"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+
           <b-input-group-append>
             <b-button variant="primary" @click="importFixtures()">Import</b-button>
           </b-input-group-append>
@@ -48,6 +85,17 @@ export default class Fixtures extends BaseComponent {
 
   importFixturesDate = moment().format("YYYY-MM-DD");
 
+  startDate = moment()
+    .startOf("week")
+    .format("YYYY-MM-DD");
+  endDate = moment(this.startDate)
+    .add(1, "week")
+    .format("YYYY-MM-DD");
+
+  get GETextension() {
+    return `/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
+  }
+
   populateNewEntity(entity: Fixture) {
     console.log("populating");
     entity.homeTeam = {};
@@ -69,13 +117,13 @@ export default class Fixtures extends BaseComponent {
       ];
     } else {
       this.fields = [
-        { key: "expand", sortable: true, label: "Expand" },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
-        { key: "time", sortable: true, label: "Time" },
+        { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
-        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult }
+        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
+        { key: "expand", label: "Expand" }
       ];
     }
   }

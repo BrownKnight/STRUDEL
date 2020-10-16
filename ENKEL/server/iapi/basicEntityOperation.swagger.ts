@@ -1,8 +1,12 @@
-export function generateCRUDOperationDocs(entityName: string): Record<string, unknown> {
+export function generateCRUDOperationDocs(entityName: string, pathName: string | null = null): Record<string, unknown> {
+  if (pathName === null) {
+    pathName = entityName + "s";
+  }
+
   const CRUDOperations: Record<string, unknown> = {};
-  CRUDOperations[`/iapi/${entityName.toLowerCase()}s`] = {
+  CRUDOperations[`/iapi/${pathName.toLowerCase()}`] = {
     get: {
-      tags: [entityName],
+      tags: [pathName],
       description: "Get all entites",
       responses: {
         "200": {
@@ -21,7 +25,7 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
       },
     },
     put: {
-      tags: [entityName],
+      tags: [pathName],
       description: "Update/Create given entity",
       requestBody: {
         content: {
@@ -47,9 +51,9 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
     },
   };
 
-  CRUDOperations[`/iapi/${entityName.toLowerCase()}s/{${entityName.toLowerCase()}Id}`] = {
+  CRUDOperations[`/iapi/${pathName.toLowerCase()}/{${entityName.toLowerCase()}Id}`] = {
     delete: {
-      tags: [entityName],
+      tags: [pathName],
       description: "Remove the given entity, by using its ID",
       parameters: [
         {
@@ -86,7 +90,7 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
       },
     },
     get: {
-      tags: [entityName],
+      tags: [pathName],
       description: "Get entity with the given ID",
       responses: {
         "200": {

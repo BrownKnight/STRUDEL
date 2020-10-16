@@ -16,6 +16,8 @@ import Fixtures from "@/pages/Fixtures.vue";
 import Predictions from "@/pages/Predictions.vue";
 import Login from "@/pages/Login.vue";
 import Management from "@/pages/Management.vue";
+import MaintainAnalytics from "@/pages/MaintainAnalytics.vue";
+import Analytics from "@/pages/Analytics.vue";
 
 import { Store } from "@/authStore.ts";
 
@@ -40,7 +42,9 @@ const routes: RouteConfig[] = [
   { path: "/fixtures", component: Fixtures },
   { path: "/predictions", component: Predictions },
   { path: "/login", component: Login },
-  { path: "/management", component: Management }
+  { path: "/management", component: Management },
+  { path: "/maintain-analytics", component: MaintainAnalytics },
+  { path: "/analytics", component: Analytics }
 ];
 
 const router = new VueRouter({

@@ -41,6 +41,10 @@
               </b-row>
             </b-list-group-item>
           </b-collapse>
+
+          <b-list-group-item to="maintain-analytics" variant="light">
+            <span>Manage Analytics Items</span>
+          </b-list-group-item>
         </b-list-group>
       </b-col>
     </b-row>

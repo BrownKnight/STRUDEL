@@ -3,7 +3,7 @@
     <b-navbar-brand to="index">
       <img src="@/assets/bot.svg" class="logo align-top" />
       BEAT THE BOT
-      </b-navbar-brand>
+    </b-navbar-brand>
     <b-navbar-toggle target="navbar-collapse"></b-navbar-toggle>
     <b-collapse id="navbar-collapse" is-nav>
       <b-navbar-nav v-if="isLoggedIn">
@@ -11,6 +11,7 @@
         <b-nav-item v-if="isAdmin()" to="teams">Teams</b-nav-item>
         <b-nav-item to="fixtures">Fixtures</b-nav-item>
         <b-nav-item to="predictions">Predictions</b-nav-item>
+        <b-nav-item to="analytics">Analytics</b-nav-item>
         <b-nav-item v-if="isAdmin()" to="management">Sys Management</b-nav-item>
       </b-navbar-nav>
 
