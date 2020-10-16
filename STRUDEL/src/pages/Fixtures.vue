@@ -87,7 +87,7 @@ export default class Fixtures extends BaseComponent {
     }
 
     this.callENKEL(
-      `/iapi/external/fixtures/bydate?date=${moment(this.importFixturesDate).format("YYYY-MM-DD")}`,
+      `/iapi/external/fixtures/importbydate?date=${moment(this.importFixturesDate).format("YYYY-MM-DD")}`,
       "POST"
     ).then(res => {
       res
@@ -97,7 +97,9 @@ export default class Fixtures extends BaseComponent {
           if (!res.ok || !json.success) {
             this.showMessage({
               delay: 5,
-              message: `Fixture import failed! ${json.errorMessage?.message ?? json.errorMessage}`,
+              message: `Fixture import failed! ${json.errorMessage ??
+                json.operationResult.message ??
+                json.operationResult}`,
               variant: "danger"
             });
 
@@ -105,9 +107,9 @@ export default class Fixtures extends BaseComponent {
           }
 
           this.showMessage({
-            delay: 5,
+            delay: 3,
             message: `${json.entity.length} Fixtures imported!`,
-            variant: "danger"
+            variant: "success"
           });
         });
     });

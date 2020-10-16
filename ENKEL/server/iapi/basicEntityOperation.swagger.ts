@@ -27,7 +27,7 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
         content: {
           "application/json": {
             schema: {
-              $ref: `#/components/schemas/${entityName}`,
+              $ref: `#/components/schemas/EntityApiResponse`,
             },
           },
         },
@@ -38,7 +38,7 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
           content: {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${entityName}`,
+                $ref: `#/components/schemas/EntityApiResponse`,
               },
             },
           },
@@ -68,7 +68,7 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
           content: {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${entityName}`,
+                $ref: `#/components/schemas/EntityApiResponse`,
               },
             },
           },
@@ -78,7 +78,52 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
           content: {
             "application/json": {
               schema: {
-                $ref: `#/components/schemas/${entityName}`,
+                $ref: `#/components/schemas/EntityApiResponse`,
+              },
+            },
+          },
+        },
+      },
+    },
+    get: {
+      tags: [entityName],
+      description: "Get entity with the given ID",
+      responses: {
+        "200": {
+          description: "The entity requested",
+          content: {
+            "application/json": {
+              schema: {
+                type: "array",
+                items: {
+                  $ref: `#/components/schemas/EntityApiResponse`,
+                },
+              },
+            },
+          },
+        },
+        "404": {
+          description: "Entity was not found",
+          content: {
+            "application/json": {
+              schema: {
+                type: "array",
+                items: {
+                  $ref: `#/components/schemas/EntityApiResponse`,
+                },
+              },
+            },
+          },
+        },
+        "400": {
+          description: "Error occured trying to fetch entity",
+          content: {
+            "application/json": {
+              schema: {
+                type: "array",
+                items: {
+                  $ref: `#/components/schemas/EntityApiResponse`,
+                },
               },
             },
           },
