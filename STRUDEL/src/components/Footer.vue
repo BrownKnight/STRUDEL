@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer bg-light mt-5">
+  <footer class="footer bg-light mt-5 container-fluid">
     <b-modal id="issue-modal" title="Report an issue" :aria-busy="true" hide-footer>
       <p>
         Found an issue? Please report it <a href="https://github.com/BrownKnight/STRUDEL/issues">here on GitHub</a>, so
@@ -7,7 +7,7 @@
       </p>
     </b-modal>
 
-    <b-row class="px-3">
+    <b-row class="px-0">
       <b-col cols="6" md="4" offset-md="4" class="text-left text-md-center">
         <b-button size="sm" variant="outline-primary" v-b-modal.issue-modal>
           <b-icon icon="bug" class="align-top mr-1"></b-icon>
