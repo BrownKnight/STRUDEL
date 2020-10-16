@@ -6,7 +6,7 @@ export const predictionsPaths = {
     get: {
       tags: ["Prediction"],
       description:
-        "Returns all predictions within the given date range. Data includes fixture information and user information. Can be provided in a csv table format.",
+        "Returns all predictions within the given date range. Data includes fixture information and user information.",
       parameters: [
         {
           name: "startDate",
@@ -28,17 +28,6 @@ export const predictionsPaths = {
             format: "date",
           },
         },
-        {
-          name: "format",
-          in: "query",
-          description: "Format of the returned data",
-          required: false,
-          schema: {
-            type: "string",
-            enum: ["json", "csv"],
-            default: "json",
-          },
-        },
       ],
       responses: {
         200: {
@@ -48,11 +37,6 @@ export const predictionsPaths = {
               schema: {
                 type: "array",
                 items: { $ref: "#/components/schemas/Prediction" },
-              },
-            },
-            "plain/text": {
-              schema: {
-                type: "string",
               },
             },
           },

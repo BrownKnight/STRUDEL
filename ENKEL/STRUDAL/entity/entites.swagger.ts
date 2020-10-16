@@ -44,6 +44,13 @@ export const entitySchemas = {
       fixtureResult: {
         $ref: "#/components/schemas/FixtureResult",
       },
+      predictions: {
+        type: "array",
+        items: {
+          $ref: "#/components/schemas/Prediction",
+        },
+        nullable: true,
+      },
     },
   },
   Prediction: {

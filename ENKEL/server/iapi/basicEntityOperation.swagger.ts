@@ -62,6 +62,28 @@ export function generateCRUDOperationDocs(entityName: string): Record<string, un
           },
         },
       ],
+      responses: {
+        "200": {
+          description: "Returns the entity you've just updated/created",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: `#/components/schemas/${entityName}`,
+              },
+            },
+          },
+        },
+        "400": {
+          description: "Error occurred trying to delete the entity",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: `#/components/schemas/${entityName}`,
+              },
+            },
+          },
+        },
+      },
     },
   };
 
