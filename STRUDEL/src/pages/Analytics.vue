@@ -3,17 +3,17 @@
     <b-row>
       <h3 class="my-5 mx-3">Analytics</h3>
     </b-row>
-    <AnalyticsItems />
+    <AnalyticsItemsView />
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Vue } from "vue-property-decorator";
-import AnalyticsItems from "@/components/AnalyticsItems.vue";
+import AnalyticsItemsView from "@/components/AnalyticsItemsView.vue";
 
 @Component({
-  components: { AnalyticsItems }
+  components: { AnalyticsItemsView }
 })
 export default class Analytics extends Vue {}
 </script>
