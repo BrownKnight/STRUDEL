@@ -4,8 +4,38 @@
       <h3 class="my-5 mx-3">{{ isAdmin() ? "Maintain" : "View" }} Fixtures</h3>
     </b-row>
 
+    <b-row class="my-2">
+      <b-col cols="12" md="6" offset-md="3">
+        <b-input-group size="sm" prepend="Fixtures between">
+          <b-form-input
+            v-if="hasNativeDatePicker()"
+            v-model="startDate"
+            type="date"
+            id="filter-start-date"
+          ></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="startDate"
+            id="filter-start-date"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+
+          <b-input-group-append is-text>and</b-input-group-append>
+
+          <b-form-input v-if="hasNativeDatePicker()" v-model="endDate" type="date" id="filter-end-date"></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="endDate"
+            id="filter-end-date"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+        </b-input-group>
+      </b-col>
+    </b-row>
+
     <EntityManagement
       :apiEndpoint="'/iapi/fixtures'"
+      :GETextension="GETextension"
       :entityFormComponent="FixtureForm"
       :rowDetailsComponent="FixtureRowDetails"
       :fields="fields"
@@ -54,6 +84,17 @@ export default class Fixtures extends BaseComponent {
   fields: {}[] = [];
 
   importFixturesDate = moment().format("YYYY-MM-DD");
+
+  startDate = moment()
+    .startOf("week")
+    .format("YYYY-MM-DD");
+  endDate = moment(this.startDate)
+    .add(1, "week")
+    .format("YYYY-MM-DD");
+
+  get GETextension() {
+    return `/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
+  }
 
   populateNewEntity(entity: Fixture) {
     console.log("populating");
