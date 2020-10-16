@@ -1,60 +1,28 @@
 import { Request, Response } from "express";
-import { RouterBase } from "../../routerBase.js";
-import { EntityApiResponse } from "../apiResponse.js";
+import { EntityRouter } from "../entityRouter.js";
 import { TeamsHandler } from "./teamsHandler.js";
 
 /**
- * Router for all internal teams-based api calls. Supports the fetching, updating, and deleting
+ * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting of users 
+ * through the standard Entity API
  *
  * Routes:
- * GET:/              : Get all teams
- * GET:/<team_id>     : Get teams for the given TeamID
- * PUT:/              : Create or update a team
- * DELETE:/<team_id>  : Delete a given prediciton
- */
-export class IApiTeamsRouter extends RouterBase {
-  private _teamsHandler: TeamsHandler;
 
+ */
+export class IApiTeamsRouter extends EntityRouter {
   constructor() {
-    super();
-    this._teamsHandler = new TeamsHandler();
+    super(new TeamsHandler());
   }
 
   protected initLocalRoutes(): void {
-    this.router.get("/", this.getAllTeams.bind(this));
-    this.router.put("/", this.saveTeam.bind(this));
-    this.router.delete("/:teamId", this.deleteTeam.bind(this));
-    this.router.all("/*", this.index.bind(this));
+    // No local routes
   }
 
   protected initChildRoutes(): void {
-    // No child routes implemented yet
+    this.router.all("/*", this.index.bind(this));
   }
 
   private index(req: Request, res: Response) {
     res.status(404).send("Unsupprted API endpoint");
-  }
-
-  private async getAllTeams(req: Request, res: Response) {
-    res.json(await this._teamsHandler.getAllEntities());
-  }
-
-  private async saveTeam(req: Request, res: Response) {
-    console.log(req.headers);
-    const apiResponse: EntityApiResponse = await this._teamsHandler.saveEntity(req.body);
-    if (apiResponse.success) {
-      res.status(200).json(apiResponse);
-    } else {
-      res.status(400).json(apiResponse);
-    }
-  }
-
-  private async deleteTeam(req: Request, res: Response) {
-    const apiResponse: EntityApiResponse = await this._teamsHandler.deleteEntity(req.params["teamId"]);
-    if (apiResponse.success) {
-      res.status(200).json(apiResponse);
-    } else {
-      res.status(400).json(apiResponse);
-    }
   }
 }

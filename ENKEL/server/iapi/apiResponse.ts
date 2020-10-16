@@ -1,7 +1,9 @@
+import { AnyEntity } from "../../STRUDAL/entity/EntityHelper.js";
+
 export class EntityApiResponse {
   success: boolean;
   errorMessage: string;
-  entity: unknown;
+  entity: AnyEntity | Array<AnyEntity>;
   operationResult: unknown;
 
   constructor(success = true, errorMessage = "", entity = {}, operationResult = {}) {

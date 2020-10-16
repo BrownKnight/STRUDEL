@@ -14,6 +14,34 @@ export class BasicEntityOperationHandler<TEntity extends AnyEntity> {
     return entities;
   }
 
+  public async getEntityById(entityStringId: string): Promise<EntityApiResponse> {
+    const entityId = parseInt(entityStringId);
+
+    const apiResponse: EntityApiResponse = new EntityApiResponse();
+
+    if (isNaN(entityId)) {
+      apiResponse.success = false;
+      apiResponse.errorMessage = "Entity ID not supplied or invalid";
+      return apiResponse;
+    }
+
+    try {
+      const entity = await this._DAO.getEntityByID(entityId);
+      if (entity !== undefined) {
+        apiResponse.success = true;
+        apiResponse.entity = entity;
+        return apiResponse;
+      } else {
+        apiResponse.errorMessage = "Could not find entity!";
+      }
+    } catch (error) {
+      apiResponse.errorMessage = error;
+    }
+
+    apiResponse.success = false;
+    return apiResponse;
+  }
+
   public async saveEntity(entity: Partial<TEntity>): Promise<EntityApiResponse> {
     const apiResponse = new EntityApiResponse();
     console.log(`Saving Entity ${entity.id}`);
@@ -40,7 +68,7 @@ export class BasicEntityOperationHandler<TEntity extends AnyEntity> {
     } catch (error) {
       console.error("Error occurred trying to save entity");
       console.error(error);
-      apiResponse.errorMessage = error;
+      apiResponse.operationResult = error;
       apiResponse.success = false;
     }
 
@@ -48,10 +76,16 @@ export class BasicEntityOperationHandler<TEntity extends AnyEntity> {
   }
 
   public async deleteEntity(entityStringId: string): Promise<EntityApiResponse> {
-    console.log("entity string id", entityStringId);
     const entityId = parseInt(entityStringId);
 
-    const apiResponse = new EntityApiResponse();
+    const apiResponse: EntityApiResponse = new EntityApiResponse();
+
+    if (isNaN(entityId)) {
+      apiResponse.success = false;
+      apiResponse.errorMessage = "Entity ID not supplied or invalid";
+      return apiResponse;
+    }
+
     console.log(`Deleting Entity ${entityId}`);
 
     try {

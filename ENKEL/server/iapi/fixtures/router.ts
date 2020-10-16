@@ -5,13 +5,14 @@ import { FixturesHandler } from "./fixturesHandler.js";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 
 /**
- * Router for all internal fixtures-based api calls. Supports the fetching, updating, and deleting
+ * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting of users
+ * through the standard Entity API
+ *
+ * Allows the fetching of fixtures, with all it's predictions, within a given date range.
+ * Can also convert the fixture data into a CSV format
  *
  * Routes:
- * GET:/                  : Get all Fixtures
- * GET:/bydate            : Get Fixture for a given date range (params: startDate, endDate)
- * PUT:/                  : Create or update a team
- * DELETE:/<fixture_id>   : Delete a given fixture
+ * GET:/bydate  : Get Fixture for a given date range. Able to convert to CSV format (params: startDate, endDate)
  */
 export class IApiFixturesRouter extends RouterBase {
   private _fixturesHandler: FixturesHandler;
@@ -22,23 +23,16 @@ export class IApiFixturesRouter extends RouterBase {
   }
 
   protected initLocalRoutes(): void {
-    this.router.get("/", this.getAllFixtures.bind(this));
     this.router.get("/bydate", this.getFixturesByDate.bind(this));
-    this.router.put("/", this.saveFixture.bind(this));
-    this.router.delete("/:fixtureId", this.deleteFixture.bind(this));
-    this.router.all("/*", this.index.bind(this));
   }
 
   protected initChildRoutes(): void {
+    this.router.all("/*", this.index.bind(this));
     // No child routes implemented yet
   }
 
   private index(req: Request, res: Response) {
     res.status(404).send("Unsupprted API endpoint");
-  }
-
-  private async getAllFixtures(req: Request, res: Response) {
-    res.json(await this._fixturesHandler.getAllEntities());
   }
 
   private async getFixturesByDate(req: Request, res: Response) {
@@ -56,24 +50,6 @@ export class IApiFixturesRouter extends RouterBase {
       res.send(this.convertToCSV(flattenedFixtures));
     } else {
       res.json(fixtures);
-    }
-  }
-
-  private async saveFixture(req: Request, res: Response) {
-    const apiResponse: EntityApiResponse = await this._fixturesHandler.saveEntity(req.body);
-    if (apiResponse.success) {
-      res.status(200).json(apiResponse);
-    } else {
-      res.status(400).json(apiResponse);
-    }
-  }
-
-  private async deleteFixture(req: Request, res: Response) {
-    const apiResponse: EntityApiResponse = await this._fixturesHandler.deleteEntity(req.params["fixtureId"]);
-    if (apiResponse.success) {
-      res.status(200).json(apiResponse);
-    } else {
-      res.status(400).json(apiResponse);
     }
   }
 

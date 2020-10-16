@@ -11,7 +11,7 @@ import { TeamsHandler } from "../teams/teamsHandler.js";
  * Router to handle requests to populate STRUDAL with information from third-party API's
  *
  * Routes:
- * POST:/fixtures/bydate    : Load in fixtures for a specified date (params: date)
+ * POST:/fixtures/importbydate    : Load in fixtures for a specified date (params: date)
  */
 export class IApiExternalRouter extends RouterBase {
   private _fixturesHandler: FixturesHandler;
@@ -22,7 +22,7 @@ export class IApiExternalRouter extends RouterBase {
   }
 
   protected initLocalRoutes(): void {
-    this.router.post("/fixtures/bydate", this.loadFixturesByDate.bind(this));
+    this.router.post("/fixtures/importbydate", this.loadFixturesByDate.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -49,7 +49,7 @@ export class IApiExternalRouter extends RouterBase {
       .then(async (json) => {
         const apiFixtures = json.api.fixtures;
         if (!apiFixtures || apiFixtures.length === 0) {
-          res.status(400).send(new EntityApiResponse(false, "No fixtures found for this date"));
+          res.status(404).send(new EntityApiResponse(false, "No fixtures found for this date"));
           return;
         }
 
@@ -81,6 +81,7 @@ export class IApiExternalRouter extends RouterBase {
           if (apiResponse.success) {
             res.status(200).json(apiResponse);
           } else {
+            apiResponse.errorMessage = "Likely some fixtures imported already exist";
             res.status(400).json(apiResponse);
           }
         });

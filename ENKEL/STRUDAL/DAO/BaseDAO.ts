@@ -18,7 +18,7 @@ export class BaseDAO<TEntity extends ObjectLiteral> {
     return this._repository.find(findOptions);
   }
 
-  async getEntityByID(id: string, findOptions: pkg.FindOneOptions<TEntity> = {}): Promise<TEntity | undefined> {
+  async getEntityByID(id: number, findOptions: pkg.FindOneOptions<TEntity> = {}): Promise<TEntity | undefined> {
     return this._repository.findOne(id, findOptions);
   }
 
