@@ -3,6 +3,7 @@ import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { FixturesHandler } from "./fixturesHandler.js";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
+import { EntityRouter } from "../entityRouter.js";
 
 /**
  * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting of users
@@ -14,12 +15,13 @@ import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
  * Routes:
  * GET:/bydate  : Get Fixture for a given date range. Able to convert to CSV format (params: startDate, endDate)
  */
-export class IApiFixturesRouter extends RouterBase {
+export class IApiFixturesRouter extends EntityRouter {
   private _fixturesHandler: FixturesHandler;
 
   constructor() {
-    super();
-    this._fixturesHandler = new FixturesHandler();
+    const fixturesHandler = new FixturesHandler();
+    super(fixturesHandler);
+    this._fixturesHandler = fixturesHandler;
   }
 
   protected initLocalRoutes(): void {
@@ -27,12 +29,7 @@ export class IApiFixturesRouter extends RouterBase {
   }
 
   protected initChildRoutes(): void {
-    this.router.all("/*", this.index.bind(this));
-    // No child routes implemented yet
-  }
-
-  private index(req: Request, res: Response) {
-    res.status(404).send("Unsupprted API endpoint");
+    // No child routes
   }
 
   private async getFixturesByDate(req: Request, res: Response) {

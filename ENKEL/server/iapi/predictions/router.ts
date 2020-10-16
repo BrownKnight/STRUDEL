@@ -30,11 +30,7 @@ export class IApiPredictionsRouter extends EntityRouter {
   }
 
   protected initChildRoutes(): void {
-    this.router.all("/*", this.index.bind(this));
-  }
-
-  private index(req: Request, res: Response) {
-    res.status(404).send("Unsupprted API endpoint");
+    // No child routes
   }
 
   private async getPredictionsInDateRange(req: Request, res: Response) {

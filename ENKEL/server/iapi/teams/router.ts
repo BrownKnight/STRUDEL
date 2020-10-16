@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { EntityRouter } from "../entityRouter.js";
 import { TeamsHandler } from "./teamsHandler.js";
 
@@ -19,10 +18,6 @@ export class IApiTeamsRouter extends EntityRouter {
   }
 
   protected initChildRoutes(): void {
-    this.router.all("/*", this.index.bind(this));
-  }
-
-  private index(req: Request, res: Response) {
-    res.status(404).send("Unsupprted API endpoint");
+    // No child routes
   }
 }

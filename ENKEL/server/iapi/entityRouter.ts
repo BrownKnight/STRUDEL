@@ -39,7 +39,7 @@ export abstract class EntityRouter extends RouterBase {
   private async getAllEntities(req: Request, res: Response) {
     // Data is sanitised (i.e. passwords removed) in the DAO if this is UserLogin,
     //  so no need to do it here
-    res.json(await this._entityHandler.getAllEntities());
+    res.status(200).json(await this._entityHandler.getAllEntities());
   }
 
   /**
