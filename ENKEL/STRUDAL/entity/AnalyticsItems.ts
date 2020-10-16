@@ -14,6 +14,6 @@ export class AnalyticsItems extends BaseEntity {
   @Column({ type: "text" })
   html?: string;
 
-  @Column({ type: "text" })
-  tagLineList?: string;
+  @Column({ type: "text", nullable: true })
+  tagLineList?: string | null;
 }

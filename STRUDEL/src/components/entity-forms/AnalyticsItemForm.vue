@@ -19,7 +19,7 @@
 
         <label class="sr-only" id="input-label-analytics-tag-lines" for="input-analytics-tag-lines">Tag Lines</label>
         <b-input-group class="my-2" prepend="Tag Lines">
-          <b-form-input id="input-analytics-tag-lines" v-model="entityModel.tagLineList" required></b-form-input>
+          <b-form-input id="input-analytics-tag-lines" v-model="entityModel.tagLineList"></b-form-input>
         </b-input-group>
 
         <label class="sr-only" id="input-label-analytics-html" for="input-analytics-html">HTML</label>
