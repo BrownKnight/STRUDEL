@@ -19,6 +19,13 @@
       <b-col cols="12" md="6" offset-md="3">
         <b-input-group prepend="Import Fixtures for">
           <b-form-input type="date" v-model="importFixturesDate"></b-form-input>
+          <b-form-input v-if="hasNativeDatePicker()" v-model="importFixturesDate" type="date"></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="importFixturesDate"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+          ></b-form-datepicker>
+
           <b-input-group-append>
             <b-button variant="primary" @click="importFixtures()">Import</b-button>
           </b-input-group-append>

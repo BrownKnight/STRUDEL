@@ -10,12 +10,21 @@
         <label class="sr-only" id="input-label-fixture-date" for="input-fixture-date">Fixture Date</label>
         <b-input-group class="my-3" prepend="Fixture Date">
           <b-form-input
-            id="input-fixture-date"
+            v-if="hasNativeDatePicker()"
             v-model="entityModel.date"
             type="date"
-            required
+            id="input-fixture-date"
             autofocus
+            required
           ></b-form-input>
+          <b-form-datepicker
+            v-else
+            v-model="entityModel.date"
+            id="input-fixture-date"
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+            autofocus
+            required
+          ></b-form-datepicker>
         </b-input-group>
 
         <label class="sr-only" id="input-label-fixture-time" for="input-fixture-time">Fixture Time</label>
