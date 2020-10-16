@@ -42,9 +42,6 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/iapi", new IApiRouter().router);
 app.use("/api", new ApiRouter().router);
 
-// Not currently needed, until we want to serve static content (even then we'd modify the web server with a proxy instead)
-//app.use(express.static(path.join(__dirname, "public")));
-
 app.listen(3000, function () {
   console.log("App is listening of port 3000");
 });
