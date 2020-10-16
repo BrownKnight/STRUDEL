@@ -3,6 +3,7 @@ import { UserLogin } from "./entity/UserLogin.js";
 import { Team } from "./entity/Team.js";
 import { Fixture } from "./entity/Fixture.js";
 import { Prediction } from "./entity/Prediction.js";
+import { AnalyticsItems } from "./entity/AnalyticsItems.js";
 const { createConnection } = pkg;
 
 export async function initDb(): Promise<void> {
@@ -14,7 +15,7 @@ export async function initDb(): Promise<void> {
     username: process.env.STRUDAL_DATABASE_USERNAME,
     password: process.env.STRUDAL_DATABASE_PASSWORD,
     database: process.env.STRUDAL_DATABASE_NAME,
-    entities: [UserLogin, Team, Fixture, Prediction],
+    entities: [UserLogin, Team, Fixture, Prediction, AnalyticsItems],
     synchronize: true,
     //logging: true,
   })

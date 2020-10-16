@@ -117,13 +117,13 @@ export default class Fixtures extends BaseComponent {
       ];
     } else {
       this.fields = [
-        { key: "expand", sortable: true, label: "Expand" },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
-        { key: "time", sortable: true, label: "Time" },
+        { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
-        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult }
+        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
+        { key: "expand", label: "Expand" }
       ];
     }
   }

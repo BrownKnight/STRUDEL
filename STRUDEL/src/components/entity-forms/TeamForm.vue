@@ -1,5 +1,5 @@
 <template>
-  <div id="user-form">
+  <div id="analytics-form">
     <b-row align-h="center">
       <b-form v-if="entityModel != null && showForm" @submit.prevent="emitSubmitEvent">
         <label class="sr-only" id="input-label-team-id" for="input-team-id">Team ID</label>

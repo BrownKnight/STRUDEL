@@ -1,11 +1,10 @@
 import pkg from "typeorm";
 import { BaseEntity } from "./BaseEntity.js";
-const { Entity, Column, Unique, Index } = pkg;
+const { Entity, Column, Index } = pkg;
 
 @Entity()
-@Unique("analytics_item_index", ["analyticsHtml"])
 export class AnalyticsItems extends BaseEntity {
-  @Column({ type: "varying character" })
+  @Column({ type: "character varying" })
   @Index({ unique: true })
   name?: string;
 
@@ -15,6 +14,6 @@ export class AnalyticsItems extends BaseEntity {
   @Column({ type: "text" })
   html?: string;
 
-  @Column({ type: "string" })
+  @Column({ type: "text" })
   tagLineList?: string;
 }
