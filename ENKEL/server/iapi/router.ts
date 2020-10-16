@@ -20,6 +20,7 @@ export class IApiRouter extends RouterBase {
     this.router.use("/users", new IApiUserLoginsRouter().router);
     this.router.use("/fixtures", new IApiFixturesRouter().router);
     this.router.use("/external", new IApiExternalRouter().router);
+    this.router.use("/analytics", new IApiExternalRouter().router);
   }
 
   private index(req: Request, res: Response) {
