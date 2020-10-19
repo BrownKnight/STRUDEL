@@ -40,6 +40,19 @@
           ></b-form-datepicker>
         </b-input-group>
       </b-col>
+
+      <b-col cols="8" offset="2" md="3" offset-md="0">
+        <b-button-group>
+          <b-button size="sm" variant="light" @click="addWeeks(1)">
+            <b-icon icon="chevron-left" font-scale="0.9" class="align-baseline"></b-icon>
+            Previous Week
+          </b-button>
+          <b-button size="sm" variant="light" @click="addWeeks(-1)">
+            Next Week
+            <b-icon icon="chevron-right" font-scale="0.9" class="align-baseline"></b-icon>
+          </b-button>
+        </b-button-group>
+      </b-col>
     </b-row>
     <EntityManagement
       :apiEndpoint="apiEndpoint"
@@ -141,6 +154,16 @@ export default class Predictions extends BaseComponent {
         }
       }
     );
+  }
+
+  addWeeks(numWeeks: number) {
+    console.log("test");
+    this.startDate = moment(this.startDate)
+      .add(numWeeks, "week")
+      .format("YYYY-MM-DD");
+    this.endDate = moment(this.endDate)
+      .add(numWeeks, "week")
+      .format("YYYY-MM-DD");
   }
 }
 </script>
