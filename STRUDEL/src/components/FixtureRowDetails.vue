@@ -1,5 +1,10 @@
 <template>
-  <b-row cols="2" cols-md="6" class="justify-content-around" no-gutters>
+  <b-row
+    cols="2"
+    :cols-md="data.item.predictions.length < 6 ? data.item.predictions.length : 6"
+    class="justify-content-around"
+    no-gutters
+  >
     <b-col v-for="prediction in data.item.predictions" :key="prediction.id" class="pb-1 px-1">
       <b-card
         class="shadow-sm"
