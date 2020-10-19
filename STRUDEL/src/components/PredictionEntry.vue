@@ -31,8 +31,18 @@
     <transition-group name="slide-down" mode="out-in">
       <template v-for="date in Object.keys(entityList).sort()">
         <div :key="entityList[date][0].id + 4">
-          <b-row :key="entityList[date][0].id" class="mt-4 ml-0">
+          <b-row :key="entityList[date][0].id" class="mt-4 ml-0 align-items-start">
             <h4>{{ prettyFormatDate(entityList[date][0].fixture.date) }}</h4>
+            <transition name="zoom-in" mode="out-in">
+              <b-button
+                class="ml-auto mr-3"
+                variant="success"
+                size="sm"
+                v-if="anyPredictionsChanged(entityList[date])"
+                @click="submitAllPredictions(entityList[date])"
+                >Submit All</b-button
+              >
+            </transition>
           </b-row>
           <b-row :key="entityList[date][0].id + 1" class="mt-1">
             <b-container>
@@ -119,17 +129,6 @@
                 </b-card>
               </b-card-group>
             </b-container>
-          </b-row>
-          <b-row class="mt-2" :key="entityList[date][0].id + 2">
-            <transition name="zoom-in" mode="out-in">
-              <b-button
-                class="mx-auto"
-                variant="success"
-                v-if="anyPredictionsChanged(entityList[date])"
-                @click="submitAllPredictions(entityList[date])"
-                >Submit All</b-button
-              >
-            </transition>
           </b-row>
         </div>
       </template>
