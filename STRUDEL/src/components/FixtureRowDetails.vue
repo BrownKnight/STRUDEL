@@ -1,25 +1,21 @@
 <template>
-  <b-card>
-    <b-row class="mb-2">
-      <b-col cols="12" class="text-center"><b>Predictions:</b></b-col>
-    </b-row>
-    <b-card-group columns>
+  <b-row cols="2" cols-md="6" class="justify-content-around" no-gutters>
+    <b-col v-for="prediction in data.item.predictions" :key="prediction.id" class="pb-1 px-1">
       <b-card
-        class="shadow"
+        class="shadow-sm"
         no-body
-        v-for="prediction in data.item.predictions"
         :key="prediction.id"
         :border-variant="
           data.item.fixtureResult ? (data.item.fixtureResult === prediction.prediction ? 'success' : 'danger') : null
         "
       >
-        <b-card-body class="p-1">
+        <b-card-body class="d-flex py-1 px-2 align-items-center justify-content-between">
           <span class="font-weight-bold mr-2">{{ prediction.user.fullName }}</span>
-          <span>{{ formatFixtureResult(prediction.prediction) }}</span>
+          <small>{{ formatFixtureResult(prediction.prediction) }}</small>
         </b-card-body>
       </b-card>
-    </b-card-group>
-  </b-card>
+    </b-col>
+  </b-row>
 </template>
 
 <script lang="ts">

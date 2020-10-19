@@ -19,6 +19,7 @@ export class FixtureDAO extends BaseDAO<Fixture> {
       .select(["fixture", "homeTeam", "awayTeam", "predictions.prediction", "user.fullName"])
       .orderBy("fixture.date", "DESC")
       .addOrderBy("fixture.time", "DESC")
+      .addOrderBy("user.fullName", "ASC")
       .getMany();
   }
 
@@ -35,6 +36,7 @@ export class FixtureDAO extends BaseDAO<Fixture> {
       })
       .orderBy("fixture.date", "DESC")
       .addOrderBy("fixture.time", "DESC")
+      .addOrderBy("user.fullName", "ASC")
       .getMany();
   }
 }
