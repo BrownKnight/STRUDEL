@@ -85,7 +85,7 @@
                         <span class="mt-2 mb-1">{{ entity.fixture.awayTeam.teamName }}</span>
                         <small>Away</small>
                       </b-form-radio>
-                      <b-form-radio name="prediction" value="D" class="flex-grow-1 d-flex rounded mt-2">
+                      <b-form-radio name="prediction" value="D" class="flex-grow-1 w-100 d-flex rounded mt-2">
                         <small class="mx-auto">Draw</small>
                       </b-form-radio>
                     </b-form-radio-group>
@@ -237,15 +237,8 @@ export default class PredictionEntry extends BaseComponent {
   }
 
   generateThisWeeksPredictionsForUser() {
-    const startDate = moment()
-      .startOf("week")
-      .add(3, "day");
-    const endDate = moment(this.startDate).add(1, "week");
-
     this.callENKEL(
-      `/iapi/predictions/${this.$store.state.AuthModule.user.id}/generate?startDate=${startDate.format(
-        "YYYY-MM-DD"
-      )}&endDate=${endDate.format("YYYY-MM-DD")}`,
+      `/iapi/predictions/${this.$store.state.AuthModule.user.id}/generate?startDate=${this.startDate}&endDate=${this.endDate}`,
       "POST"
     ).then(res => {
       if (res.status !== 200 && res.status !== 400) {
