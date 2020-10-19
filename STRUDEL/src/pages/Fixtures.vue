@@ -48,7 +48,6 @@
     <b-row v-if="isAdmin()">
       <b-col cols="12" md="6" offset-md="3">
         <b-input-group prepend="Import Fixtures for">
-          <b-form-input type="date" v-model="importFixturesDate"></b-form-input>
           <b-form-input v-if="hasNativeDatePicker()" v-model="importFixturesDate" type="date"></b-form-input>
           <b-form-datepicker
             v-else
