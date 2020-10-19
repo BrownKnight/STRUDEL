@@ -14,8 +14,8 @@ export class PredictionsHandler extends BasicEntityOperationHandler<Prediction> 
     this._fixtureDAO = new FixtureDAO();
   }
 
-  async getPredictionsInDateRange(startDate: Date, endDate: Date, user?: number): Promise<Prediction[]> {
-    return await (this._DAO as PredictionDAO).getEntitiesInDateRange(startDate, endDate, user);
+  async getPredictionsInDateRange(startDate: Moment, endDate: Moment, userId?: number): Promise<Prediction[]> {
+    return await (this._DAO as PredictionDAO).getEntitiesInDateRange(startDate, endDate, userId);
   }
 
   /**

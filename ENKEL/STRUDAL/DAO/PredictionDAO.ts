@@ -1,5 +1,7 @@
 import { BaseDAO } from "./BaseDAO.js";
 import { Prediction } from "../entity/Prediction.js";
+import pkg from "typeorm";
+import moment, { Moment } from "moment";
 
 export class PredictionDAO extends BaseDAO<Prediction> {
   constructor() {
@@ -18,25 +20,22 @@ export class PredictionDAO extends BaseDAO<Prediction> {
       });
   }
 
-  async getEntitiesInDateRange(startDate: Date, endDate: Date, user?: number): Promise<Prediction[]> {
-    let whereString = `Prediction__fixture.date BETWEEN '${startDate
-      .toISOString()
-      .slice(0, 10)}' AND '${endDate.toISOString().slice(0, 10)}'`;
-    if (user) {
-      whereString += ` AND Prediction__user.id = ${user}`;
-    }
-
-    return super
-      .getAllEntities({
-        relations: ["user", "fixture", "fixture.homeTeam", "fixture.awayTeam"],
-        where: whereString,
+  async getEntitiesInDateRange(startDate: Moment, endDate: Moment, userId?: number): Promise<Prediction[]> {
+    return this._repository
+      .createQueryBuilder("prediction")
+      .leftJoinAndSelect("prediction.user", "user")
+      .leftJoinAndSelect("prediction.fixture", "fixture")
+      .leftJoinAndSelect("fixture.homeTeam", "homeTeam")
+      .leftJoinAndSelect("fixture.awayTeam", "awayTeam")
+      .select(["fixture", "prediction", "user.fullName", "user.id", "homeTeam", "awayTeam"])
+      .where("fixture.date BETWEEN :startDate AND :endDate", {
+        startDate: startDate.format("YYYY-MM-DD"),
+        endDate: endDate.format("YYYY-MM-DD"),
       })
-      .then((entities) => {
-        entities.forEach((entity) => {
-          entity.user.password = undefined;
-          entity.user.token = undefined;
-        });
-        return entities;
-      });
+      .andWhere(userId ? "user.id = :userId" : "1=1", { userId })
+      .orderBy("fixture.date", "DESC")
+      .addOrderBy("fixture.time", "DESC")
+      .addOrderBy("user.fullName", "ASC")
+      .getMany();
   }
 }

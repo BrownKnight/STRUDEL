@@ -48,7 +48,7 @@ export class IApiPredictionsRouter extends EntityRouter {
     }
 
     const predictions = await this._predictionsHandler
-      .getPredictionsInDateRange(new Date(startDate as string), new Date(endDate as string), userId)
+      .getPredictionsInDateRange(moment(startDate), moment(endDate), userId)
       .catch((err) => {
         res.status(400).json(new EntityApiResponse(false, "error fetching predictions", {}, err));
       });
