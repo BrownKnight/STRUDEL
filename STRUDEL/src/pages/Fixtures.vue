@@ -70,9 +70,10 @@ import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
 import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
-import { BaseComponent } from "@/components/BaseComponent.ts";
+import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
+import { AnyEntity } from '@/ENKEL/entity/EntityHelper';
 
 @Component({
   components: { EntityManagement, FixtureForm, FixtureRowDetails }
@@ -80,7 +81,7 @@ import { Fixture } from "@/ENKEL/entity/Fixture";
 export default class Fixtures extends BaseComponent {
   FixtureForm = FixtureForm;
   FixtureRowDetails = FixtureRowDetails;
-  fields: {}[] = [];
+  fields: Array<BootstrapTableField> = [];
 
   importFixturesDate = moment().format("YYYY-MM-DD");
 
@@ -111,7 +112,7 @@ export default class Fixtures extends BaseComponent {
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
-        { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
+        { key: "predictions", label: "# Predictions", formatter: (item: AnyEntity[]) => item.length.toString() },
         { key: "Action", label: "Action", sortable: false }
       ];
     } else {
@@ -120,7 +121,7 @@ export default class Fixtures extends BaseComponent {
         { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
-        { key: "predictions", label: "# Predictions", formatter: (item: []) => item.length },
+        { key: "predictions", label: "# Predictions", formatter: (item: AnyEntity[]) => item.length.toString() },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
         { key: "expand", label: "Expand" }
       ];

@@ -75,3 +75,12 @@ export class BaseComponent extends Vue {
 
 export type FormEntity = AnyEntity & NewEntity & { previousPrediction: string };
 export type NewEntity = { new: boolean };
+
+export type BootstrapTableField = {
+  key: string;
+  label: string;
+  formatter?: ((value: string) => string) | ((value: AnyEntity) => string) | ((value: AnyEntity[]) => string);
+  sortable?: boolean;
+  sortByFormatted?: boolean;
+  variant?: "active" | "success" | "info" | "warning" | "danger";
+};

@@ -44,9 +44,24 @@
       </template>
     </b-table>
 
-    <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()">
-      Create New
-    </b-button>
+    <b-row>
+      <b-col cols="4" offset="4">
+        <b-button v-if="this.isAdmin()" size="sm" variant="outline-success" v-on:click="createNewEntity()">
+          Create New
+        </b-button>
+      </b-col>
+
+      <b-col cols="4">
+        <b-button
+          v-if="fields.some(field => field.key === 'expand')"
+          size="sm"
+          variant="outline-info"
+          v-on:click="toggleAllRows()"
+        >
+          Toggle All
+        </b-button>
+      </b-col>
+    </b-row>
 
     <component
       :is="entityFormComponent"
@@ -61,7 +76,7 @@
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { BaseComponent, FormEntity } from "@/components/BaseComponent.ts";
+import { BaseComponent, BootstrapTableField, FormEntity } from "@/components/BaseComponent.ts";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 
 const SHOW_ALERT_TIME = 2;
@@ -70,7 +85,7 @@ const SHOW_ALERT_TIME = 2;
   components: {}
 })
 export default class EntityManagement extends BaseComponent {
-  entityList: string[] = [];
+  entityList: Array<AnyEntity & { _showDetails: boolean }> = [];
 
   showForm = false;
 
@@ -85,7 +100,7 @@ export default class EntityManagement extends BaseComponent {
   @Prop()
   rowDetailsComponent: Vue | undefined;
   @Prop()
-  fields: Record<string, unknown> | undefined;
+  fields: Array<BootstrapTableField> | undefined;
   @Prop()
   populateNewEntity: Function | undefined;
 
@@ -98,6 +113,9 @@ export default class EntityManagement extends BaseComponent {
     return await this.callENKEL(endpoint)
       .then(res => res.json())
       .then(json => {
+        json.forEach((entity: AnyEntity & { _showDetails: boolean }) => {
+          entity._showDetails = false;
+        });
         this.entityList = json;
       });
   }
@@ -201,6 +219,12 @@ export default class EntityManagement extends BaseComponent {
         }
       });
     }
+  }
+
+  toggleAllRows() {
+    this.entityList.forEach(entity => {
+      entity._showDetails = !entity._showDetails;
+    });
   }
 }
 </script>
