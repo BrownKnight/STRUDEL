@@ -29,7 +29,7 @@ export class FixtureDAO extends BaseDAO<Fixture> {
       .leftJoinAndSelect("fixture.awayTeam", "awayTeam")
       .leftJoinAndSelect("fixture.predictions", "predictions")
       .leftJoinAndSelect("predictions.user", "user")
-      .select(["fixture", "homeTeam.teamName", "awayTeam.teamName", "predictions.prediction", "user.fullName"])
+      .select(["fixture", "homeTeam", "awayTeam", "predictions.prediction", "user.fullName"])
       .where({
         date: pkg.Between(startDate.format("YYYY-MM-DD"), endDate.format("YYYY-MM-DD")),
       })
