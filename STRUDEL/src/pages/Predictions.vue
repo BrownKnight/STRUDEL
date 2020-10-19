@@ -43,13 +43,13 @@
 
       <b-col cols="8" offset="2" md="3" offset-md="0">
         <b-button-group>
-          <b-button size="sm" variant="light" @click="addWeeks(-1)">
-            <b-icon icon="chevron-left" font-scale="0.9" class="align-baseline"></b-icon>
+          <b-button size="sm" variant="light" @click="addWeeks(-1)" class="d-flex align-items-center">
+            <b-icon icon="chevron-left"></b-icon>
             Previous Week
           </b-button>
-          <b-button size="sm" variant="light" @click="addWeeks(1)">
+          <b-button size="sm" variant="light" @click="addWeeks(1)" class="d-flex align-items-center">
             Next Week
-            <b-icon icon="chevron-right" font-scale="0.9" class="align-baseline"></b-icon>
+            <b-icon icon="chevron-right"></b-icon>
           </b-button>
         </b-button-group>
       </b-col>
@@ -68,7 +68,7 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import PredictionForm from "@/components/entity-forms/PredictionForm.vue";
-import { BaseComponent } from "@/components/BaseComponent.ts";
+import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { UserLogin } from "@/ENKEL/entity/UserLogin";
 
@@ -91,30 +91,20 @@ export default class Predictions extends BaseComponent {
 
   apiEndpoint = "/iapi/predictions";
 
-  fields = [
-    { key: "id", sortable: true, label: "id" },
-    { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
-    { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
-    {
-      key: "user",
-      label: "User",
-      sortable: true,
-      formatter: (value: UserLogin) => value.fullName
-    },
-    { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
-    { key: "Action" }
-  ];
+  fields: Array<BootstrapTableField> = [];
 
   created() {
     if (this.isAdmin()) {
       this.fields = [
         { key: "id", sortable: true, label: "id" },
-        { key: "fixture.date", label: "Date", sortable: true },
+        { key: "fixture.dateModified", label: "Date Mod", sortable: true },
+        { key: "fixture.date", label: "Date", sortable: true, formatter: this.prettyFormatDate },
+        { key: "fixture.time", label: "Time", sortable: true, formatter: this.prettyFormatTime },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },
         { key: "fixture.awayTeam.teamName", label: "Away Team", sortable: true },
         { key: "user", label: "User", sortable: true, formatter: (value: UserLogin) => value.fullName },
         { key: "prediction", label: "Prediction", sortable: true, formatter: this.formatFixtureResult },
-        { key: "Action" }
+        { key: "Action", label: "Action" }
       ];
     } else {
       this.fields = [

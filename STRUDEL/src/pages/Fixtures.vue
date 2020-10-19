@@ -34,13 +34,13 @@
 
       <b-col cols="10" offset="1" md="3" offset-md="0" class="mb-2">
         <b-button-group>
-          <b-button size="sm" variant="light" @click="addWeeks(-1)">
-            <b-icon icon="chevron-left" font-scale="0.9" class="align-baseline"></b-icon>
+          <b-button size="sm" variant="light" @click="addWeeks(-1)" class="d-flex align-items-center">
+            <b-icon icon="chevron-left"></b-icon>
             Previous Week
           </b-button>
-          <b-button size="sm" variant="light" @click="addWeeks(1)">
+          <b-button size="sm" variant="light" @click="addWeeks(1)" class="d-flex align-items-center">
             Next Week
-            <b-icon icon="chevron-right" font-scale="0.9" class="align-baseline"></b-icon>
+            <b-icon icon="chevron-right"></b-icon>
           </b-button>
         </b-button-group>
       </b-col>
