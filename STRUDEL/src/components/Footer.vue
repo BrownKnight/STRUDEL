@@ -38,7 +38,7 @@ export default class Header extends BaseComponent {
   }
 
   get versionNumber() {
-    return process.env.VUE_APP_GITHUB_REF;
+    return process.env.VUE_APP_GITHUB_REF?.replace("refs/tags/", "");
   }
 
   invalidateToken() {
