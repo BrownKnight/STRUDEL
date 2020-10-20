@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AnyEntity, sanitiseEntity } from "../../STRUDAL/entity/EntityHelper.js";
+import { AdminOnly } from "../middleware/adminOnlyDecorator.js";
 import { RouterBase } from "../routerBase.js";
 import { EntityApiResponse } from "./apiResponse.js";
 import { BasicEntityOperationHandler } from "./basicEntityOperationHandler.js";
@@ -36,7 +37,7 @@ export abstract class EntityRouter extends RouterBase {
   /**
    * Handle a request to retrieve all entities of the type supported by this handler
    */
-  private async getAllEntities(req: Request, res: Response) {
+  protected async getAllEntities(req: Request, res: Response): Promise<void> {
     // Data is sanitised (i.e. passwords removed) in the DAO if this is UserLogin,
     //  so no need to do it here
     res.status(200).json(await this._entityHandler.getAllEntities());
@@ -45,7 +46,7 @@ export abstract class EntityRouter extends RouterBase {
   /**
    * Handle a request to retrieve an entities based on its id
    */
-  private async getEntityById(req: Request, res: Response) {
+  protected async getEntityById(req: Request, res: Response): Promise<void> {
     const apiResponse: EntityApiResponse = await this._entityHandler.getEntityById(req.params["entityId"]);
 
     apiResponse.entity = sanitiseEntity(apiResponse.entity as AnyEntity);
@@ -64,7 +65,7 @@ export abstract class EntityRouter extends RouterBase {
   /**
    * Handle a request to save the entity given in the requests body
    */
-  private async saveEntity(req: Request, res: Response) {
+  protected async saveEntity(req: Request, res: Response): Promise<void> {
     const apiResponse: EntityApiResponse = await this._entityHandler.saveEntity(req.body);
 
     apiResponse.entity = sanitiseEntity(apiResponse.entity as AnyEntity);
@@ -79,7 +80,8 @@ export abstract class EntityRouter extends RouterBase {
   /**
    * Handle a request to save the entity given in the requests body
    */
-  private async deleteEntity(req: Request, res: Response) {
+  @AdminOnly()
+  protected async deleteEntity(req: Request, res: Response): Promise<void> {
     const apiResponse: EntityApiResponse = await this._entityHandler.deleteEntity(req.params["entityId"]);
 
     if (apiResponse.success) {

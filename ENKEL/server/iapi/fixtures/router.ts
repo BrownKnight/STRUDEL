@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { RouterBase } from "../../routerBase.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { FixturesHandler } from "./fixturesHandler.js";
 import { Fixture } from "../../../STRUDAL/entity/Fixture.js";
 import { EntityRouter } from "../entityRouter.js";
+import { AdminOnly } from "../../middleware/adminOnlyDecorator.js";
 
 /**
  * Router for all internal userLogins-based api calls. Supports the fetching, updating, and deleting of users
@@ -30,6 +30,11 @@ export class IApiFixturesRouter extends EntityRouter {
 
   protected initChildRoutes(): void {
     // No child routes
+  }
+
+  @AdminOnly()
+  protected async saveEntity(req: Request, res: Response): Promise<void> {
+    return await super.saveEntity(req, res);
   }
 
   private async getFixturesByDate(req: Request, res: Response) {

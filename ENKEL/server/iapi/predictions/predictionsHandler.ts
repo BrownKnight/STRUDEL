@@ -30,19 +30,16 @@ export class PredictionsHandler extends BasicEntityOperationHandler<Prediction> 
     if (!fixtures || fixtures.length === 0) {
       return new EntityApiResponse(false, "No fixtures found");
     }
-    console.log(startDate, endDate, userId);
 
     const predictions: Prediction[] = [];
     fixtures.forEach((fixture: Fixture) => {
       const prediction = new Prediction();
       prediction.fixture = { id: fixture.id };
       prediction.user = { id: userId };
-      console.log(prediction);
       predictions.push(prediction);
     });
 
-    const response = new EntityApiResponse(true);
-    response.entity = await (this._DAO as PredictionDAO).saveAll(predictions);
+    const response = await super.saveMultipleEntities(predictions);
     return response;
   }
 }
