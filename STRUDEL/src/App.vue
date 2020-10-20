@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+    <b-badge v-if="!isProductionBuild" variant="danger" style="border-radius: 0;">DEVELOPMENT</b-badge>
     <b-container class="content">
       <router-view></router-view>
     </b-container>
@@ -20,7 +21,11 @@ import Footer from "@/components/Footer.vue";
     Footer
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get isProductionBuild() {
+    return process.env.NODE_ENV === "production";
+  }
+}
 </script>
 
 <style lang="scss">
@@ -42,7 +47,7 @@ $theme-colors: (
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 56px;
   display: flex;
   flex-direction: column;
   flex: 1;
