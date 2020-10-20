@@ -1,7 +1,6 @@
 import { BaseDAO } from "./BaseDAO.js";
 import { Prediction } from "../entity/Prediction.js";
-import pkg from "typeorm";
-import moment, { Moment } from "moment";
+import { Moment } from "moment";
 
 export class PredictionDAO extends BaseDAO<Prediction> {
   constructor() {
