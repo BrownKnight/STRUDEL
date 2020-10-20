@@ -6,6 +6,7 @@ import { FixturesHandler } from "../fixtures/fixturesHandler.js";
 import fetch from "node-fetch";
 import moment from "moment";
 import { TeamsHandler } from "../teams/teamsHandler.js";
+import { AdminOnly } from "../../middleware/adminOnlyDecorator.js";
 
 /**
  * Router to handle requests to populate STRUDAL with information from third-party API's
@@ -34,6 +35,7 @@ export class IApiExternalRouter extends RouterBase {
     res.status(404).send("Unsupprted API endpoint");
   }
 
+  @AdminOnly()
   private async loadFixturesByDate(req: Request, res: Response) {
     const date = req.query["date"];
     if (!date) {
