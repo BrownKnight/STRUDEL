@@ -1,6 +1,3 @@
-# Doc
-Coming Soon (Probably)
-
 # Deployment
 Create private/public keys using the following commands
 ```
@@ -47,3 +44,6 @@ Response:
 ```
 
 After fetching this token, simply add it as a Bearer Authentication token to every request to ensure you are authenticated.
+
+## Docs
+Access Swagger documentation for the API at /api/docs [(BeatTheBot API Docs)](https://beatthebot.co.uk/api/docs)
