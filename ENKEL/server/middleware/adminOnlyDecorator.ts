@@ -28,7 +28,7 @@ export function AdminOnly() {
           originalMethod.apply(this, args);
         } else {
           console.error(
-            `Unauthorised (i.e standard) user ${req.user?.id} ${req.user?.fullName} attempted to access ${req.path}`
+            `Unauthorised (i.e standard) user ${req.user?.id} ${req.user?.fullName} attempted to access ${req.originalUrl}`
           );
           res.status(401).json(new EntityApiResponse(false, "Not authorized for this Admin-only endpoint"));
         }
