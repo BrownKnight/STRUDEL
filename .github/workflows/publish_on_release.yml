@@ -38,6 +38,8 @@ jobs:
 
     - run: npm run build --if-present
       working-directory: STRUDEL
+      env:
+        VUE_APP_GITHUB_REF: ${{ github.ref }}
   
     - uses: montudor/action-zip@v0.1.0
       with: 
