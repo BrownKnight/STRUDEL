@@ -10,6 +10,7 @@ export function AdminOnly() {
   return function (target: unknown, propertyKey: string, descriptor: PropertyDescriptor): void {
     const originalMethod = descriptor.value;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     descriptor.value = function (...args: any[]) {
       let req: Request | undefined;
       let res: Response | undefined;
