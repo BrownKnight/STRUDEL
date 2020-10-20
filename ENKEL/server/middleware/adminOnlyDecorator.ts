@@ -19,6 +19,7 @@ export function AdminOnly() {
       }
 
       if (!req || !res) {
+        res.status(500).json(new EntityApiResponse(false, "Unexpected error, decorator not used correctly"));
         throw new Error("Unexpected Error occurred, req/res is not defined in handler");
       }
 
@@ -33,10 +34,9 @@ export function AdminOnly() {
           res.status(401).json(new EntityApiResponse(false, "Not authorized for this Admin-only endpoint"));
         }
       } else {
+        res.status(500).json(new EntityApiResponse(false, "Unexpected error, user object not injected into request"));
         throw new Error("User object is not defined in request, is the authMiddleware working correctly?");
       }
-
-      //originalMethod.apply(this, args);
     };
   };
 }
