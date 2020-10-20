@@ -27,7 +27,7 @@ front end, providing support for entity CRUD operations via the STRU*DAL* compon
 
 ### API Documentation
 For basic API Documentation, [see ENKEL's README here](ENKEL/README.md).
-Advancded documentation can be found using Swagger.
+Advanced documentation can be found using Swagger.
  
 
 ## STRUDAL
