@@ -19,7 +19,6 @@ export function AdminOnly() {
       }
 
       if (!req || !res) {
-        res.status(500).json(new EntityApiResponse(false, "Unexpected error, decorator not used correctly"));
         throw new Error("Unexpected Error occurred, req/res is not defined in handler");
       }
 
