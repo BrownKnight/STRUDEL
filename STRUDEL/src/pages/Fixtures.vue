@@ -46,57 +46,120 @@
       </b-col>
     </b-row>
 
-    <EntityManagement
-      :apiEndpoint="'/iapi/fixtures'"
-      :GETextension="GETextension"
-      :entityFormComponent="FixtureForm"
-      :rowDetailsComponent="FixtureRowDetails"
-      :fields="fields"
-      :populateNewEntity="populateNewEntity"
-    ></EntityManagement>
+    <b-row>
+      <b-list-group class="w-100">
+        <b-list-group-item v-for="fixture in entityList" :key="fixture.id" class="d-flex px-1 flex-wrap py-1">
+          <b-container>
+            <b-row>
+              <b-col cols="6" md="2" class="text-left order-0 order-md-0">
+                <small>{{ prettyFormatDate(fixture.date) }}</small>
+                <br />
+                <small>
+                  <strong>{{ prettyFormatTime(fixture.time) }}</strong>
+                </small>
+              </b-col>
 
-    <b-row v-if="isAdmin()">
-      <h3 class="my-5 mx-3">Management</h3>
+              <b-col
+                cols="6"
+                md="3"
+                class="d-flex px-0 align-items-center justify-content-end order-3 order-md-1 mb-2 mb-md-0"
+              >
+                <b-badge variant="success" v-if="fixture.fixtureResult === 'H'">WIN</b-badge>
+                <span class="mx-2">{{ fixture.homeTeam.teamName }}</span>
+                <img :src="fixture.homeTeam.teamLogoUrl" alt="Home Team Logo" class="team-logo mx-2" />
+              </b-col>
+              <b-col cols="12" md="2" class="d-flex px-0 align-items-center justify-content-center order-2 order-md-1">
+                <b-badge variant="warning" v-if="fixture.fixtureResult === 'D'" class="mt-0 mb-2 m-md-0">DRAW</b-badge>
+              </b-col>
+              <b-col
+                cols="6"
+                md="4"
+                class="d-flex px-0 align-items-center justify-content-start order-4 order-md-2 mb-2 mb-md-0"
+              >
+                <img :src="fixture.awayTeam.teamLogoUrl" alt="Away Team Logo" class="team-logo mx-2" />
+                <span class="mx-2">{{ fixture.awayTeam.teamName }}</span>
+                <b-badge variant="success" v-if="fixture.fixtureResult === 'A'">WIN</b-badge>
+              </b-col>
+
+              <b-col
+                cols="6"
+                md="1"
+                class="d-flex text-right order-1 order-md-3 align-items-center justify-content-end"
+              >
+                <b-button
+                  class="mx-1"
+                  variant="outline-primary"
+                  size="sm"
+                  @click="fixture._edit = true"
+                  v-if="isAdmin() && !fixture._edit"
+                  >Edit</b-button
+                >
+                <b-button
+                  class="mx-1"
+                  variant="success"
+                  size="sm"
+                  @click="submitFixtureResult(fixture)"
+                  v-if="isAdmin() && fixture._edit"
+                  >Save</b-button
+                >
+                <b-button
+                  class="mx-1"
+                  variant="outline-danger"
+                  size="sm"
+                  @click="fixture._edit = false"
+                  v-if="isAdmin() && fixture._edit"
+                  >Cancel</b-button
+                >
+                <a class="ml-3" @click="fixture._showDetails = !fixture._showDetails">
+                  <b-icon :icon="fixture._showDetails ? 'chevron-up' : 'chevron-down'"></b-icon>
+                </a>
+              </b-col>
+            </b-row>
+
+            <b-row v-if="isAdmin() && fixture._edit" class="my-2 text-center">
+              <b-form-radio-group
+                :options="fixturesResultOptions"
+                buttons
+                button-variant="outline-primary"
+                size="sm"
+                v-model="fixture.fixtureResult"
+                class="mx-auto"
+              >
+              </b-form-radio-group>
+            </b-row>
+
+            <FixtureRowDetails :data="{ item: fixture }" v-if="fixture._showDetails" class="mt-1" />
+          </b-container>
+        </b-list-group-item>
+      </b-list-group>
     </b-row>
-    <b-row v-if="isAdmin()">
-      <b-col cols="12" md="6" offset-md="3">
-        <b-input-group prepend="Import Fixtures for">
-          <b-form-input v-if="hasNativeDatePicker()" v-model="importFixturesDate" type="date"></b-form-input>
-          <b-form-datepicker
-            v-else
-            v-model="importFixturesDate"
-            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-          ></b-form-datepicker>
 
-          <b-input-group-append>
-            <b-button variant="primary" @click="importFixtures()">Import</b-button>
-          </b-input-group-append>
-        </b-input-group>
-      </b-col>
+    <b-row class="justify-content-center mt-2">
+      <b-button variant="outline-primary" @click="toggleAllRows()" size="sm">Show All Predictions</b-button>
     </b-row>
   </div>
 </template>
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component } from "vue-property-decorator";
-import EntityManagement from "@/components/EntityManagement.vue";
-import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
+import { Component, Watch } from "vue-property-decorator";
 import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
-import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.ts";
+import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 
 @Component({
-  components: { EntityManagement, FixtureForm, FixtureRowDetails }
+  components: { FixtureRowDetails }
 })
 export default class Fixtures extends BaseComponent {
-  FixtureForm = FixtureForm;
-  FixtureRowDetails = FixtureRowDetails;
-  fields: Array<BootstrapTableField> = [];
+  entityList = [];
 
-  importFixturesDate = moment().format("YYYY-MM-DD");
+  fixturesResultOptions = [
+    { text: "Home", value: "H" },
+    { text: "Draw", value: "D" },
+    { text: "Away", value: "A" }
+  ];
 
   startDate = moment()
     .startOf("week")
@@ -105,75 +168,25 @@ export default class Fixtures extends BaseComponent {
     .add(1, "week")
     .format("YYYY-MM-DD");
 
-  get GETextension() {
-    return `/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
+  get apiEndpoint() {
+    return `/iapi/fixtures/bydate?startDate=${this.startDate}&endDate=${this.endDate}`;
   }
 
-  populateNewEntity(entity: Fixture) {
-    console.log("populating");
-    entity.homeTeam = {};
-    entity.awayTeam = {};
+  @Watch("apiEndpoint")
+  async getAllFixtures() {
+    return await this.callENKEL(this.apiEndpoint)
+      .then(res => res.json())
+      .then(json => {
+        json.forEach((entity: AnyEntity & { _showDetails: boolean; _edit: boolean }) => {
+          entity._showDetails = false;
+          entity._edit = false;
+        });
+        this.entityList = json;
+      });
   }
 
   created() {
-    if (this.isAdmin()) {
-      this.fields = [
-        { key: "expand", sortable: true, label: "Expand" },
-        { key: "id", sortable: true, label: "id" },
-        { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
-        { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
-        { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
-        { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
-        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
-        { key: "predictions", label: "# Predictions", formatter: (item: AnyEntity[]) => item.length.toString() },
-        { key: "Action", label: "Action", sortable: false }
-      ];
-    } else {
-      this.fields = [
-        { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
-        { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
-        { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
-        { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
-        { key: "predictions", label: "# Predictions", formatter: (item: AnyEntity[]) => item.length.toString() },
-        { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
-        { key: "expand", label: "Expand" }
-      ];
-    }
-  }
-
-  importFixtures() {
-    if (this.importFixturesDate == null || this.importFixturesDate == "") {
-      this.showMessage({ delay: 3, message: "Please enter a date to import fixtures for", variant: "danger" });
-      return;
-    }
-
-    this.callENKEL(
-      `/iapi/external/fixtures/importbydate?date=${moment(this.importFixturesDate).format("YYYY-MM-DD")}`,
-      "POST"
-    ).then(res => {
-      res
-        .text()
-        .then(text => JSON.parse(text))
-        .then(json => {
-          if (!res.ok || !json.success) {
-            this.showMessage({
-              delay: 5,
-              message: `Fixture import failed! ${json.errorMessage ??
-                json.operationResult.message ??
-                json.operationResult}`,
-              variant: "danger"
-            });
-
-            return;
-          }
-
-          this.showMessage({
-            delay: 3,
-            message: `${json.entity.length} Fixtures imported!`,
-            variant: "success"
-          });
-        });
-    });
+    this.getAllFixtures();
   }
 
   addWeeks(numWeeks: number) {
@@ -184,7 +197,32 @@ export default class Fixtures extends BaseComponent {
       .add(numWeeks, "week")
       .format("YYYY-MM-DD");
   }
+
+  submitFixtureResult(fixture: Fixture & { _edit: boolean }) {
+    this.callENKEL(
+      "/iapi/fixtures",
+      "PUT",
+      JSON.stringify({ id: fixture.id, fixtureResult: fixture.fixtureResult })
+    ).then(res => {
+      if (res.ok) {
+        this.showMessage({ message: "Fixture Result Submitted", variant: "success" });
+        fixture._edit = false;
+      } else {
+        this.showMessage({ message: `Error occurred submitting fixture :( [${res.status}]`, variant: "danger" });
+      }
+    });
+  }
+
+  toggleAllRows() {
+    this.entityList.forEach((entity: { _showDetails: boolean }) => {
+      entity._showDetails = !entity._showDetails;
+    });
+  }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.team-logo {
+  height: 2.5em;
+}
+</style>

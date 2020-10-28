@@ -37,7 +37,7 @@ $theme-colors: (
   "dark": #17161f,
   "info": #2b6eb7,
   "success": #50af72,
-  "warning": #d28f2b,
+  "warning": #ffc107,
   "danger": #f44336
 );
 
