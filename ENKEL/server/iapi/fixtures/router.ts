@@ -58,6 +58,7 @@ export class IApiFixturesRouter extends EntityRouter {
   private flattenFixtures(fixtures: Fixture[]) {
     const flattenedFixture = fixtures.map((fixture) => {
       return {
+        id: fixture.id,
         date: fixture.date,
         time: fixture.time,
         homeTeamName: fixture.homeTeam.teamName,
@@ -77,12 +78,14 @@ export class IApiFixturesRouter extends EntityRouter {
   private convertToCSV(objArray: any) {
     const dict: Record<string, Record<number, string>> = {};
     // headerRow, with basics
+    dict["fixtureId"] = {};
     dict["date"] = {};
     dict["time"] = {};
     dict["homeTeamName"] = {};
     dict["awayTeamName"] = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     objArray.forEach((fixture: Record<string, any>, index: number) => {
+      dict["fixtureId"][index] = fixture.id;
       dict["date"][index] = fixture.date;
       dict["time"][index] = fixture.time;
       dict["homeTeamName"][index] = fixture.homeTeamName;
