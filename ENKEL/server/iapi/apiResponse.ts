@@ -34,6 +34,7 @@ export const EntityApiResponseSchema = {
           { $ref: "#/components/schemas/Team" },
           { $ref: "#/components/schemas/UserLogin" },
         ],
+        nullable: true,
       },
     },
   },

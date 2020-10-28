@@ -14,6 +14,15 @@ export class Prediction extends BaseEntity {
   @Column({ type: "enum", enum: FixtureResult, nullable: true })
   prediction!: FixtureResult;
 
+  @Column({ type: "float", nullable: true })
+  homeWinProbability?: number;
+
+  @Column({ type: "float", nullable: true })
+  drawProbability?: number;
+
+  @Column({ type: "float", nullable: true })
+  awayWinProbability?: number;
+
   @ManyToOne(() => UserLogin)
   user!: Partial<UserLogin>;
 }
