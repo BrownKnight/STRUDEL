@@ -59,14 +59,23 @@ export const entitySchemas = {
       id: {
         type: "integer",
       },
+      prediction: {
+        type: "string",
+      },
+      homeWinProbability: {
+        type: "number",
+      },
+      drawProbability: {
+        type: "number",
+      },
+      awayWinProbability: {
+        type: "number",
+      },
       fixture: {
         $ref: "#/components/schemas/Fixture",
       },
       user: {
         $ref: "#/components/schemas/User",
-      },
-      prediction: {
-        type: "string",
       },
     },
   },
