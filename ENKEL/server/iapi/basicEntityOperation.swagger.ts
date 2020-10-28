@@ -1,6 +1,6 @@
 export function generateCRUDOperationDocs(entityName: string, pathName: string | null = null): Record<string, unknown> {
   if (pathName === null) {
-    pathName = entityName + "s";
+    pathName = entityName;
   }
 
   const CRUDOperations: Record<string, unknown> = {};
@@ -31,7 +31,7 @@ export function generateCRUDOperationDocs(entityName: string, pathName: string |
         content: {
           "application/json": {
             schema: {
-              $ref: `#/components/schemas/EntityApiResponse`,
+              $ref: `#/components/schemas/${entityName}`,
             },
           },
         },
