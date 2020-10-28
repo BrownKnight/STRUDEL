@@ -53,6 +53,8 @@ export const fixturesPaths = {
             "plain/text": {
               schema: {
                 type: "string",
+                example:
+                  "fixtureId,date,time,homeTeamName,awayTeamName,<userName>\n36,2020-10-17,19:00:00,Newcastle,Manchester United,<result>",
               },
             },
           },
