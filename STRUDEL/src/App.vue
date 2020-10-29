@@ -83,10 +83,6 @@ body {
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
-svg {
-  vertical-align: text-top !important;
-}
-
 a,
 button {
   font-weight: normal !important;

@@ -28,7 +28,7 @@ import { Component } from "vue-property-decorator";
 import { BaseComponent } from "./BaseComponent";
 
 @Component
-export default class Header extends BaseComponent {
+export default class Footer extends BaseComponent {
   get userFullName() {
     return this.$store.state?.AuthModule?.user?.fullName ?? "Not Logged In";
   }
