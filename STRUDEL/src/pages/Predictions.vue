@@ -97,7 +97,7 @@ export default class Predictions extends BaseComponent {
     if (this.isAdmin()) {
       this.fields = [
         { key: "id", sortable: true, label: "id" },
-        { key: "fixture.dateModified", label: "Date Mod", sortable: true },
+        { key: "dateModified", label: "Date Modified", sortable: true, formatter: this.prettyFormatDateTime },
         { key: "fixture.date", label: "Date", sortable: true, formatter: this.prettyFormatDate },
         { key: "fixture.time", label: "Time", sortable: true, formatter: this.prettyFormatTime },
         { key: "fixture.homeTeam.teamName", label: "Home Team", sortable: true },

@@ -63,6 +63,10 @@ export class BaseComponent extends Vue {
     return moment(time, "HH:mm").format("HH:mm");
   }
 
+  prettyFormatDateTime(datetime: string | Date): string {
+    return moment(datetime).format("dd Oct, HH:mm");
+  }
+
   hasNativeDatePicker() {
     const el = document.createElement("input");
     const invalidVal = "foo"; // Any value that is not a date
