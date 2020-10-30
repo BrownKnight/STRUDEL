@@ -64,7 +64,7 @@ export class BaseComponent extends Vue {
   }
 
   prettyFormatDateTime(datetime: string | Date): string {
-    return moment(datetime).format("dd Oct, HH:mm");
+    return moment(datetime).format("DD Oct, HH:mm");
   }
 
   hasNativeDatePicker() {
