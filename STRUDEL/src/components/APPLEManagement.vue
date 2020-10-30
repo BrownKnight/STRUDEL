@@ -55,6 +55,8 @@
 
     <b-collapse :visible="isStateComplete">
       <b-badge variant="success">COMPLETE</b-badge>
+      <h6 class="text-left">Predictions Generated:</h6>
+      <b-skeleton-table :rows="5" :columns="3" :table-props="{ bordered: true, striped: true }"></b-skeleton-table>
     </b-collapse>
 
     <b-collapse :visible="isStateFailed">
