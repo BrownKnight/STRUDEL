@@ -98,7 +98,7 @@
                   class="mx-1"
                   variant="success"
                   size="sm"
-                  @click="submitFixtureResult(fixture)"
+                  @click="submitFixtureResult(fixture, 'Fixture Result Submitted')"
                   v-if="isAdmin() && fixture._edit"
                   >Save</b-button
                 >
@@ -110,22 +110,28 @@
                   v-if="isAdmin() && fixture._edit"
                   >Cancel</b-button
                 >
-                <a class="ml-3" @click="fixture._showDetails = !fixture._showDetails">
+                <b-link :disabled="!isAdmin()" @click="setLockedState(fixture, !fixture.locked)">
+                  <b-icon class="ml-1 mr-2" :icon="fixture.locked ? 'lock-fill' : 'unlock'" />
+                </b-link>
+                <a @click="fixture._showDetails = !fixture._showDetails">
                   <b-icon :icon="fixture._showDetails ? 'chevron-up' : 'chevron-down'"></b-icon>
                 </a>
+                <b-badge variant="info" class="ml-2">{{ fixture.predictions.length }}</b-badge>
               </b-col>
             </b-row>
 
-            <b-row v-if="isAdmin() && fixture._edit" class="my-2 text-center">
-              <b-form-radio-group
-                :options="fixturesResultOptions"
-                buttons
-                button-variant="outline-primary"
-                size="sm"
-                v-model="fixture.fixtureResult"
-                class="mx-auto"
-              >
-              </b-form-radio-group>
+            <b-row v-if="isAdmin() && fixture._edit" class="my-2">
+              <b-col cols="8" offset="2">
+                <b-form-radio-group
+                  :options="fixturesResultOptions"
+                  buttons
+                  button-variant="outline-primary"
+                  size="sm"
+                  v-model="fixture.fixtureResult"
+                  class="d-block"
+                >
+                </b-form-radio-group>
+              </b-col>
             </b-row>
 
             <FixtureRowDetails :data="{ item: fixture }" v-if="fixture._showDetails" class="mt-1" />
@@ -135,7 +141,27 @@
     </b-row>
 
     <b-row class="justify-content-center mt-2">
-      <b-button variant="outline-primary" @click="toggleAllRows()" size="sm">Show All Predictions</b-button>
+      <b-button class="mx-1" variant="outline-primary" @click="toggleAllRows()" size="sm"
+        >Show All Predictions</b-button
+      >
+      <b-button
+        class="mx-1"
+        variant="outline-dark"
+        @click="setLockedOnAllFixtures(true)"
+        size="sm"
+        v-if="isAdmin() && entityList.some(fixture => !fixture.locked)"
+      >
+        Lock All
+      </b-button>
+      <b-button
+        class="mx-1"
+        variant="outline-dark"
+        @click="setLockedOnAllFixtures(false)"
+        size="sm"
+        v-if="isAdmin() && entityList.some(fixture => fixture.locked)"
+      >
+        Unlock All
+      </b-button>
     </b-row>
   </div>
 </template>
@@ -198,14 +224,14 @@ export default class Fixtures extends BaseComponent {
       .format("YYYY-MM-DD");
   }
 
-  submitFixtureResult(fixture: Fixture & { _edit: boolean }) {
+  submitFixtureResult(fixture: Fixture & { _edit: boolean }, successMessage: string) {
     this.callENKEL(
       "/iapi/fixtures",
       "PUT",
-      JSON.stringify({ id: fixture.id, fixtureResult: fixture.fixtureResult })
+      JSON.stringify({ id: fixture.id, fixtureResult: fixture.fixtureResult, locked: fixture.locked })
     ).then(res => {
       if (res.ok) {
-        this.showMessage({ message: "Fixture Result Submitted", variant: "success" });
+        this.showMessage({ message: successMessage, variant: "success", delay: 1 });
         fixture._edit = false;
       } else {
         this.showMessage({ message: `Error occurred submitting fixture :( [${res.status}]`, variant: "danger" });
@@ -218,11 +244,31 @@ export default class Fixtures extends BaseComponent {
       entity._showDetails = !entity._showDetails;
     });
   }
+
+  setLockedState(fixture: Fixture & { _edit: boolean }, locked: boolean) {
+    if (!this.isAdmin()) {
+      return;
+    }
+
+    fixture.locked = locked;
+    this.submitFixtureResult(fixture, `Fixture ${fixture.locked ? "Locked" : "Unlocked"}`);
+  }
+
+  setLockedOnAllFixtures(locked: boolean) {
+    this.entityList.forEach(fixture => {
+      this.setLockedState(fixture, locked);
+    });
+  }
 }
 </script>
 
 <style lang="scss">
 .team-logo {
   height: 2.5em;
+}
+
+a.disabled {
+  pointer-events: none;
+  color: darkgray;
 }
 </style>

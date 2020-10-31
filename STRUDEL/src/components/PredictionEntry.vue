@@ -64,7 +64,8 @@
                       : null
                   "
                 >
-                  <b-card-body class="p-0 pr-2 text-right helper-text border-0">
+                  <b-card-body class="d-flex p-0 pt-1 px-2 justify-content-between helper-text border-0">
+                    <b-icon :icon="entity.fixture.locked ? 'lock-fill' : 'unlock'" />
                     <small>
                       {{ prettyFormatTime(entity.fixture.time) }}
                     </small>
@@ -75,7 +76,7 @@
                       v-model="entity.prediction"
                       button-variant="prediction"
                       class="d-flex flex-wrap justify-content-around"
-                      :disabled="entity.fixture.fixtureResult !== null"
+                      :disabled="entity.fixture.locked"
                     >
                       <b-form-radio
                         name="prediction"
