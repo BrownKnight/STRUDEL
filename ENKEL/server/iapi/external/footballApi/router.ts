@@ -72,6 +72,7 @@ export class IApiFootballApiRouter extends RouterBase {
               time: moment(fixture.event_date).toDate(),
               homeTeam: { id: teamDict[fixture.homeTeam.team_name] },
               awayTeam: { id: teamDict[fixture.awayTeam.team_name] },
+              locked: false,
             };
           }
         );

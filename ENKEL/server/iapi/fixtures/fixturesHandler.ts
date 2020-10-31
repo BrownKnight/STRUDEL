@@ -25,6 +25,7 @@ export class FixturesHandler extends BasicEntityOperationHandler<Fixture> {
       },
       date: entity.date,
       fixtureResult: entity.fixtureResult,
+      locked: entity.locked,
     };
     return super.saveEntity(parsedEntity);
   }

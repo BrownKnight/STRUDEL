@@ -25,4 +25,7 @@ export class Fixture extends BaseEntity {
 
   @OneToMany(() => Prediction, (prediction) => prediction.fixture)
   predictions!: Prediction[];
+
+  @Column({ type: "bool", default: true })
+  locked!: boolean;
 }
