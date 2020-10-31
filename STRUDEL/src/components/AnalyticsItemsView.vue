@@ -3,7 +3,11 @@
     <template v-for="entity in entityList">
       <b-card class="shadow mt-3" :key="entity.id">
         <h3>{{ entity.heading }}</h3>
-        <b-container v-html="entity.html"></b-container>
+        <b-container>
+          <div class="iframe-container">
+            <iframe :srcdoc="entity.html" frameborder="0"></iframe>
+          </div>
+        </b-container>
         <ul>
           <li v-for="tagLine in entity.tagLineList.split(',')" :key="tagLine">{{ tagLine }}</li>
         </ul>
@@ -34,4 +38,20 @@ export default class AnalyticsItemsView extends BaseComponent {
 }
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss">
+.iframe-container {
+  overflow: hidden;
+  /* 16:9 aspect ratio */
+  padding-top: 56.25%;
+  position: relative;
+}
+
+.iframe-container iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+</style>
