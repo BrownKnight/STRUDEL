@@ -63,6 +63,7 @@ export class IApiFixturesRouter extends EntityRouter {
         time: fixture.time,
         homeTeamName: fixture.homeTeam.teamName,
         awayTeamName: fixture.awayTeam.teamName,
+        FTR: fixture.fixtureResult,
         predictions: fixture.predictions.map((prediction) => {
           return {
             userFullName: prediction.user.fullName,
@@ -83,6 +84,7 @@ export class IApiFixturesRouter extends EntityRouter {
     dict["time"] = {};
     dict["homeTeamName"] = {};
     dict["awayTeamName"] = {};
+    dict["FTR"] = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     objArray.forEach((fixture: Record<string, any>, index: number) => {
       dict["fixtureId"][index] = fixture.id;
@@ -90,6 +92,7 @@ export class IApiFixturesRouter extends EntityRouter {
       dict["time"][index] = fixture.time;
       dict["homeTeamName"][index] = fixture.homeTeamName;
       dict["awayTeamName"][index] = fixture.awayTeamName;
+      dict["FTR"][index] = fixture.FTR;
       fixture.predictions.forEach((prediction: Record<string, string>) => {
         if (!dict[prediction.userFullName]) {
           dict[prediction.userFullName] = {};
