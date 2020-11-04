@@ -67,9 +67,15 @@ export class IApiFootballApiRouter extends RouterBase {
         const fixtures: Partial<Fixture>[] = apiFixtures.map(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (fixture: any): Partial<Fixture> => {
+            const matches = (fixture.round as string).match(/.* - (\d*)/);
+            let week = 0;
+            if (matches && matches.length > 1) {
+              week = parseInt(matches[1]);
+            }
             return {
               date: moment(fixture.event_date).toDate(),
               time: moment(fixture.event_date).toDate(),
+              week: week,
               homeTeam: { id: teamDict[fixture.homeTeam.team_name] },
               awayTeam: { id: teamDict[fixture.awayTeam.team_name] },
               locked: false,
