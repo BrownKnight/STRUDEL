@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import moment from "moment";
 import { TeamsHandler } from "../../teams/teamsHandler.js";
 import { AdminOnly } from "../../../middleware/adminOnlyDecorator.js";
+import { FixtureResult } from "../../../../STRUDAL/entity/dataTypes/FixtureResult.js";
 
 /**
  * Router to handle requests to populate STRUDAL with information from third-party API's
@@ -43,7 +44,9 @@ export class IApiFootballApiRouter extends RouterBase {
       return;
     }
 
-    fetch(`https://v2.api-football.com/fixtures/league/2790/${moment(date as string).format("YYYY-MM-DD")}`, {
+    const dateStr = moment(date as string).format("YYYY-MM-DD");
+
+    fetch(`https://v2.api-football.com/fixtures/league/2790/${dateStr}`, {
       headers: { "X-RapidApi-Key": process.env.FOOTBALL_API_KEY ?? "" },
     })
       .then((res) => res.text())
@@ -64,6 +67,9 @@ export class IApiFootballApiRouter extends RouterBase {
           });
         });
 
+        // Get all the fixtures for the date in question, so we can update them if they already exist
+        const existingFixtures = await this._fixturesHandler.getFixturesForDateRange(dateStr, dateStr);
+
         const fixtures: Partial<Fixture>[] = apiFixtures.map(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (fixture: any): Partial<Fixture> => {
@@ -72,7 +78,8 @@ export class IApiFootballApiRouter extends RouterBase {
             if (matches && matches.length > 1) {
               week = parseInt(matches[1]);
             }
-            return {
+
+            const mappedFixture: Partial<Fixture> = {
               date: moment(fixture.event_date).toDate(),
               time: moment(fixture.event_date).toDate(),
               week: week,
@@ -80,6 +87,30 @@ export class IApiFootballApiRouter extends RouterBase {
               awayTeam: { id: teamDict[fixture.awayTeam.team_name] },
               locked: false,
             };
+
+            // Check if the fixture exists, and if so set the id so its updated instead of inserted
+            const existingFixture = existingFixtures.find(
+              (x) =>
+                moment(x.date).isSame(moment(mappedFixture.date), "D") &&
+                x.homeTeam.id === mappedFixture.homeTeam?.id &&
+                x.awayTeam.id === mappedFixture.awayTeam?.id
+            );
+            if (existingFixture) {
+              mappedFixture.id = existingFixture.id;
+            }
+
+            // Check if the incoming fixture is finished and has scores, then determine the result
+            if (fixture.statusShort === "FT") {
+              if (fixture.goalsHomeTeam > fixture.goalsAwayTeam) {
+                mappedFixture.fixtureResult = FixtureResult.HOME;
+              } else if (fixture.goalsHomeTeam < fixture.goalsAwayTeam) {
+                mappedFixture.fixtureResult = FixtureResult.AWAY;
+              } else if (fixture.goalsHomeTeam === fixture.goalsAwayTeam) {
+                mappedFixture.fixtureResult = FixtureResult.DRAW;
+              }
+            }
+
+            return mappedFixture;
           }
         );
 
