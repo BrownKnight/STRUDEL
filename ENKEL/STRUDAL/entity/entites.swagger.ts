@@ -51,6 +51,12 @@ export const entitySchemas = {
         },
         nullable: true,
       },
+      locked: {
+        type: "boolean",
+      },
+      week: {
+        type: "integer",
+      },
     },
   },
   Prediction: {

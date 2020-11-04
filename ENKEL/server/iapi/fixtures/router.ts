@@ -59,6 +59,7 @@ export class IApiFixturesRouter extends EntityRouter {
     const flattenedFixture = fixtures.map((fixture) => {
       return {
         id: fixture.id,
+        week: fixture.week,
         date: fixture.date,
         time: fixture.time,
         homeTeamName: fixture.homeTeam.teamName,
@@ -80,6 +81,7 @@ export class IApiFixturesRouter extends EntityRouter {
     const dict: Record<string, Record<number, string>> = {};
     // headerRow, with basics
     dict["fixtureId"] = {};
+    dict["week"] = {};
     dict["date"] = {};
     dict["time"] = {};
     dict["homeTeamName"] = {};
@@ -88,6 +90,7 @@ export class IApiFixturesRouter extends EntityRouter {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     objArray.forEach((fixture: Record<string, any>, index: number) => {
       dict["fixtureId"][index] = fixture.id;
+      dict["week"][index] = fixture.week;
       dict["date"][index] = fixture.date;
       dict["time"][index] = fixture.time;
       dict["homeTeamName"][index] = fixture.homeTeamName;

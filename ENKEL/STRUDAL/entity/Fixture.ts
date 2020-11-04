@@ -28,4 +28,7 @@ export class Fixture extends BaseEntity {
 
   @Column({ type: "bool", default: true })
   locked!: boolean;
+
+  @Column({ type: "int", default: 0 })
+  week!: number;
 }
