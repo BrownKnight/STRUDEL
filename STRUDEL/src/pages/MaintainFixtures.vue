@@ -122,6 +122,7 @@ export default class MaintainFixtures extends BaseComponent {
         { key: "id", sortable: true, label: "id" },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
         { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
+        { key: "week", sortable: true, label: "Week" },
         { key: "fixtureHomeTeam", label: "Home Team", sortable: true },
         { key: "fixtureAwayTeam", label: "Away Team", sortable: true },
         { key: "fixtureResult", label: "Result", sortable: true, formatter: this.formatFixtureResult },
