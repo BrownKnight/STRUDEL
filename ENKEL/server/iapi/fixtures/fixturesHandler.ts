@@ -24,6 +24,8 @@ export class FixturesHandler extends BasicEntityOperationHandler<Fixture> {
         id: entity.awayTeam?.id,
       },
       date: entity.date,
+      time: entity.time,
+      week: entity.week,
       fixtureResult: entity.fixtureResult,
       locked: entity.locked,
     };
