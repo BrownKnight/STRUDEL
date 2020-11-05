@@ -218,7 +218,11 @@ export default class PredictionEntry extends BaseComponent {
   }
 
   submitPrediction(entity: Prediction & { previousPrediction: FixtureResult }) {
-    this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(entity)).then(res => {
+    // Create a new object with just the required fields we are updating,
+    //  to help prevent accidental data manipulation (like with out of date data)
+    const prediction: Partial<Prediction> = { id: entity.id, prediction: entity.prediction };
+
+    this.callENKEL("/iapi/predictions", "PUT", JSON.stringify(prediction)).then(res => {
       if (res.ok) {
         this.showMessage({ message: "Prediction Submitted", variant: "success" });
         entity.previousPrediction = entity.prediction;
