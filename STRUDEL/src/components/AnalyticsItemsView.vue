@@ -2,10 +2,10 @@
   <b-container id="analytics-items-list" fluid class="px-0">
     <b-row>
       <template v-for="entity in entityList">
-        <b-col cols="12" :lg="entity._expanded ? '12' : '6'" :key="entity.id">
+        <b-col cols="12" :md="entity._expanded ? '12' : '6'" :key="entity.id">
           <div class="d-flex justify-content-between align-items-center my-3">
             <h4 class="text-left m-0">{{ entity.heading }}</h4>
-            <b-link @click="handleFrameExpand(entity)">
+            <b-link @click="handleFrameExpand(entity)" class="d-none d-md-inline">
               <b-icon :icon="entity._expanded ? 'dash' : 'plus'" font-scale="1.5" />
             </b-link>
           </div>
