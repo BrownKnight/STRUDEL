@@ -29,7 +29,7 @@ export class UserLoginDAO extends BaseDAO<UserLogin> {
         userRole: userLogin.userRole,
       },
       privateKey,
-      { algorithm: "RS512", expiresIn: "1h" }
+      { algorithm: "RS512", expiresIn: "1d" }
     );
 
     // Now that we've generated the token, save it against the user
