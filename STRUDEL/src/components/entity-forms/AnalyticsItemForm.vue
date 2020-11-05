@@ -27,9 +27,9 @@
           <b-form-input id="input-analytics-html" v-model="entityModel.html" required></b-form-input>
         </b-input-group>
 
-        <b-card header="Preview">{{ entityModel.html }}</b-card>
-
         <b-button class="ml-2 my-2" variant="success" type="submit">Save Entity</b-button>
+
+        <AnalyticsRowDetails :data="{ item: entityModel }"></AnalyticsRowDetails>
       </b-form>
     </b-row>
   </div>
@@ -39,9 +39,10 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
+import AnalyticsRowDetails from "@/components/AnalyticsRowDetails.vue";
 
 @Component({
-  components: {}
+  components: { AnalyticsRowDetails }
 })
 export default class TeamForm extends EntityForm {}
 </script>
