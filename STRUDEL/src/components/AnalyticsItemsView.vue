@@ -1,12 +1,12 @@
 <template>
-  <b-container id="analytics-items-list" fluid>
+  <b-container id="analytics-items-list" fluid class="px-0">
     <b-row>
       <template v-for="entity in entityList">
         <b-col cols="12" :lg="entity._expanded ? '12' : '6'" :key="entity.id">
-          <div class="d-flex justify-content-between align-items-center">
-            <h4 class="text-left">{{ entity.heading }}</h4>
+          <div class="d-flex justify-content-between align-items-center my-3">
+            <h4 class="text-left m-0">{{ entity.heading }}</h4>
             <b-link @click="handleFrameExpand(entity)">
-              <b-icon :icon="entity._expanded ? 'dash' : 'plus'" font-scale="1.2" />
+              <b-icon :icon="entity._expanded ? 'dash' : 'plus'" font-scale="1.5" />
             </b-link>
           </div>
           <div class="border rounded-lg">
@@ -18,10 +18,10 @@
               width="100%"
             ></iframe>
           </div>
-          <ul>
-            <li v-for="tagLine in entity.tagLineList.split(',')" :key="tagLine">{{ tagLine }}</li>
+          <ul class="mt-3 text-left tag-line-list">
+            <li v-for="tagLine in entity.tagLineList.split(',')" :key="tagLine">{{ tagLine.trim() }}</li>
           </ul>
-          <hr />
+          <hr class="m-0" />
         </b-col>
       </template>
     </b-row>
@@ -73,19 +73,11 @@ export default class AnalyticsItemsView extends BaseComponent {
 </script>
 
 <style scoped lang="scss">
-// .iframe-container {
-//   overflow: hidden;
-//   /* 16:9 aspect ratio */
-//   // padding-top: 56.25%;
-//   position: relative;
-// }
-
-// .iframe-container iframe {
-//   border: 0;
-//   // height: 100%;
-//   left: 0;
-//   position: absolute;
-//   top: 0;
-//   width: 100%;
-// }
+.tag-line-list {
+  padding-left: 1em;
+}
+.tag-line-list > li {
+  list-style-type: circle;
+  list-style-position: outside;
+}
 </style>
