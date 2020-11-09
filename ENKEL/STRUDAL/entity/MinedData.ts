@@ -1,9 +1,13 @@
 import pkg from "typeorm";
 import { BaseEntity } from "./BaseEntity.js";
-const { Entity, Column } = pkg;
+const { Entity, Column, Index } = pkg;
 
 @Entity()
 export class MinedData extends BaseEntity {
-  @Column({ type: "jsonb", nullable: true })
-  json?: string | null;
+  @Column({ type: "character varying" })
+  @Index({ unique: true })
+  name?: string;
+
+  @Column({ type: "jsonb" })
+  json?: string;
 }
