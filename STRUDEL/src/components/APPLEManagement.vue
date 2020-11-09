@@ -27,7 +27,12 @@
 
           <b-col cols="12" class="text-left">
             <b-form-group label="Data for Predictions:" label-size="sm">
-              <b-form-input v-model="appleParameters.predictionData" required />
+              <EntitySelect
+                id="apple-mined-data-select"
+                v-model.number="appleParameters.minedData"
+                optionsEndpoint="/iapi/mined-data"
+                :optionTextFunction="entity => entity.name"
+              />
             </b-form-group>
           </b-col>
 
@@ -78,6 +83,7 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import DatePicker from "@/components/helpers/DatePicker.vue";
+import EntitySelect from "@/components/helpers/EntitySelect.vue";
 import moment from "moment";
 
 enum States {
@@ -89,7 +95,7 @@ enum States {
 }
 
 @Component({
-  components: { DatePicker }
+  components: { DatePicker, EntitySelect }
 })
 export default class APPLEManagement extends BaseComponent {
   appleParameters = {
