@@ -141,4 +141,17 @@ export const entitySchemas = {
       },
     },
   },
+  MinedData: {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+        description: "Named used to reference the data item",
+      },
+      json: {
+        type: "object",
+        description: "JSON object",
+      },
+    },
+  },
 };
