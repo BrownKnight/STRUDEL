@@ -18,6 +18,7 @@ import Login from "@/pages/Login.vue";
 import Management from "@/pages/Management.vue";
 import MaintainAnalytics from "@/pages/MaintainAnalytics.vue";
 import MaintainFixtures from "@/pages/MaintainFixtures.vue";
+import MaintainMinedData from "@/pages/MaintainMinedData.vue";
 import Analytics from "@/pages/Analytics.vue";
 
 import { Store } from "@/authStore.ts";
@@ -46,6 +47,7 @@ const routes: RouteConfig[] = [
   { path: "/management", component: Management },
   { path: "/maintain-analytics", component: MaintainAnalytics },
   { path: "/maintain-fixtures", component: MaintainFixtures },
+  { path: "/maintain-mined-data", component: MaintainMinedData },
   { path: "/analytics", component: Analytics }
 ];
 

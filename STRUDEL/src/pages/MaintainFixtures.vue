@@ -82,7 +82,7 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import FixtureForm from "@/components/entity-forms/FixtureForm.vue";
-import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
+import FixtureRowDetails from "@/components/detail-views/FixtureRowDetails.vue";
 import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";

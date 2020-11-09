@@ -97,6 +97,7 @@ export class IApiFootballApiRouter extends RouterBase {
             );
             if (existingFixture) {
               mappedFixture.id = existingFixture.id;
+              mappedFixture.locked = existingFixture.locked;
             }
 
             // Check if the incoming fixture is finished and has scores, then determine the result

@@ -17,7 +17,7 @@ import "reflect-metadata";
 import { Component, Vue } from "vue-property-decorator";
 import EntityManagement from "@/components/EntityManagement.vue";
 import AnalyticsItemForm from "@/components/entity-forms/AnalyticsItemForm.vue";
-import AnalyticsRowDetails from "@/components/AnalyticsRowDetails.vue";
+import AnalyticsRowDetails from "@/components/detail-views/AnalyticsRowDetails.vue";
 
 @Component({
   components: { EntityManagement, AnalyticsItemForm }

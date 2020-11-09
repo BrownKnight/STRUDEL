@@ -169,7 +169,7 @@
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Watch } from "vue-property-decorator";
-import FixtureRowDetails from "@/components/FixtureRowDetails.vue";
+import FixtureRowDetails from "@/components/detail-views/FixtureRowDetails.vue";
 import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
