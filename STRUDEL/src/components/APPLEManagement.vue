@@ -104,6 +104,7 @@ export default class APPLEManagement extends BaseComponent {
       .format("YYYY-MM-DD"),
 
     endDate: moment()
+      .startOf("week")
       .add(1, "week")
       .format("YYYY-MM-DD"),
 
