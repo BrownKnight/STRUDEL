@@ -39,7 +39,7 @@
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
-import AnalyticsRowDetails from "@/components/AnalyticsRowDetails.vue";
+import AnalyticsRowDetails from "@/components/detail-views/AnalyticsRowDetails.vue";
 
 @Component({
   components: { AnalyticsRowDetails }
