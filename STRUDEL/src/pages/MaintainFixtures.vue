@@ -62,9 +62,10 @@ import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.t
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
+import DatePicker from "@/components/helpers/DatePicker.vue";
 
 @Component({
-  components: { EntityManagement, FixtureForm, FixtureRowDetails }
+  components: { EntityManagement, FixtureForm, FixtureRowDetails, DatePicker }
 })
 export default class MaintainFixtures extends BaseComponent {
   FixtureForm = FixtureForm;

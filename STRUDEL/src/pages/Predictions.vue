@@ -52,9 +52,10 @@ import PredictionForm from "@/components/entity-forms/PredictionForm.vue";
 import { BaseComponent, BootstrapTableField } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { UserLogin } from "@/ENKEL/entity/UserLogin";
+import DatePicker from "@/components/helpers/DatePicker.vue";
 
 @Component({
-  components: { EntityManagement, PredictionForm }
+  components: { EntityManagement, PredictionForm, DatePicker }
 })
 export default class Predictions extends BaseComponent {
   PredictionForm = PredictionForm;

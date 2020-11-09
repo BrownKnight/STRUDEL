@@ -59,9 +59,10 @@ import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import { EntityForm } from "@/components/entity-forms/EntityForm.ts";
 import { Team } from "@/ENKEL/entity/Team";
+import DatePicker from "@/components/helpers/DatePicker.vue";
 
 @Component({
-  components: {}
+  components: { DatePicker }
 })
 export default class FixtureForm extends EntityForm {
   teamOptions: {}[] = [];

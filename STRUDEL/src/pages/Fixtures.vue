@@ -155,9 +155,10 @@ import { BaseComponent } from "@/components/BaseComponent.ts";
 import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
+import DatePicker from "@/components/helpers/DatePicker.vue";
 
 @Component({
-  components: { FixtureRowDetails }
+  components: { FixtureRowDetails, DatePicker }
 })
 export default class Fixtures extends BaseComponent {
   entityList = [];

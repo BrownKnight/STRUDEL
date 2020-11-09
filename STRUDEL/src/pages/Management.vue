@@ -78,9 +78,10 @@ import { UserLogin } from "@/ENKEL/entity/UserLogin";
 import moment from "moment";
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
+import DatePicker from "@/components/helpers/DatePicker.vue";
 
 @Component({
-  components: { APPLEManagement }
+  components: { APPLEManagement, DatePicker }
 })
 export default class Management extends BaseComponent {
   selectedUserId = "";

@@ -10,13 +10,12 @@
 
 <script lang="ts">
 import "reflect-metadata";
-import { Component, Prop, Watch } from "vue-property-decorator";
-import { BaseComponent } from "@/components/BaseComponent.ts";
+import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 
 @Component({
   components: {}
 })
-export default class DatePicker extends BaseComponent {
+export default class DatePicker extends Vue {
   @Prop()
   id: string | undefined;
 
@@ -26,6 +25,15 @@ export default class DatePicker extends BaseComponent {
   @Watch("value")
   valueChanged() {
     this.$emit("input", this.value);
+  }
+
+  hasNativeDatePicker() {
+    const el = document.createElement("input");
+    const invalidVal = "foo"; // Any value that is not a date
+    el.setAttribute("type", "date");
+    el.setAttribute("value", invalidVal);
+    // A supported browser will modify this if it is a true date field
+    return el.value !== invalidVal;
   }
 }
 </script>
