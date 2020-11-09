@@ -4,6 +4,7 @@ import { predictionsPaths } from "./predictions/predictions.swagger.js";
 import { externalPaths } from "./external/external.swagger.js";
 import { analyticsPaths } from "./analytics/analytics.swagger.js";
 import { teamsPaths } from "./teams/teams.swagger.js";
+import { minedDataPaths } from "./minedData/minedData.swagger.js";
 
 export const iapiPaths = {
   ...usersPaths,
@@ -12,4 +13,5 @@ export const iapiPaths = {
   ...teamsPaths,
   ...analyticsPaths,
   ...externalPaths,
+  ...minedDataPaths,
 };
