@@ -28,18 +28,7 @@
               </b-col>
               <b-col cols="12" md="6" class="mt-3">
                 <b-input-group prepend="Date">
-                  <b-form-input
-                    v-if="hasNativeDatePicker()"
-                    v-model="date"
-                    type="date"
-                    id="filter-end-date"
-                  ></b-form-input>
-                  <b-form-datepicker
-                    v-else
-                    v-model="date"
-                    id="filter-end-date"
-                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                  ></b-form-datepicker>
+                  <DatePicker id="prediction-date" v-model="date" />
                 </b-input-group>
               </b-col>
               <b-col cols="12" class="mt-2">

@@ -7,28 +7,9 @@
     <b-row>
       <b-col cols="12" md="6" offset-md="3" class="mb-2">
         <b-input-group size="sm" prepend="Fixtures between">
-          <b-form-input
-            v-if="hasNativeDatePicker()"
-            v-model="startDate"
-            type="date"
-            id="filter-start-date"
-          ></b-form-input>
-          <b-form-datepicker
-            v-else
-            v-model="startDate"
-            id="filter-start-date"
-            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-          ></b-form-datepicker>
-
+          <DatePicker id="filter-start-date" v-model="startDate" />
           <b-input-group-append is-text>and</b-input-group-append>
-
-          <b-form-input v-if="hasNativeDatePicker()" v-model="endDate" type="date" id="filter-end-date"></b-form-input>
-          <b-form-datepicker
-            v-else
-            v-model="endDate"
-            id="filter-end-date"
-            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-          ></b-form-datepicker>
+          <DatePicker id="filter-end-date" v-model="endDate" />
         </b-input-group>
       </b-col>
 
