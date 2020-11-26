@@ -146,11 +146,28 @@ export const entitySchemas = {
     properties: {
       name: {
         type: "string",
-        description: "Named used to reference the data item",
+        description: "Name used to reference the data item",
       },
       json: {
         type: "object",
         description: "JSON object",
+      },
+    },
+  },
+  Schedule: {
+    type: "object",
+    properties: {
+      name: {
+        type: "string",
+        description: "Name used to reference the schedule",
+      },
+      cron: {
+        type: "string",
+        description: "CRON string used for the schedule",
+      },
+      jobName: {
+        type: "string",
+        description: "Name of the job that is run",
       },
     },
   },
