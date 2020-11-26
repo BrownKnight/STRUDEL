@@ -7,6 +7,7 @@ import { IApiFixturesRouter } from "./fixtures/router.js";
 import { IApiExternalRouter } from "./external/router.js";
 import { IApiAnalyticsRouter } from "./analytics/router.js";
 import { IApiMinedDataRouter } from "./minedData/router.js";
+import { IApiSchedulesRouter } from "./schedules/router.js";
 
 /**
  * Base router for all internal API calls (i.e. from the front end)
@@ -24,6 +25,7 @@ export class IApiRouter extends RouterBase {
     this.router.use("/external", new IApiExternalRouter().router);
     this.router.use("/analytics", new IApiAnalyticsRouter().router);
     this.router.use("/mined-data", new IApiMinedDataRouter().router);
+    this.router.use("/schedules", new IApiSchedulesRouter().router);
   }
 
   private index(req: Request, res: Response) {

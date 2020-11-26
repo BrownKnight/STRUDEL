@@ -10,7 +10,7 @@ import { Request, Response } from "express";
  * Routes:
  *    GET:/joblist : Returns a list of possible jobs that can be run
  */
-export class IApiScheduleRouter extends EntityRouter {
+export class IApiSchedulesRouter extends EntityRouter {
   private _scheduleHandler: ScheduleHandler;
   constructor() {
     const predictionsHandler = new ScheduleHandler();
@@ -20,8 +20,8 @@ export class IApiScheduleRouter extends EntityRouter {
   }
 
   protected initLocalRoutes(): void {
-    this.router.get("/joblist"), this.getJobList.bind(this);
-    this.router.post("/refresh"), this.refreshSchedule.bind(this);
+    this.router.get("/joblist", this.getJobList.bind(this));
+    this.router.post("/refresh", this.refreshSchedule.bind(this));
   }
 
   protected initChildRoutes(): void {
