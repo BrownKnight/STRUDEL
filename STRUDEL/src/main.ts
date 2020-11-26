@@ -19,6 +19,7 @@ import Management from "@/pages/Management.vue";
 import MaintainAnalytics from "@/pages/MaintainAnalytics.vue";
 import MaintainFixtures from "@/pages/MaintainFixtures.vue";
 import MaintainMinedData from "@/pages/MaintainMinedData.vue";
+import MaintainSchedule from "@/pages/MaintainSchedule.vue";
 import Analytics from "@/pages/Analytics.vue";
 
 import { Store } from "@/authStore.ts";
@@ -48,6 +49,7 @@ const routes: RouteConfig[] = [
   { path: "/maintain-analytics", component: MaintainAnalytics },
   { path: "/maintain-fixtures", component: MaintainFixtures },
   { path: "/maintain-mined-data", component: MaintainMinedData },
+  { path: "/maintain-schedule", component: MaintainSchedule },
   { path: "/analytics", component: Analytics }
 ];
 

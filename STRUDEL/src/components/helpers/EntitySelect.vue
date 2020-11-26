@@ -1,5 +1,5 @@
 <template>
-  <b-form-select :id="id" v-model="value" required :options="options"></b-form-select>
+  <b-form-select :id="id" v-model="nestedValue" required :options="options"></b-form-select>
 </template>
 
 <script lang="ts">
@@ -26,9 +26,12 @@ export default class EntitySelect extends BaseComponent {
 
   options: Array<{ value: string; text: string }> = [];
 
-  @Watch("value")
-  valueChanged() {
-    this.$emit("input", this.value);
+  get nestedValue() {
+    return this.value;
+  }
+
+  set nestedValue(nestedValue) {
+    this.$emit("input", nestedValue);
   }
 
   @Watch("optionsEndpoint")
@@ -42,7 +45,13 @@ export default class EntitySelect extends BaseComponent {
             if (this.optionTextFunction) {
               optionText = this.optionTextFunction(entity);
             }
-            return { value: entity.id?.toString() as string, text: optionText };
+
+            let value = entity.id?.toString();
+            if (!value) {
+              value = entity as string;
+            }
+
+            return { value: value as string, text: optionText };
           });
         });
     }

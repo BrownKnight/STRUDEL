@@ -66,6 +66,9 @@
           <b-list-group-item to="maintain-mined-data">
             <span>Manage Mined Data</span>
           </b-list-group-item>
+          <b-list-group-item to="maintain-schedule">
+            <span>Manage Schedule</span>
+          </b-list-group-item>
 
           <b-list-group-item
             button
