@@ -5,6 +5,7 @@ import { externalPaths } from "./external/external.swagger.js";
 import { analyticsPaths } from "./analytics/analytics.swagger.js";
 import { teamsPaths } from "./teams/teams.swagger.js";
 import { minedDataPaths } from "./minedData/minedData.swagger.js";
+import { schedulePaths } from "./schedules/schedules.swagger.js";
 
 export const iapiPaths = {
   ...usersPaths,
@@ -14,4 +15,5 @@ export const iapiPaths = {
   ...analyticsPaths,
   ...externalPaths,
   ...minedDataPaths,
+  ...schedulePaths,
 };

@@ -6,11 +6,11 @@ const { Entity, Column, Index } = pkg;
 export class Schedule extends BaseEntity {
   @Column({ type: "character varying" })
   @Index({ unique: true })
-  name?: string;
+  name!: string;
 
   @Column({ type: "character varying" })
-  cron?: string;
+  cron!: string;
 
   @Column({ type: "character varying" })
-  jobName?: string;
+  jobName!: string;
 }
