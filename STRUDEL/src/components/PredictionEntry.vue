@@ -30,8 +30,8 @@
 
     <transition-group name="slide-down" mode="out-in">
       <template v-for="date in Object.keys(entityList).sort()">
-        <div :key="entityList[date][0].id + 4">
-          <b-row :key="entityList[date][0].id" class="mt-4 ml-0 align-items-start">
+        <div :key="entityList[date][0].id">
+          <b-row class="mt-4 ml-0 align-items-start">
             <h4>{{ prettyFormatDate(entityList[date][0].fixture.date) }}</h4>
             <transition name="zoom-in" mode="out-in">
               <b-button
@@ -44,7 +44,7 @@
               >
             </transition>
           </b-row>
-          <b-row :key="entityList[date][0].id + 1" class="mt-1">
+          <b-row class="mt-1">
             <b-container>
               <b-card-group
                 columns
@@ -161,7 +161,7 @@ export default class PredictionEntry extends BaseComponent {
     return `/iapi/predictions/bydate?startDate=${this.startDate}&endDate=${this.endDate}&user=${this.$store.state.AuthModule.user.id}`;
   }
 
-  entityList: Dictionary<unknown[]> | [] = [];
+  entityList: Dictionary<Prediction[]> | [] = [];
 
   predictionChanges = true;
 
@@ -213,7 +213,15 @@ export default class PredictionEntry extends BaseComponent {
         json.forEach((element: { previousPrediction: string; prediction: string }) => {
           element.previousPrediction = element.prediction;
         });
-        this.entityList = _.groupBy(json, "fixture.date");
+        const predictionDays = _.groupBy(json, "fixture.date");
+
+        for (const date of Object.keys(predictionDays)) {
+          predictionDays[date].sort(
+            (a, b) => moment(a.fixture.time, "HH:mm").unix() - moment(b.fixture.time, "HH:mm").unix()
+          );
+        }
+
+        this.entityList = predictionDays;
       });
   }
 
