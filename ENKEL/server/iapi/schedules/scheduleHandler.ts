@@ -14,14 +14,16 @@ export class ScheduleHandler extends BasicEntityOperationHandler<Schedule> {
   }
 
   async refreshSchedule(): Promise<void> {
+    console.log("** SCHEDULE REFRESH **");
     // Cancel all current jobs
     for (const scheduledJobName of Object.keys(schedule.scheduledJobs)) {
       console.log(`Cancelling schedule job: ${scheduledJobName}}`);
       schedule.cancelJob(scheduledJobName);
     }
 
-    const jobs: Schedule[] = await this.getAllEntities();
-    jobs.forEach((job) => {
+    const scheduleList: Schedule[] = await this.getAllEntities();
+    scheduleList.forEach((job) => {
+      console.log(`Scheduling Job: ${job.name} to run ${job.jobName} at ${job.cron}`);
       schedule.scheduleJob(job.name, job.cron, ScheduleJobs[job.jobName].action);
     });
   }

@@ -44,9 +44,31 @@ export class IApiFootballApiRouter extends RouterBase {
       return;
     }
 
+    const apiResponse = await this.updateFixtures(date as string);
+    if (apiResponse) {
+      if (apiResponse.success) {
+        res.status(200).json(apiResponse);
+      } else {
+        if (apiResponse.errorMessage === "No fixtures found for this date") {
+          res.status(404).json(apiResponse);
+        } else {
+          res.status(400).json(apiResponse);
+        }
+      }
+    } else {
+      res.status(500).json(apiResponse);
+    }
+  }
+
+  private async saveFixtures(fixtures: Partial<Fixture>[]) {
+    const apiResponse: EntityApiResponse = await this._fixturesHandler.saveMultipleEntities(fixtures);
+    return apiResponse;
+  }
+
+  async updateFixtures(date: string): Promise<EntityApiResponse> {
     const dateStr = moment(date as string).format("YYYY-MM-DD");
 
-    fetch(`https://v2.api-football.com/fixtures/league/2790/${dateStr}`, {
+    return await fetch(`https://v2.api-football.com/fixtures/league/2790/${dateStr}`, {
       headers: { "X-RapidApi-Key": process.env.FOOTBALL_API_KEY ?? "" },
     })
       .then((res) => res.text())
@@ -54,8 +76,7 @@ export class IApiFootballApiRouter extends RouterBase {
       .then(async (json) => {
         const apiFixtures = json.api.fixtures;
         if (!apiFixtures || apiFixtures.length === 0) {
-          res.status(404).send(new EntityApiResponse(false, "No fixtures found for this date"));
-          return;
+          return new EntityApiResponse(false, "No fixtures found for this date");
         }
 
         // Get teams so we can index in to map their names to their id's
@@ -118,20 +139,15 @@ export class IApiFootballApiRouter extends RouterBase {
         console.log(fixtures);
 
         // Attempt to save these fixtures
-        this.saveFixtures(fixtures).then((apiResponse) => {
+        return await this.saveFixtures(fixtures).then((apiResponse) => {
           if (apiResponse.success) {
-            res.status(200).json(apiResponse);
+            return apiResponse;
           } else {
             apiResponse.errorMessage = "Likely some fixtures imported already exist";
-            res.status(400).json(apiResponse);
+            return apiResponse;
           }
         });
       })
-      .catch((error) => res.status(500).send(error));
-  }
-
-  private async saveFixtures(fixtures: Partial<Fixture>[]) {
-    const apiResponse: EntityApiResponse = await this._fixturesHandler.saveMultipleEntities(fixtures);
-    return apiResponse;
+      .catch((error) => new EntityApiResponse(false, error.toString()));
   }
 }

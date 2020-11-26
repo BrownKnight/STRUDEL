@@ -17,6 +17,9 @@ export class IApiSchedulesRouter extends EntityRouter {
     super(predictionsHandler);
 
     this._scheduleHandler = predictionsHandler;
+
+    // Refresh the schedule when this router is created (i.e. at startup)
+    this._scheduleHandler.refreshSchedule();
   }
 
   protected initLocalRoutes(): void {
@@ -30,7 +33,8 @@ export class IApiSchedulesRouter extends EntityRouter {
 
   @AdminOnly()
   protected async saveEntity(req: Request, res: Response): Promise<void> {
-    return await super.saveEntity(req, res);
+    await super.saveEntity(req, res);
+    this._scheduleHandler.refreshSchedule();
   }
 
   private async getJobList(req: Request, res: Response): Promise<void> {
