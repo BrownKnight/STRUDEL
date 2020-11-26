@@ -39,16 +39,7 @@
     <b-row v-if="isAdmin()">
       <h3 class="my-5 mx-3">Management</h3>
     </b-row>
-    <b-row v-if="isAdmin()">
-      <b-col cols="12" md="6" offset-md="3">
-        <b-input-group prepend="Import Fixtures for">
-          <DatePicker id="import-date" v-model="importFixturesDate" />
-          <b-input-group-append>
-            <b-button variant="primary" @click="importFixtures()">Import</b-button>
-          </b-input-group-append>
-        </b-input-group>
-      </b-col>
-    </b-row>
+    <ImportFixtures class="col-md-6 offset-md-3 col-12" />
   </div>
 </template>
 
@@ -63,16 +54,15 @@ import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 import DatePicker from "@/components/helpers/DatePicker.vue";
+import ImportFixtures from "@/components/ImportFixtures.vue";
 
 @Component({
-  components: { EntityManagement, FixtureForm, FixtureRowDetails, DatePicker }
+  components: { EntityManagement, FixtureForm, FixtureRowDetails, DatePicker, ImportFixtures }
 })
 export default class MaintainFixtures extends BaseComponent {
   FixtureForm = FixtureForm;
   FixtureRowDetails = FixtureRowDetails;
   fields: Array<BootstrapTableField> = [];
-
-  importFixturesDate = moment().format("YYYY-MM-DD");
 
   startDate = moment()
     .startOf("week")
@@ -116,41 +106,6 @@ export default class MaintainFixtures extends BaseComponent {
         { key: "expand", label: "Expand" }
       ];
     }
-  }
-
-  importFixtures() {
-    if (this.importFixturesDate == null || this.importFixturesDate == "") {
-      this.showMessage({ delay: 3, message: "Please enter a date to import fixtures for", variant: "danger" });
-      return;
-    }
-
-    this.callENKEL(
-      `/iapi/external/fixtures/importbydate?date=${moment(this.importFixturesDate).format("YYYY-MM-DD")}`,
-      "POST"
-    ).then(res => {
-      res
-        .text()
-        .then(text => JSON.parse(text))
-        .then(json => {
-          if (!res.ok || !json.success) {
-            this.showMessage({
-              delay: 5,
-              message: `Fixture import failed! ${json.errorMessage ??
-                json.operationResult.message ??
-                json.operationResult}`,
-              variant: "danger"
-            });
-
-            return;
-          }
-
-          this.showMessage({
-            delay: 3,
-            message: `${json.entity.length} Fixtures imported!`,
-            variant: "success"
-          });
-        });
-    });
   }
 
   addWeeks(numWeeks: number) {

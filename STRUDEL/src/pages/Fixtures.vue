@@ -144,6 +144,11 @@
         Unlock All
       </b-button>
     </b-row>
+
+    <b-row v-if="isAdmin()">
+      <h3 class="my-5 mx-3">Management</h3>
+    </b-row>
+    <ImportFixtures class="col-md-6 offset-md-3 col-12" />
   </div>
 </template>
 
@@ -156,9 +161,10 @@ import moment from "moment";
 import { Fixture } from "@/ENKEL/entity/Fixture";
 import { AnyEntity } from "@/ENKEL/entity/EntityHelper";
 import DatePicker from "@/components/helpers/DatePicker.vue";
+import ImportFixtures from "@/components/ImportFixtures.vue";
 
 @Component({
-  components: { FixtureRowDetails, DatePicker }
+  components: { FixtureRowDetails, DatePicker, ImportFixtures }
 })
 export default class Fixtures extends BaseComponent {
   entityList = [];

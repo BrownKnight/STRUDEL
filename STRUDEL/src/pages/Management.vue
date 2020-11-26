@@ -45,6 +45,24 @@
           <b-list-group-item to="maintain-fixtures">
             <span>Manage Fixtures</span>
           </b-list-group-item>
+
+          <b-list-group-item
+            button
+            @click="showImportFixtures = !showImportFixtures"
+            :active="showImportFixtures"
+            class="d-flex px-2"
+          >
+            <b-col cols="10" offset="1">
+              <span>Update Fixtures</span>
+            </b-col>
+            <b-col cols="1" class="">
+              <b-icon :icon="showImportFixtures ? 'chevron-up' : 'chevron-down'" />
+            </b-col>
+          </b-list-group-item>
+          <b-list-group-item v-if="showImportFixtures">
+            <ImportFixtures />
+          </b-list-group-item>
+
           <b-list-group-item to="maintain-mined-data">
             <span>Manage Mined Data</span>
           </b-list-group-item>
@@ -79,9 +97,10 @@ import moment from "moment";
 import "reflect-metadata";
 import { Component } from "vue-property-decorator";
 import DatePicker from "@/components/helpers/DatePicker.vue";
+import ImportFixtures from "@/components/ImportFixtures.vue";
 
 @Component({
-  components: { APPLEManagement, DatePicker }
+  components: { APPLEManagement, DatePicker, ImportFixtures }
 })
 export default class Management extends BaseComponent {
   selectedUserId = "";
@@ -90,6 +109,7 @@ export default class Management extends BaseComponent {
 
   showGeneratePredictions = false;
   showManageApple = false;
+  showImportFixtures = false;
 
   created() {
     this.populateUserList();
