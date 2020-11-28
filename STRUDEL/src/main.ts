@@ -52,10 +52,12 @@ const routes: RouteConfig[] = [
   { path: "/maintain-mined-data", component: MaintainMinedData },
   { path: "/maintain-schedule", component: MaintainSchedule },
   { path: "/analytics", component: Analytics },
-  { path: "/my-account", component: MyAccount }
+  { path: "/my-account", component: MyAccount },
+  { path: "/.well-known/change-password", redirect: "/my-account" }
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes: routes
 });
 
