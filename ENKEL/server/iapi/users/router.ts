@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import moment from "moment";
+import { UserRole } from "../../../STRUDAL/entity/dataTypes/UserRoles.js";
+import { UserLogin } from "../../../STRUDAL/entity/UserLogin.js";
 import { EntityApiResponse } from "../apiResponse.js";
 import { EntityRouter } from "../entityRouter.js";
 import { PredictionsHandler } from "../predictions/predictionsHandler.js";
@@ -51,5 +53,39 @@ export class IApiUserLoginsRouter extends EntityRouter {
       .catch((err) => {
         res.status(400).json(new EntityApiResponse(false, "error generating predictions", {}, err));
       });
+  }
+
+  protected async saveEntity(req: Request, res: Response): Promise<void> {
+    const apiResponse: EntityApiResponse = new EntityApiResponse(true);
+    const userToEdit: Partial<UserLogin> = req.body;
+    const requestUser: UserLogin | undefined = req.user;
+
+    if (!requestUser) {
+      apiResponse.success = false;
+      apiResponse.errorMessage = "No user found in the request";
+      res.status(400).json(apiResponse);
+      return;
+    }
+
+    // Admin can do whatever they please
+    if (requestUser.userRole === UserRole.ADMIN) {
+      super.saveEntity(req, res);
+      return;
+    }
+
+    // Any user can update their own details - to an extent (no token, id, role, name update)
+    if (requestUser.id === userToEdit.id) {
+      userToEdit.token = undefined;
+      userToEdit.userRole = undefined;
+      userToEdit.fullName = undefined;
+      req.body = userToEdit;
+
+      super.saveEntity(req, res);
+      return;
+    }
+
+    apiResponse.success = false;
+    apiResponse.errorMessage = "Cannot update somebody elses user accounts";
+    res.status(400).json(apiResponse);
   }
 }

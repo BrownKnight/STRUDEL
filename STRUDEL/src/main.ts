@@ -21,6 +21,7 @@ import MaintainFixtures from "@/pages/MaintainFixtures.vue";
 import MaintainMinedData from "@/pages/MaintainMinedData.vue";
 import MaintainSchedule from "@/pages/MaintainSchedule.vue";
 import Analytics from "@/pages/Analytics.vue";
+import MyAccount from "@/pages/MyAccount.vue";
 
 import { Store } from "@/authStore.ts";
 
@@ -50,10 +51,13 @@ const routes: RouteConfig[] = [
   { path: "/maintain-fixtures", component: MaintainFixtures },
   { path: "/maintain-mined-data", component: MaintainMinedData },
   { path: "/maintain-schedule", component: MaintainSchedule },
-  { path: "/analytics", component: Analytics }
+  { path: "/analytics", component: Analytics },
+  { path: "/my-account", component: MyAccount },
+  { path: "/.well-known/change-password", redirect: "/my-account" }
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes: routes
 });
 
