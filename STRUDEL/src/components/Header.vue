@@ -21,6 +21,7 @@
             <b-icon icon="person-circle" size="sm" variant="light" class="align-top"></b-icon>
             <span class="ml-2">{{ userFullName }}</span>
           </template>
+          <b-dropdown-item to="my-account">My Account</b-dropdown-item>
           <b-dropdown-item @click="invalidateToken()">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
