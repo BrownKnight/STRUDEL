@@ -23,6 +23,9 @@ export class UserLogin extends BaseEntity {
   @Column({ type: "enum", enum: UserRole })
   userRole!: UserRole | "A" | "S";
 
+  @Column({ type: "boolean", default: false })
+  receiveNotificationEmails!: boolean;
+
   @BeforeInsert()
   @BeforeUpdate()
   encryptPassword(): void {
