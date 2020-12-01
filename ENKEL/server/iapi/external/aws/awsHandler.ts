@@ -13,7 +13,10 @@ export class AWSHandler {
   async createTemplate(template: AWS.SES.Template): Promise<EntityApiResponse> {
     const response = new EntityApiResponse();
 
-    const ses = new AWS.SES();
+    const ses = new AWS.SES({
+      credentials: AWS.config.credentials,
+      region: "eu-west-2",
+    });
     try {
       await ses.createTemplate({ Template: template }).promise();
     } catch (err) {
