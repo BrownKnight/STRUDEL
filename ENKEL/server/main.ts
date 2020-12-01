@@ -10,6 +10,7 @@ import compression from "compression";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocument } from "./swagger.js";
+import moment from "moment";
 
 // Wait for a connection to be established before starting the server
 await initDb();
@@ -44,4 +45,11 @@ app.use("/api", new ApiRouter().router);
 
 app.listen(3000, function () {
   console.log("App is listening of port 3000");
+});
+
+// Our "weeks" start on a tuesday, so set start of week to tuesday
+moment.locale("en", {
+  week: {
+    dow: 2,
+  },
 });

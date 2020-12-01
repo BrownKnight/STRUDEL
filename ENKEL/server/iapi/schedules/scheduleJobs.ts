@@ -1,4 +1,5 @@
-import { IApiFootballApiRouter } from "../external/footballApi/router.js";
+import { oneDayReminderEmail, threeHourReminderEmail } from "./jobs/awsJobs";
+import { lockThisWeeksFixtures, scheduleDynamicJobs, updateTodaysFixture } from "./jobs/ENKELJobs";
 
 export class ScheduleJob {
   jobName: string;
@@ -11,10 +12,12 @@ export class ScheduleJob {
 }
 
 export const ScheduleJobs: { [jobName: string]: ScheduleJob } = {
-  updateTodaysFixtures: new ScheduleJob("updateTodaysFixtures", (date) => {
-    console.log("Running updateTodaysFixtures");
-    // Use the external football api endpoint
-    const externalFootballApi = new IApiFootballApiRouter();
-    externalFootballApi.updateFixtures(date.toISOString());
-  }),
+  // ENKEL
+  updateTodaysFixtures: updateTodaysFixture,
+  scheduleDynamicJobs: scheduleDynamicJobs,
+  lockThisWeeksFixtures: lockThisWeeksFixtures,
+
+  // AWS
+  oneDayReminderEmail: oneDayReminderEmail,
+  threeHourReminderEmail: threeHourReminderEmail,
 };
