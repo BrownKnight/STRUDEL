@@ -48,7 +48,7 @@ app.listen(3000, function () {
 });
 
 // Our "weeks" start on a tuesday, so set start of week to tuesday
-moment.locale("en", {
+moment.updateLocale("en", {
   week: {
     dow: 2,
   },
