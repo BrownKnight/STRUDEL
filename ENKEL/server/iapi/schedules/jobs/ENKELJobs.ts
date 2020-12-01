@@ -1,7 +1,7 @@
 import { IApiFootballApiRouter } from "../../external/footballApi/router.js";
 import { FixturesHandler } from "../../fixtures/fixturesHandler.js";
 import { ScheduleHandler } from "../scheduleHandler.js";
-import { ScheduleJob } from "../scheduleJobs.js";
+import { ScheduleJob } from "./scheduleJob.js";
 
 export const updateTodaysFixture = new ScheduleJob("updateTodaysFixtures", (date) => {
   console.log("Running updateTodaysFixtures");

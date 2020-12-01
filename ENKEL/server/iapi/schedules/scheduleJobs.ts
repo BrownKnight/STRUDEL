@@ -1,15 +1,6 @@
-import { oneDayReminderEmail, threeHourReminderEmail } from "./jobs/awsJobs";
-import { lockThisWeeksFixtures, scheduleDynamicJobs, updateTodaysFixture } from "./jobs/ENKELJobs";
-
-export class ScheduleJob {
-  jobName: string;
-  action: (date: Date) => void;
-
-  constructor(jobName: string, action: (date: Date) => void) {
-    this.jobName = jobName;
-    this.action = action;
-  }
-}
+import { oneDayReminderEmail, threeHourReminderEmail } from "./jobs/awsJobs.js";
+import { lockThisWeeksFixtures, scheduleDynamicJobs, updateTodaysFixture } from "./jobs/ENKELJobs.js";
+import { ScheduleJob } from "./jobs/scheduleJob.js";
 
 export const ScheduleJobs: { [jobName: string]: ScheduleJob } = {
   // ENKEL
