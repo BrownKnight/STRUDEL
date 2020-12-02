@@ -10,13 +10,14 @@ export const updateTodaysFixture = new ScheduleJob("updateTodaysFixtures", (date
   externalFootballApi.updateFixtures(date.toISOString());
 });
 
-export const scheduleDynamicJobs = new ScheduleJob("scheduleDynamicJobs", (date) => {
+export const scheduleDynamicJobs = new ScheduleJob("scheduleDynamicJobs", async (date) => {
   console.log("Deleting this weeks dynamic jobs");
 
   const scheduleHandler = new ScheduleHandler();
-  scheduleHandler.deleteAllDynamicJobs();
+  await scheduleHandler.deleteAllDynamicJobs();
 
-  scheduleHandler.scheduleDynamicJobs(date);
+  console.log("Scheduling new dynamic jobs");
+  await scheduleHandler.scheduleDynamicJobs(date);
 });
 
 export const lockThisWeeksFixtures = new ScheduleJob("lockThisWeeksFixtures", async (date) => {

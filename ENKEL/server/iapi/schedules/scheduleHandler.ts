@@ -21,7 +21,7 @@ export class ScheduleHandler extends BasicEntityOperationHandler<Schedule> {
     console.log("** SCHEDULE REFRESH **");
     // Cancel all current jobs
     for (const scheduledJobName of Object.keys(schedule.scheduledJobs)) {
-      console.log(`Cancelling schedule job: ${scheduledJobName}}`);
+      console.log(`Cancelling schedule job: ${scheduledJobName}`);
       schedule.cancelJob(scheduledJobName);
     }
 
@@ -60,7 +60,11 @@ export class ScheduleHandler extends BasicEntityOperationHandler<Schedule> {
     }
 
     // Fixtures returned are ordered by date, so first element will be the earliest
-    const earliestFixtureDate = moment(fixtures[0].date);
+    const earliestFixtureTime = moment(fixtures[0].time, "HH:mm");
+    const earliestFixtureDate = moment(fixtures[0].date).set({
+      hour: earliestFixtureTime.get("hour"),
+      minute: earliestFixtureTime.get("minute"),
+    });
     const schedules: Partial<Schedule>[] = [];
 
     // Schedule job for 24h before the first fixture, to send a reminder
