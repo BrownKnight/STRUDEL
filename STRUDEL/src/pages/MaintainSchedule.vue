@@ -30,7 +30,8 @@ export default class MaintainSchedule extends BaseComponent {
     { key: "dateModified", sortable: true, label: "Date Modified", formatter: this.prettyFormatDateTime },
     { key: "name", sortable: true, label: "Schedule Name" },
     { key: "jobName", sortable: true, label: "Job Name" },
-    { key: "cron", sortable: true, label: "CRON String" },
+    { key: "cron", sortable: true, label: "CRON/Date String" },
+    { key: "scheduleType", label: "Schedule Type" },
     { key: "Action", label: "Action" }
   ];
 }

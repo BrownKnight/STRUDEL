@@ -27,6 +27,16 @@
           <b-form-input id="input-schedule-cron-string" v-model="entityModel.cron" required></b-form-input>
         </b-input-group>
 
+        <label class="sr-only" id="input-label-schedule-schedule-type" for="input-schedule-schedule-type">Job</label>
+        <b-input-group class="my-2" prepend="Type">
+          <b-form-select
+            id="input-schedule-schedule-type"
+            v-model="entityModel.scheduleType"
+            required
+            :options="options"
+          ></b-form-select>
+        </b-input-group>
+
         <b-button class="ml-2 my-2" variant="success" type="submit">Save Entity</b-button>
       </b-form>
     </b-row>
@@ -42,7 +52,12 @@ import EntitySelect from "@/components/helpers/EntitySelect.vue";
 @Component({
   components: { EntitySelect }
 })
-export default class ScheduleForm extends EntityForm {}
+export default class ScheduleForm extends EntityForm {
+  options = [
+    { value: "D", text: "Dynamic" },
+    { value: "P", text: "Persistent" }
+  ];
+}
 </script>
 
 <style lang="scss"></style>
