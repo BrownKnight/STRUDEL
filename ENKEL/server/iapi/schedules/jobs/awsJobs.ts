@@ -8,13 +8,13 @@ import { ScheduleJob } from "./scheduleJob.js";
 export const oneDayReminderEmail = new ScheduleJob("oneDayReminderEmail", async (date) => {
   console.log("Sending 24h reminder email");
 
-  sendReminderEmail(date, "oneDayReminder");
+  sendReminderEmail(date, "1dayreminder");
 });
 
 export const threeHourReminderEmail = new ScheduleJob("threeHourReminderEmail", (date) => {
   console.log("Sending 3h reminder email");
 
-  sendReminderEmail(date, "threeHourReminder");
+  sendReminderEmail(date, "3hourreminder");
 });
 
 async function sendReminderEmail(date: Date, templateName: string) {
@@ -42,7 +42,11 @@ async function sendReminderEmail(date: Date, templateName: string) {
     const predictionsHandler = new PredictionsHandler();
     const predictions = await predictionsHandler.getPredictionsInDateRange(startDate, endDate);
 
-    if (predictions.some((prediction) => prediction.prediction === null)) {
+    if (
+      predictions == null ||
+      predictions.length === 0 ||
+      predictions.some((prediction) => prediction.prediction === null)
+    ) {
       const awsHandler = new AWSHandler();
       awsHandler.sendEmail(templateName, user, { deadlineDate: moment(fixtures[0].date).format("DD Oct, HH:mm") });
     } else {
