@@ -1,5 +1,6 @@
 import { RouterBase } from "../../routerBase.js";
 import { IApiAppleRouter } from "./apple/router.js";
+import { IApiAWSApiRouter } from "./aws/router.js";
 import { IApiFootballApiRouter } from "./footballApi/router.js";
 
 /**
@@ -21,5 +22,6 @@ export class IApiExternalRouter extends RouterBase {
   protected initChildRoutes(): void {
     this.router.use("/fixtures", new IApiFootballApiRouter().router);
     this.router.use("/apple", new IApiAppleRouter().router);
+    this.router.use("/aws", new IApiAWSApiRouter().router);
   }
 }

@@ -35,4 +35,17 @@ export class FixturesHandler extends BasicEntityOperationHandler<Fixture> {
   getFixturesForDateRange(startDate: string, endDate: string): Promise<Fixture[]> {
     return (this._DAO as FixtureDAO).getFixturesForDateRange(moment(startDate), moment(endDate));
   }
+
+  async getFixturesForCurrentWeek(date: Date = new Date()): Promise<Fixture[]> {
+    const startDate = moment(date).startOf("week");
+    const endDate = moment(date).endOf("week");
+
+    const fixtureHandler = new FixturesHandler();
+    const fixtures = await fixtureHandler.getFixturesForDateRange(
+      startDate.format("YYYY-MM-DD"),
+      endDate.format("YYYY-MM-DD")
+    );
+
+    return fixtures;
+  }
 }

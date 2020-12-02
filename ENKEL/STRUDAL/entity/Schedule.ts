@@ -15,6 +15,6 @@ export class Schedule extends BaseEntity {
   @Column({ type: "character varying" })
   jobName!: string;
 
-  @Column({ type: "enum", enum: ScheduleType })
+  @Column({ type: "enum", enum: ScheduleType, default: ScheduleType.PERSISTENT })
   scheduleType!: ScheduleType;
 }

@@ -43,9 +43,13 @@
     </b-input-group>
 
     <b-input-group class="my-3" prepend="Role" v-if="isAdmin() && !personalMode">
-      <label class="sr-only" id="input-label-password" for="input-password">Role</label>
+      <label class="sr-only" id="input-label-user-role" for="input-user-role">Role</label>
       <b-form-select :options="userRoleOptions" v-model="entityModel.userRole" required></b-form-select>
     </b-input-group>
+
+    <b-form-checkbox v-model="entityModel.receiveNotificationEmails" switch
+      >Receive Notification Emails</b-form-checkbox
+    >
 
     <b-button class="ml-2 my-2" variant="success" type="submit">{{ saveButtonText }}</b-button>
   </b-form>
