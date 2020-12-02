@@ -46,7 +46,7 @@ export class AWSHandler {
         .sendTemplatedEmail({
           Template: templateName,
           TemplateData: templateData,
-          Source: "amanvirdhoot@gmail.com",
+          Source: '"Beat The Bot" <notifications@beatthebot.co.uk>',
           Destination: { ToAddresses: [recipient.emailAddress] },
         })
         .promise();
