@@ -34,7 +34,13 @@ export class IApiSchedulesRouter extends EntityRouter {
   @AdminOnly()
   protected async saveEntity(req: Request, res: Response): Promise<void> {
     await super.saveEntity(req, res);
-    this._scheduleHandler.refreshSchedule();
+    await this._scheduleHandler.refreshSchedule();
+  }
+
+  @AdminOnly()
+  protected async deleteEntity(req: Request, res: Response): Promise<void> {
+    await super.deleteEntity(req, res);
+    await this._scheduleHandler.refreshSchedule();
   }
 
   private async getJobList(req: Request, res: Response): Promise<void> {
