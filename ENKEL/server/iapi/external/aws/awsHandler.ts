@@ -4,13 +4,13 @@ import { EntityApiResponse } from "../../apiResponse.js";
 
 export class AWSHandler {
   constructor() {
-    new AWS.Config({
+    AWS.config = new AWS.Config({
       credentials: AWS.config.credentials,
       region: "eu-west-2",
     });
   }
 
-  async createTemplate(template: AWS.SES.Template): Promise<EntityApiResponse> {
+  async createTemplate(template: AWS.SES.Template, update: boolean): Promise<EntityApiResponse> {
     const response = new EntityApiResponse();
 
     const ses = new AWS.SES({
@@ -18,7 +18,11 @@ export class AWSHandler {
       region: "eu-west-2",
     });
     try {
-      await ses.createTemplate({ Template: template }).promise();
+      if (update) {
+        await ses.updateTemplate({ Template: template }).promise();
+      } else {
+        await ses.createTemplate({ Template: template }).promise();
+      }
     } catch (err) {
       console.log("Failed to create template", err);
       response.success = false;
@@ -42,7 +46,7 @@ export class AWSHandler {
         .sendTemplatedEmail({
           Template: templateName,
           TemplateData: templateData,
-          Source: "notifications@beatthebot.co.uk",
+          Source: "amanvirdhoot@gmail.com",
           Destination: { ToAddresses: [recipient.emailAddress] },
         })
         .promise();

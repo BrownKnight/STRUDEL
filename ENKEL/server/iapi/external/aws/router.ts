@@ -20,6 +20,7 @@ export class IApiAWSApiRouter extends RouterBase {
 
   protected initLocalRoutes(): void {
     this.router.post("/create-template", this.createTemplate.bind(this));
+    this.router.post("/update-template", this.updateTemplate.bind(this));
     this.router.all("/*", this.index.bind(this));
   }
 
@@ -39,7 +40,27 @@ export class IApiAWSApiRouter extends RouterBase {
       return;
     }
 
-    const apiResponse = await this._awsHandler.createTemplate(req.body);
+    const apiResponse = await this._awsHandler.createTemplate(req.body, false);
+    if (apiResponse) {
+      if (apiResponse.success) {
+        res.status(200).json(apiResponse);
+      } else {
+        res.status(500).json(apiResponse);
+      }
+    } else {
+      res.status(500).json(apiResponse);
+    }
+  }
+
+  @AdminOnly()
+  private async updateTemplate(req: Request, res: Response) {
+    const body = req.body;
+    if (body == null) {
+      res.status(400).json(new EntityApiResponse(false, "No Template supplied"));
+      return;
+    }
+
+    const apiResponse = await this._awsHandler.createTemplate(req.body, true);
     if (apiResponse) {
       if (apiResponse.success) {
         res.status(200).json(apiResponse);
