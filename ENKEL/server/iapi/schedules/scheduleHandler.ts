@@ -27,8 +27,12 @@ export class ScheduleHandler extends BasicEntityOperationHandler<Schedule> {
 
     const scheduleList: Schedule[] = await this.getAllEntities();
     scheduleList.forEach((job) => {
-      console.log(`Scheduling Job: ${job.name} to run ${job.jobName} at ${job.cron}`);
-      schedule.scheduleJob(job.name, job.cron, ScheduleJobs[job.jobName].action);
+      const scheduledJob = schedule.scheduleJob(job.name, job.cron, ScheduleJobs[job.jobName].action);
+      console.log(
+        `Scheduling Job: ${job.name} to run ${job.jobName} at ${
+          job.cron
+        }. Next Run at: ${scheduledJob?.nextInvocation().toISOString()}`
+      );
     });
   }
 
