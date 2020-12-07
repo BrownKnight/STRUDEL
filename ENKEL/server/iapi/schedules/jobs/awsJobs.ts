@@ -48,7 +48,14 @@ async function sendReminderEmail(date: Date, templateName: string) {
       predictions.some((prediction) => prediction.prediction === null)
     ) {
       const awsHandler = new AWSHandler();
-      awsHandler.sendEmail(templateName, user, { deadlineDate: moment(fixtures[0].date).format("DD Oct, HH:mm") });
+      const fixtureTime = moment(fixtures[0].time, "HH:mm");
+      const deadlineDate = moment(fixtures[0].date).set({
+        hour: fixtureTime.get("hour"),
+        minute: fixtureTime.get("minute"),
+      });
+      awsHandler.sendEmail(templateName, user, {
+        deadlineDate: deadlineDate.format("DD Oct, HH:mm"),
+      });
     } else {
       console.log(`Didn't send email to ${user.fullName} as they have already made their predictions`);
     }
