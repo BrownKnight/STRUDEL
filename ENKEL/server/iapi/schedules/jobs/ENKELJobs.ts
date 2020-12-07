@@ -31,10 +31,10 @@ export const lockThisWeeksFixtures = new ScheduleJob("lockThisWeeksFixtures", as
     return;
   }
 
-  fixtures.forEach((fixture) => {
-    fixture.locked = true;
+  const updatedFixtures = fixtures.map((fixture) => {
+    return { id: fixture.id, locked: true };
   });
 
-  const response = await fixtureHandler.saveMultipleEntities(fixtures);
+  const response = await fixtureHandler.saveMultipleEntities(updatedFixtures);
   console.log(response);
 });
