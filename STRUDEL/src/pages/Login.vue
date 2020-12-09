@@ -106,7 +106,12 @@ export default class Login extends BaseComponent {
         const token = json["token"];
         if (token !== null && token !== "") {
           this.$store.commit("setToken", json["token"]);
-          this.$router.push("/index");
+          const redirectPath = sessionStorage.getItem("redirectTo");
+          if (redirectPath) {
+            this.$router.push(redirectPath);
+          } else {
+            this.$router.push("/index");
+          }
           return;
         } else {
           this.showMessage({ delay: 5, message: "Login Failed (No Token?)", variant: "danger" });
