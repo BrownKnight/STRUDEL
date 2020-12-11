@@ -1,8 +1,61 @@
-<h1>Your BeatTheBot Reminder</h1><br /><h2>Hey, {{name}}</h2><p>The weekend is here! Make your predictions now at <a href="https://beatthebot.co.uk">BeatTheBot</a></p><p>  Don't want to receive these emails? You can edit your notification preferences at  <a href="https://beatthebot.co.uk/my-account">BeatTheBot.co.uk/my-account</a></p>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  </head>
+<body>
+  <div class="header-box">
+    <h2>The Weekend is here!</h1>
+  </div>
 
-{
-  "TemplateName": "1dayreminder",
-  "SubjectPart": "It's time to predict!",
-  "HtmlPart": "<h1>Your BeatTheBot Reminder</h1><br /><h2>Hey, {{name}}</h2><p>The weekend is here! Make your predictions now at <a href='https://beatthebot.co.uk'>BeatTheBot</a></p><p>  Don't want to receive these emails? You can edit your notification preferences at  <a href='https://beatthebot.co.uk/my-account'>BeatTheBot.co.uk/my-account</a></p>",
-  "TextPart": "Hey, {{name}},\r\nThe weekend is here! Make your predictions now at BeatTheBot.co.uk."
-}
+  <div class="content-box">
+    <h3>Hey, {{name}}</h3>
+    <p>
+      The weekend is here! Make your predictions now over at <a href="https://beatthebot.co.uk">beatthebot.co.uk.</a>
+      This weeks deadline for making your predictions will be {{deadlineDate}}.
+    </p>
+    <br>
+    <p class="small">
+      Don't want to receive these emails? You can edit your notification preferences at
+      <a href="https://beatthebot.co.uk/my-account">beatthebot.co.uk/my-account</a>
+    </p>
+  </div>
+</body>
+</html>
+
+<style>
+  html,
+  body {
+    font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h2 {
+    text-align: center;
+    color: white;
+  }
+
+  .header-box {
+    background-color: #2b6eb7;
+    padding: 0.5em 0;
+  }
+  .content-box {
+    padding: 0 0.5em;
+  }
+
+  .small {
+    font-size: 0.75em;
+    color: gray;
+  }
+</style>
+
+<!--
+  {
+    "TemplateName": "1dayreminder",
+    "SubjectPart": "It's time to predict!",
+    "HtmlPart": "<h1>Your BeatTheBot Reminder</h1><br /><h2>Hey, {{name}}</h2><p>The weekend is here! Make your predictions now at <a href='https://beatthebot.co.uk'>BeatTheBot</a></p><p>  Don't want to receive these emails? You can edit your notification preferences at  <a href='https://beatthebot.co.uk/my-account'>BeatTheBot.co.uk/my-account</a></p>",
+    "TextPart": "Hey, {{name}},\r\nThe weekend is here! Make your predictions now at BeatTheBot.co.uk."
+  }
+-->
