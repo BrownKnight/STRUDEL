@@ -179,7 +179,7 @@ export default class Fixtures extends BaseComponent {
     .startOf("week")
     .format("YYYY-MM-DD");
   endDate = moment(this.startDate)
-    .add(1, "week")
+    .add(6, "days")
     .format("YYYY-MM-DD");
 
   get apiEndpoint() {
