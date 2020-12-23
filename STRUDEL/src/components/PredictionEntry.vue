@@ -36,7 +36,7 @@
             <small class="ml-auto mr-4">Matchweek {{ entityList[date][0].fixture.week }}</small>
           </b-row>
           <b-row class="mt-1" v-if="entityList != null && entityList[date] && entityList[date].length > 0">
-            <b-col cols="auto" v-for="entity in entityList[date]" :key="entity.id" class="p-1 flex-grow-1">
+            <b-col cols="auto" v-for="entity in entityList[date]" :key="entity.id" class="p-1 flex-grow-1 card-basis">
               <b-card
                 no-body
                 class="shadow"
@@ -289,6 +289,10 @@ export default class PredictionEntry extends BaseComponent {
   background-color: #f7f7f6;
   border-width: 1px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.125) !important;
+}
+
+.card-basis {
+  flex-basis: 300px;
 }
 
 .helper-text {
