@@ -68,10 +68,14 @@
                       value="H"
                       class="d-flex align-items-center justify-content-end px-0 py-1"
                     >
-                      <span class="mr-2">{{ entity.fixture.homeTeam.teamCode }}</span>
-                      <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 2em; width: 2em;" />
+                      <span>{{ entity.fixture.homeTeam.teamCode }}</span>
+                      <img
+                        :src="entity.fixture.homeTeam.teamLogoUrl"
+                        style="height: 2.25em; width: 2.25em;"
+                        class="mx-2"
+                      />
                     </b-form-radio>
-                    <b-form-radio name="prediction" value="D" class="d-flex align-items-center mx-2 py-1">
+                    <b-form-radio name="prediction" value="D" class="d-flex align-items-center mx-1 py-1">
                       <small class="mx-auto">Draw</small>
                     </b-form-radio>
                     <b-form-radio
@@ -79,8 +83,12 @@
                       value="A"
                       class="d-flex align-items-center justify-content-start px-0 py-1"
                     >
-                      <img :src="entity.fixture.awayTeam.teamLogoUrl" style="height: 2em; width: 2em;" />
-                      <span class="ml-2">{{ entity.fixture.awayTeam.teamCode }}</span>
+                      <img
+                        :src="entity.fixture.awayTeam.teamLogoUrl"
+                        style="height: 2.25em; width: 2.25em;"
+                        class="mx-2"
+                      />
+                      <span>{{ entity.fixture.awayTeam.teamCode }}</span>
                     </b-form-radio>
                   </b-form-radio-group>
                 </b-card-body>
