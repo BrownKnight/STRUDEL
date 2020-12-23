@@ -22,6 +22,7 @@ export default class Teams extends Vue {
   fields = [
     { key: "id", sortable: true, label: "id" },
     { key: "teamName", label: "Team Name", sortable: true },
+    { key: "teamCode", label: "Code", sortable: true },
     { key: "Action" }
   ];
 }
