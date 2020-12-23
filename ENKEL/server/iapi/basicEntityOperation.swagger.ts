@@ -26,19 +26,31 @@ export function generateCRUDOperationDocs(entityName: string, pathName: string |
     },
     put: {
       tags: [pathName],
-      description: "Update/Create given entity",
+      description:
+        "Update/Create given entity. If id is applied, then entity is updated, otherwise it is created. Supports being given an array of entities to create/update",
       requestBody: {
         content: {
           "application/json": {
             schema: {
-              $ref: `#/components/schemas/${entityName}`,
+              anyOf: [
+                {
+                  $ref: `#/components/schemas/${entityName}`,
+                },
+                {
+                  type: "array",
+                  items: {
+                    $ref: `#/components/schemas/${entityName}`,
+                  },
+                },
+              ],
             },
           },
         },
       },
       responses: {
         "200": {
-          description: "Returns the entity you've just updated/created",
+          description:
+            "Returns the entity you've just updated/created.; If an array is input, an array will also be returned.",
           content: {
             "application/json": {
               schema: {

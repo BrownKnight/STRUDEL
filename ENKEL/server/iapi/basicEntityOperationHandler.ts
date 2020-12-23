@@ -66,7 +66,7 @@ export class BasicEntityOperationHandler<TEntity extends AnyEntity> {
     try {
       apiResponse.entity = await this._DAO.saveAll(entities);
     } catch (error) {
-      console.error("Error occurred trying to save entity");
+      console.error("Error occurred trying to save entities");
       console.error(error);
       apiResponse.operationResult = error;
       apiResponse.success = false;

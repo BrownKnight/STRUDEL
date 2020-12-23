@@ -66,9 +66,14 @@ export abstract class EntityRouter extends RouterBase {
    * Handle a request to save the entity given in the requests body
    */
   protected async saveEntity(req: Request, res: Response): Promise<void> {
-    const apiResponse: EntityApiResponse = await this._entityHandler.saveEntity(req.body);
-
-    apiResponse.entity = sanitiseEntity(apiResponse.entity as AnyEntity);
+    let apiResponse: EntityApiResponse;
+    const entities = req.body;
+    if (Array.isArray(entities)) {
+      apiResponse = await this._entityHandler.saveMultipleEntities(entities);
+    } else {
+      apiResponse = await this._entityHandler.saveEntity(entities);
+      apiResponse.entity = sanitiseEntity(apiResponse.entity as AnyEntity);
+    }
 
     if (apiResponse.success) {
       res.status(200).json(apiResponse);

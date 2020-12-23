@@ -12,6 +12,11 @@
           <b-form-input id="input-team-name" v-model="entityModel.teamName" required></b-form-input>
         </b-input-group>
 
+        <label class="sr-only" id="input-label-team-CODE" for="input-team-CODE">Team Name</label>
+        <b-input-group class="my-2" prepend="Team Code">
+          <b-form-input id="input-team-CODE" v-model="entityModel.teamCode" required></b-form-input>
+        </b-input-group>
+
         <label class="sr-only" id="input-label-team-logo" for="input-team-logo">Team Logo</label>
         <b-input-group class="my-2" prepend="Team Logo">
           <b-form-input id="input-team-logo" v-model="entityModel.teamLogoUrl"></b-form-input>

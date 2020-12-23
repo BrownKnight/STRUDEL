@@ -16,6 +16,9 @@ export const entitySchemas = {
       teamName: {
         type: "string",
       },
+      teamCode: {
+        type: "string",
+      },
       teamLogoUrl: {
         type: "string",
       },

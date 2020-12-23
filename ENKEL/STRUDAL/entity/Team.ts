@@ -10,4 +10,7 @@ export class Team extends BaseEntity {
 
   @Column("character varying", { nullable: true })
   teamLogoUrl?: string;
+
+  @Column("character varying", { default: "**DFLT**" })
+  teamCode?: string;
 }

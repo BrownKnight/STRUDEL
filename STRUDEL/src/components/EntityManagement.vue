@@ -69,6 +69,7 @@
       :showForm="showForm"
       @submit="handleFormSubmit"
       class="mt-2"
+      id="entity-form"
     ></component>
   </div>
 </template>
@@ -137,6 +138,8 @@ export default class EntityManagement extends BaseComponent {
     console.log(`Editing entity with id ${entity.id}`);
     this.formEntity = entity;
     this.showForm = true;
+    
+    document.getElementById("entity-form")?.scrollIntoView();
   }
 
   deleteEntity(entity: AnyEntity) {
