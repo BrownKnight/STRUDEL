@@ -50,7 +50,8 @@
                 class="d-flex px-0 align-items-center justify-content-end order-3 order-md-1 mb-2 mb-md-0"
               >
                 <b-badge variant="success" v-if="fixture.fixtureResult === 'H'">WIN</b-badge>
-                <span class="mx-2">{{ fixture.homeTeam.teamName }}</span>
+                <span class="d-none d-lg-block mx-2">{{ fixture.homeTeam.teamName }}</span>
+                <span class="d-lg-none mx-2">{{ fixture.homeTeam.teamCode }}</span>
                 <img :src="fixture.homeTeam.teamLogoUrl" alt="Home Team Logo" class="team-logo mx-2" />
               </b-col>
               <b-col cols="12" md="2" class="d-flex px-0 align-items-center justify-content-center order-2 order-md-1">
@@ -62,7 +63,8 @@
                 class="d-flex px-0 align-items-center justify-content-start order-4 order-md-2 mb-2 mb-md-0"
               >
                 <img :src="fixture.awayTeam.teamLogoUrl" alt="Away Team Logo" class="team-logo mx-2" />
-                <span class="mx-2">{{ fixture.awayTeam.teamName }}</span>
+                <span class="d-none d-lg-block mx-2">{{ fixture.awayTeam.teamName }}</span>
+                <span class="d-lg-none mx-2">{{ fixture.awayTeam.teamCode }}</span>
                 <b-badge variant="success" v-if="fixture.fixtureResult === 'A'">WIN</b-badge>
               </b-col>
 
