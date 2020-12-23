@@ -33,7 +33,11 @@
           <b-container>
             <b-row>
               <b-col cols="6" md="2" class="text-left order-0 order-md-0">
-                <small>{{ prettyFormatDate(fixture.date) }}</small>
+                <small
+                  >{{ prettyFormatDate(fixture.date) }}
+                  <em> - Week {{ fixture.week }}</em>
+                </small>
+
                 <br />
                 <small>
                   <strong>{{ prettyFormatTime(fixture.time) }}</strong>
