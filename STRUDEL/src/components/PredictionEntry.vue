@@ -71,7 +71,7 @@
                       <span class="mr-2">{{ entity.fixture.homeTeam.teamCode }}</span>
                       <img :src="entity.fixture.homeTeam.teamLogoUrl" style="height: 2em; width: 2em;" />
                     </b-form-radio>
-                    <b-form-radio name="prediction" value="D" class="d-flex align-items-center px-1 py-1">
+                    <b-form-radio name="prediction" value="D" class="d-flex align-items-center mx-2 py-1">
                       <small class="mx-auto">Draw</small>
                     </b-form-radio>
                     <b-form-radio
