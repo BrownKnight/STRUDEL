@@ -71,8 +71,8 @@
                     />
                     <b-form-radio name="prediction" value="D" class="d-flex align-items-center mx-1 py-1">
                       <small class="mx-auto" v-show="entity.fixture.fixtureResult !== 'D'">Draw</small>
-                      <div class="mx-auto small">
-                        <b-badge variant="success" v-show="entity.fixture.fixtureResult === 'D'">DRAW</b-badge>
+                      <div class="mx-auto small" v-show="entity.fixture.fixtureResult === 'D'">
+                        <b-badge variant="success">DRAW</b-badge>
                       </div>
                     </b-form-radio>
                     <TeamButton
