@@ -10,7 +10,7 @@
 <script lang="ts">
 import "reflect-metadata";
 import { Component, Vue } from "vue-property-decorator";
-import PredictionEntry from "@/components/PredictionEntry.vue";
+import PredictionEntry from "@/components/prediction-entry/PredictionEntry.vue";
 
 @Component({
   components: { PredictionEntry }

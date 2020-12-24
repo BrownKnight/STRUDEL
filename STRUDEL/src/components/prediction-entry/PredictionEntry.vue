@@ -63,33 +63,23 @@
                     :disabled="entity.fixture.locked"
                     @input="submitPrediction(entity)"
                   >
-                    <b-form-radio
-                      name="prediction"
+                    <TeamButton
                       value="H"
-                      class="d-flex align-items-center justify-content-end px-0 py-1"
-                    >
-                      <span>{{ entity.fixture.homeTeam.teamCode }}</span>
-                      <img
-                        :src="entity.fixture.homeTeam.teamLogoUrl"
-                        style="height: 2.25em; width: 2.25em;"
-                        class="mx-2"
-                      />
-                    </b-form-radio>
+                      :team="entity.fixture.homeTeam"
+                      :showWin="entity.fixture.fixtureResult === 'H'"
+                      reversed
+                    />
                     <b-form-radio name="prediction" value="D" class="d-flex align-items-center mx-1 py-1">
-                      <small class="mx-auto">Draw</small>
+                      <small class="mx-auto" v-show="entity.fixture.fixtureResult !== 'D'">Draw</small>
+                      <div class="mx-auto small">
+                        <b-badge variant="success" v-show="entity.fixture.fixtureResult === 'D'">DRAW</b-badge>
+                      </div>
                     </b-form-radio>
-                    <b-form-radio
-                      name="prediction"
+                    <TeamButton
                       value="A"
-                      class="d-flex align-items-center justify-content-start px-0 py-1"
-                    >
-                      <img
-                        :src="entity.fixture.awayTeam.teamLogoUrl"
-                        style="height: 2.25em; width: 2.25em;"
-                        class="mx-2"
-                      />
-                      <span>{{ entity.fixture.awayTeam.teamCode }}</span>
-                    </b-form-radio>
+                      :team="entity.fixture.awayTeam"
+                      :showWin="entity.fixture.fixtureResult === 'A'"
+                    />
                   </b-form-radio-group>
                 </b-card-body>
 
@@ -125,9 +115,10 @@ import moment from "moment";
 import _, { Dictionary } from "lodash";
 import { Prediction } from "@/ENKEL/entity/Prediction";
 import { FixtureResult } from "@/ENKEL/entity/dataTypes/FixtureResult";
+import TeamButton from "@/components/prediction-entry/TeamButton.vue";
 
 @Component({
-  components: {}
+  components: { TeamButton }
 })
 export default class PredictionEntry extends BaseComponent {
   startDate = moment()
