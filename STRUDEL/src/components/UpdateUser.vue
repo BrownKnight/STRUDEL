@@ -19,7 +19,7 @@ import { UserLogin } from "@/ENKEL/entity/UserLogin";
   components: { UserForm }
 })
 export default class UpdateUser extends BaseComponent {
-  user: UserLogin = this.$store?.state?.AuthModule?.user;
+  user: UserLogin | null = null;
   apiEndpoint = "/iapi/users";
 
   saveUser() {
@@ -37,6 +37,16 @@ export default class UpdateUser extends BaseComponent {
         this.showMessage({ delay: 3, message: "User Updated", variant: "success" });
       }
     });
+  }
+
+  async created() {
+    await this.getUser();
+  }
+
+  async getUser() {
+    this.user = await this.callENKEL(`${this.apiEndpoint}/${this.$store?.state?.AuthModule?.user.id}`)
+      .then(res => res.json())
+      .then(json => json.entity);
   }
 }
 </script>
