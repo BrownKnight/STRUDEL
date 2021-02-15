@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.17.3",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "enkel": "file:../ENKEL",
     "jquery": "^3.5.1",
@@ -17,6 +18,7 @@
     "moment": "^2.29.0",
     "reflect-metadata": "^0.1.13",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.4.3",
