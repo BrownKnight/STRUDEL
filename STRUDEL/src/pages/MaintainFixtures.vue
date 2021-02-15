@@ -86,6 +86,7 @@ export default class MaintainFixtures extends BaseComponent {
       this.fields = [
         { key: "expand", sortable: true, label: "Expand" },
         { key: "id", sortable: true, label: "id" },
+        { key: "dateModified", sortable: true, label: "Date Mod", formatter: this.prettyFormatDateTime },
         { key: "date", sortable: true, label: "Date", formatter: this.prettyFormatDate },
         { key: "time", sortable: true, label: "Time", formatter: this.prettyFormatTime },
         { key: "week", sortable: true, label: "Week" },
